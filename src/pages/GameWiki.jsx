@@ -236,162 +236,162 @@ export default function GameWiki() {
  const showEditor = isEditing || isAddingPage;
 
  return (
- <PageTransition className="min-h-screen bg-surface-900">
- {/* Banner */}
- <div className="relative h-64 sm:h-80 w-full overflow-hidden group">
- <img 
- src={wikiData.banner} 
- alt={`${wikiData.title} Banner`} 
- className="absolute inset-0 h-full w-full object-cover"
- />
- <div className="absolute inset-0 bg-gradient-to-t from-surface-900 via-surface-900/60 to-transparent" />
- <div className="absolute bottom-0 left-0 w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pb-6 flex justify-between items-end">
- <h1 className="font-display text-4xl sm:text-5xl font-bold text-white drop-shadow-lg tracking-tight">
- {wikiData.title}
- </h1>
- </div>
- </div>
+    <PageTransition className="min-h-screen bg-[#0B0F17]">
+      {/* Banner */}
+      <div className="relative h-64 sm:h-80 w-full overflow-hidden group">
+        <img 
+          src={wikiData.banner} 
+          alt={`${wikiData.title} Banner`} 
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-[#0B0F17]/60 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pb-6 flex justify-between items-end">
+          <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-brand-text drop-shadow-lg tracking-tight">
+            {wikiData.title}
+          </h1>
+        </div>
+      </div>
 
- <WikiNavbar gameId={gameId} gameName={wikiData.title} pages={allPages} />
+      <WikiNavbar gameId={gameId} gameName={wikiData.title} pages={allPages} />
 
- <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
- 
- {/* Main Content Area */}
- <div className="flex-1 min-w-0">
- <div className="bg-surface-800 border-2 border-surface-700 shadow-sm p-6 sm:p-8 relative group/page hover:border-surface-600 transition-colors">
- 
- {/* Context Actions */}
- {!showEditor && (
- <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover/page:opacity-100 transition-opacity z-10 bg-surface-900 p-1 border border-surface-700 shadow-lg">
- <button 
- onClick={startAddingNewPage}
- className="flex items-center gap-1 hover:bg-surface-700 text-text-secondary hover:text-pixel-blue px-2 py-1 text-xs font-bold transition-colors"
- title="Create New Page"
- >
- <Plus size={14} /> New
- </button>
- {currentPage && (
- <button 
- onClick={() => setIsEditing(true)}
- className="flex items-center gap-1 hover:bg-surface-700 text-text-secondary hover:text-pixel-blue px-2 py-1 text-xs font-bold transition-colors"
- title="Edit Current Page"
- >
- <Edit3 size={14} /> Edit
- </button>
- )}
- {pageId !== 'home' && currentPage && (
- <button 
- onClick={handleDeletePage}
- className="flex items-center gap-1 hover:bg-surface-700 text-text-secondary hover:text-red-500 px-2 py-1 text-xs font-bold transition-colors"
- title="Delete Current Page"
- >
- <Trash2 size={14} /> Delete
- </button>
- )}
- </div>
- )}
- 
- {/* Editor Mode */}
- {showEditor ? (
- <form onSubmit={handleSavePage} className="animate-in fade-in slide-in-from-top-4 duration-300">
- <div className="flex items-center justify-between border-b border-surface-700 pb-4 mb-6">
- <h3 className="font-display text-2xl font-bold text-text-primary">
- {isAddingPage ? 'Create New Page' : 'Editing Page'}
- </h3>
- <div className="flex gap-2">
- <button 
- type="button"
- onClick={() => setPreviewMode(!previewMode)}
- className="flex items-center gap-1 bg-surface-700 hover:bg-surface-600 text-white px-3 py-1.5 text-sm font-bold transition-colors"
- >
- {previewMode ? <Edit3 size={16} /> : <Eye size={16} />}
- {previewMode ? 'Edit' : 'Preview'}
- </button>
- <button 
- type="submit"
- className="flex items-center gap-1 bg-pixel-blue hover:bg-signal-blue text-white px-3 py-1.5 text-sm font-bold transition-colors"
- >
- <Save size={16} /> Save
- </button>
- <button 
- type="button"
- onClick={cancelEdit}
- className="flex items-center gap-1 hover:bg-surface-800 text-text-muted hover:text-white px-3 py-1.5 text-sm font-bold transition-colors"
- >
- <X size={16} /> Cancel
- </button>
- </div>
- </div>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
+        
+        {/* Main Content Area */}
+        <div className="flex-1 min-w-0">
+          <div className="bg-[#151A24] rounded-xl border border-[#1E2638] shadow-sm p-6 sm:p-8 relative group/page hover:border-brand-primary/50 transition-colors">
+            
+            {/* Context Actions */}
+            {!showEditor && (
+              <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover/page:opacity-100 transition-opacity z-10 bg-[#0B0F17] p-1.5 rounded-lg border border-[#1E2638] shadow-lg">
+                <button 
+                  onClick={startAddingNewPage}
+                  className="flex items-center gap-1 hover:bg-[#151A24] text-brand-muted hover:text-brand-accent px-2 py-1 text-xs font-mono font-bold transition-colors cursor-pointer"
+                  title="Create New Page"
+                >
+                  <Plus size={14} /> New
+                </button>
+                {currentPage && (
+                  <button 
+                    onClick={() => setIsEditing(true)}
+                    className="flex items-center gap-1 hover:bg-[#151A24] text-brand-muted hover:text-brand-accent px-2 py-1 text-xs font-mono font-bold transition-colors cursor-pointer"
+                    title="Edit Current Page"
+                  >
+                    <Edit3 size={14} /> Edit
+                  </button>
+                )}
+                {pageId !== 'home' && currentPage && (
+                  <button 
+                    onClick={handleDeletePage}
+                    className="flex items-center gap-1 hover:bg-[#151A24] text-brand-muted hover:text-red-400 px-2 py-1 text-xs font-mono font-bold transition-colors cursor-pointer"
+                    title="Delete Current Page"
+                  >
+                    <Trash2 size={14} /> Delete
+                  </button>
+                )}
+              </div>
+            )}
+            
+            {/* Editor Mode */}
+            {showEditor ? (
+              <form onSubmit={handleSavePage} className="animate-in fade-in slide-in-from-top-4 duration-300">
+                <div className="flex items-center justify-between border-b border-[#1E2638] pb-4 mb-6">
+                  <h3 className="font-display text-2xl font-bold text-brand-text">
+                    {isAddingPage ? 'Create New Page' : 'Editing Page'}
+                  </h3>
+                  <div className="flex gap-2">
+                    <button 
+                      type="button" 
+                      onClick={() => setPreviewMode(!previewMode)}
+                      className="flex items-center gap-1 rounded-lg bg-[#0B0F17] hover:bg-[#1E2638] text-brand-text border border-[#1E2638] px-3 py-1.5 text-xs font-mono font-bold transition-colors cursor-pointer"
+                    >
+                      {previewMode ? <Edit3 size={14} /> : <Eye size={14} />}
+                      {previewMode ? 'Edit' : 'Preview'}
+                    </button>
+                    <button 
+                      type="submit" 
+                      className="flex items-center gap-1 rounded-lg bg-brand-primary hover:bg-brand-primary/85 text-white px-3.5 py-1.5 text-xs font-mono font-bold shadow-[0_0_12px_rgba(37,99,235,0.3)] transition-colors cursor-pointer"
+                    >
+                      <Save size={14} /> Save
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={cancelEdit}
+                      className="flex items-center gap-1 rounded-lg hover:bg-[#0B0F17] text-brand-muted hover:text-brand-text px-3 py-1.5 text-xs font-mono font-bold transition-colors cursor-pointer"
+                    >
+                      <X size={14} /> Cancel
+                    </button>
+                  </div>
+                </div>
 
- {!previewMode ? (
- <div className="space-y-4">
- {isAddingPage && (
- <div>
- <label className="block text-sm font-bold text-text-secondary mb-1">Page Title</label>
- <input 
- type="text" 
- required 
- value={editTitle}
- onChange={e => setEditTitle(e.target.value)}
- className="w-full bg-surface-900 border border-surface-700 px-4 py-2 text-text-primary focus:border-pixel-blue outline-none"
- placeholder="e.g. Boss Guides"
- />
- </div>
- )}
- <div>
- <label className="block text-sm font-bold text-text-secondary mb-1 flex justify-between">
- <span>Markdown Content</span>
- <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank" rel="noreferrer" className="text-pixel-blue hover:underline font-normal text-xs">Formatting Guide</a>
- </label>
- <textarea 
- required 
- rows={16}
- value={editContent}
- onChange={e => setEditContent(e.target.value)}
- className="w-full bg-surface-900 border border-surface-700 px-4 py-3 text-text-primary focus:border-pixel-blue outline-none font-mono text-sm leading-relaxed"
- placeholder="# Heading 1&#10;**Bold text**&#10;* List item&#10;[Link](url)"
- />
- </div>
- </div>
- ) : (
- <div className="prose prose-invert max-w-none prose-headings:font-display prose-a:text-pixel-blue hover:prose-a:text-signal-blue prose-img:border-2 prose-img:border-surface-700 prose-hr:border-surface-700 bg-surface-900 p-6 border border-surface-700 min-h-[400px]">
- <h1 className="border-b border-surface-700 pb-2 mb-6">{editTitle || 'Untitled'}</h1>
- <ReactMarkdown remarkPlugins={[remarkGfm]}>
- {editContent || '*No content yet.*'}
- </ReactMarkdown>
- </div>
- )}
- </form>
- ) : currentPage ? (
- /* Viewer Mode */
- <div className="prose prose-invert max-w-none prose-headings:font-display prose-headings:text-text-primary prose-h1:text-4xl prose-h2:text-2xl prose-h2:border-b prose-h2:border-surface-700 prose-h2:pb-2 prose-h3:text-xl prose-a:text-pixel-blue hover:prose-a:text-signal-blue prose-strong:text-text-primary prose-th:bg-surface-900 prose-th:border-surface-700 prose-td:border-surface-700 prose-img:border-2 prose-img:border-surface-700 prose-hr:border-surface-700">
- <h1 className="mb-8">{currentPage.title}</h1>
- <ReactMarkdown remarkPlugins={[remarkGfm]}>
- {currentPage.content}
- </ReactMarkdown>
- </div>
- ) : (
- <div className="text-center py-20">
- <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-surface-900 mb-4">
- <Edit3 className="text-surface-500" size={24} />
- </div>
- <h2 className="text-2xl font-bold text-text-primary mb-2">Page Not Found</h2>
- <p className="text-text-muted max-w-md mx-auto mb-6">This page doesn't exist yet, or it was deleted. You can create it now to start building the Codex.</p>
- <button 
- onClick={startAddingNewPage}
- className="bg-pixel-blue hover:bg-signal-blue text-white px-6 py-2 font-bold inline-flex items-center gap-2"
- >
- <Plus size={18} /> Create "{pageId}"
- </button>
- </div>
- )}
+                {!previewMode ? (
+                  <div className="space-y-4">
+                    {isAddingPage && (
+                      <div>
+                        <label className="block text-xs font-mono font-bold text-brand-muted mb-1">Page Title</label>
+                        <input 
+                          type="text" 
+                          required 
+                          value={editTitle}
+                          onChange={e => setEditTitle(e.target.value)}
+                          className="w-full rounded-lg bg-[#0B0F17] border border-[#1E2638] px-4 py-2 text-sm text-brand-text focus:border-brand-primary outline-none"
+                          placeholder="e.g. Boss Guides"
+                        />
+                      </div>
+                    )}
+                    <div>
+                      <label className="block text-xs font-mono font-bold text-brand-muted mb-1 flex justify-between">
+                        <span>Markdown Content</span>
+                        <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank" rel="noreferrer" className="text-brand-accent hover:underline font-normal text-xs">Formatting Guide</a>
+                      </label>
+                      <textarea 
+                        required 
+                        rows={16}
+                        value={editContent}
+                        onChange={e => setEditContent(e.target.value)}
+                        className="w-full rounded-lg bg-[#0B0F17] border border-[#1E2638] px-4 py-3 text-brand-text focus:border-brand-primary outline-none font-mono text-sm leading-relaxed"
+                        placeholder="# Heading 1&#10;**Bold text**&#10;* List item&#10;[Link](url)"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="prose prose-invert max-w-none prose-headings:font-display prose-a:text-brand-accent hover:prose-a:text-brand-accent2 prose-img:rounded-xl prose-img:border prose-img:border-[#1E2638] prose-hr:border-[#1E2638] bg-[#0B0F17] p-6 rounded-xl border border-[#1E2638] min-h-[400px]">
+                    <h1 className="border-b border-[#1E2638] pb-2 mb-6 font-display text-brand-text">{editTitle || 'Untitled'}</h1>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {editContent || '*No content yet.*'}
+                    </ReactMarkdown>
+                  </div>
+                )}
+              </form>
+            ) : currentPage ? (
+              /* Viewer Mode */
+              <div className="prose prose-invert max-w-none prose-headings:font-display prose-headings:text-brand-text prose-h1:text-4xl prose-h2:text-2xl prose-h2:border-b prose-h2:border-[#1E2638] prose-h2:pb-2 prose-h3:text-xl prose-a:text-brand-accent hover:prose-a:text-brand-accent2 prose-strong:text-brand-text prose-th:bg-[#0B0F17] prose-th:border-[#1E2638] prose-td:border-[#1E2638] prose-img:rounded-xl prose-img:border prose-img:border-[#1E2638] prose-hr:border-[#1E2638]">
+                <h1 className="mb-8 font-display text-brand-text">{currentPage.title}</h1>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {currentPage.content}
+                </ReactMarkdown>
+              </div>
+            ) : (
+              <div className="text-center py-20">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#0B0F17] border border-[#1E2638] mb-4">
+                  <Edit3 className="text-brand-muted" size={24} />
+                </div>
+                <h2 className="text-2xl font-display font-bold text-brand-text mb-2">Page Not Found</h2>
+                <p className="text-brand-muted max-w-md mx-auto mb-6 text-sm">This page doesn't exist yet, or it was deleted. You can create it now to start building the Codex.</p>
+                <button 
+                  onClick={startAddingNewPage}
+                  className="bg-brand-primary hover:bg-brand-primary/85 text-white px-6 py-2.5 rounded-xl font-mono text-xs font-bold inline-flex items-center gap-2 shadow-[0_0_12px_rgba(37,99,235,0.3)] cursor-pointer"
+                >
+                  <Plus size={16} /> Create "{pageId}"
+                </button>
+              </div>
+            )}
 
- </div>
- </div>
+          </div>
+        </div>
 
- <WikiSidebar gameId={gameId} pages={allPages} wikiData={wikiData} />
- 
- </div>
- </PageTransition>
- );
+        <WikiSidebar gameId={gameId} pages={allPages} wikiData={wikiData} />
+        
+      </div>
+    </PageTransition>
+  );
 }

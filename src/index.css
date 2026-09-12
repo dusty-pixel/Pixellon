@@ -1,77 +1,126 @@
 @import "tailwindcss";
 
-/* ── Design Tokens ─────────────────────────────────────────────── */
+/* ── Pixellon Brand Kit v1.0 Design Tokens ─────────────────────── */
 @theme {
- --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
- --font-display: 'Outfit', 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
- /* Brand Colors */
- --color-pixel-blue: #3B82F6; /* Brighter blue for dark mode */
- --color-signal-blue: #60A5FA;
- --color-signal-green: #10B981;
- --color-deep-ink: #0F172A; /* Slate 900 */
- --color-grid-tint: rgba(255, 255, 255, 0.03);
- --color-paper: #09090B; /* Zinc 950 */
+  /* Strict Brand Kit Color Palette */
+  --color-brand-primary: #2563EB;   /* Primary Blue */
+  --color-brand-bg: #0B0F17;        /* Deep Background */
+  --color-brand-surface: #151A24;   /* Dark Slate Surface */
+  --color-brand-muted: #6B7280;     /* Muted Gray */
+  --color-brand-text: #F8FAFC;      /* Primary White/Ice Text */
+  --color-brand-accent: #60A5FA;    /* Accent 1 Light Blue */
+  --color-brand-accent2: #93C5FD;   /* Accent 2 Soft Blue */
+  --color-brand-accent3: #DBEAFE;   /* Accent 3 Ice Blue */
 
- /* Surface mapping for UI (Sleek Dark Theme) */
- --color-surface-950: #09090B;
- --color-surface-900: #18181B; /* Zinc 900 */
- --color-surface-800: #27272A; /* Zinc 800 */
- --color-surface-700: #3F3F46; /* Zinc 700 */
- --color-surface-600: #52525B; /* Zinc 600 */
+  /* Aliases for semantic mapping */
+  --color-pixel-blue: #2563EB;
+  --color-signal-blue: #60A5FA;
+  --color-paper: #0B0F17;
+  --color-deep-ink: #0B0F17;
+  --color-grid-tint: rgba(96, 165, 250, 0.05);
 
- --color-text-primary: #FAFAFA; /* Zinc 50 */
- --color-text-secondary: #A1A1AA; /* Zinc 400 */
- --color-text-muted: #71717A; /* Zinc 500 */
+  /* Surface Scale mapped to brand surfaces */
+  --color-surface-950: #0B0F17;
+  --color-surface-900: #10151F;
+  --color-surface-800: #151A24;
+  --color-surface-700: #1E2638;
+  --color-surface-600: #2C3549;
+  --color-surface-500: #475569;
+
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #6B7280;
 }
 
 /* ── Global Reset & Base ───────────────────────────────────────── */
 @layer base {
- * {
- scrollbar-width: thin;
- scrollbar-color: var(--color-pixel-blue) transparent;
- }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #2563EB transparent;
+  }
 
- html {
- scroll-behavior: smooth;
- }
+  html {
+    scroll-behavior: smooth;
+    background-color: #0B0F17;
+    color: #F8FAFC;
+  }
 
- body {
- @apply bg-paper text-text-primary font-sans antialiased;
- -webkit-font-smoothing: antialiased;
- -moz-osx-font-smoothing: grayscale;
- }
+  body {
+    background-color: #0B0F17;
+    color: #F8FAFC;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
- ::selection {
- @apply bg-pixel-blue/30 text-white;
- }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+
+  ::selection {
+    background-color: rgba(37, 99, 235, 0.4);
+    color: #FFFFFF;
+  }
 }
 
-/* ── Utilities ─────────────────────────────────────────────────── */
+/* ── Brand Kit Pixel Utilities & Glows ─────────────────────────── */
 @utility glow-pixel {
- box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.45);
 }
 
 @utility glow-signal {
- box-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+  box-shadow: 0 0 16px rgba(96, 165, 250, 0.45);
+}
+
+@utility pixel-card {
+  background-color: #151A24;
+  border: 1px solid #1E2638;
+}
+
+@utility pixel-card-hover {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @utility animate-fade-up {
- animation: fade-up 0.5s ease-out both;
+  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@utility bg-grid-pattern {
+  background-image: linear-gradient(to right, rgba(96, 165, 250, 0.04) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(96, 165, 250, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
 @keyframes fade-up {
- from {
- opacity: 0;
- transform: translateY(16px);
- }
- to {
- opacity: 1;
- transform: translateY(0);
- }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 @keyframes shimmer {
- 0% { background-position: -200% 0; }
- 100% { background-position: 200% 0; }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }

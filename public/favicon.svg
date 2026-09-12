@@ -1,5 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <rect width="48" height="48" fill="#18181B" />
-  <rect width="48" height="48" fill="#3B82F6" fill-opacity="0.15" />
-  <path d="M 18 14 L 28 14 C 32 14 34 16 34 20 C 34 24 32 26 28 26 L 22 26 L 22 34 L 18 34 Z M 22 18 L 22 22 L 28 22 C 29 22 30 21.5 30 20 C 30 18.5 29 18 28 18 Z" fill="#3B82F6" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Outer Brand Blue Squircle -->
+  <rect width="128" height="128" rx="36" fill="#2563EB"/>
+  
+  <!-- Inner White Rounded Square -->
+  <rect x="32" y="32" width="64" height="64" rx="20" fill="#FFFFFF"/>
+  
+  <!-- Pixellon Smile & Star Emblem (#2563EB) -->
+  <!-- Main U-curve Smile -->
+  <path
+    d="M 50 56 C 50 74, 78 74, 78 56"
+    stroke="#2563EB"
+    stroke-width="8"
+    stroke-linecap="round"
+    fill="none"
+  />
+  
+  <!-- Left 4-Point Star -->
+  <path
+    d="M 50 48 Q 50 54 44 54 Q 50 54 50 60 Q 50 54 56 54 Q 50 54 50 48 Z"
+    fill="#2563EB"
+  />
+  
+  <!-- Right 4-Point Star -->
+  <path
+    d="M 78 48 Q 78 54 72 54 Q 78 54 78 60 Q 78 54 84 54 Q 78 54 78 48 Z"
+    fill="#2563EB"
+  />
 </svg>

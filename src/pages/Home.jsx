@@ -3,176 +3,234 @@ import { Link } from 'react-router-dom'
 import GameCard from '../components/GameCard'
 import SectionHeader from '../components/SectionHeader'
 import PageTransition from '../components/PageTransition'
+import { PixellonIcon } from '../components/PixellonLogo'
+import { BrandPillarsBar, PixelCross, PixelPatternBg } from '../components/BrandDecorations'
 import { getTrendingGames, getHighlyRatedGames, getUpcomingGames } from '../utils/api'
 
 export default function Home() {
- const [trendingGames, setTrendingGames] = useState([])
- const [recentReviews, setRecentReviews] = useState([])
- const [upcomingReleases, setUpcomingReleases] = useState([])
- const [loading, setLoading] = useState(true)
+  const [trendingGames, setTrendingGames] = useState([])
+  const [recentReviews, setRecentReviews] = useState([])
+  const [upcomingReleases, setUpcomingReleases] = useState([])
+  const [loading, setLoading] = useState(true)
 
- useEffect(() => {
- async function loadData() {
- try {
- const [trending, reviews, upcoming] = await Promise.all([
- getTrendingGames(),
- getHighlyRatedGames(),
- getUpcomingGames(),
- ])
- setTrendingGames(trending)
- setRecentReviews(reviews)
- setUpcomingReleases(upcoming)
- } catch (err) {
- console.error('Failed to load home page data', err)
- } finally {
- setLoading(false)
- }
- }
- loadData()
- }, [])
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [trending, reviews, upcoming] = await Promise.all([
+          getTrendingGames(),
+          getHighlyRatedGames(),
+          getUpcomingGames(),
+        ])
+        setTrendingGames(trending)
+        setRecentReviews(reviews)
+        setUpcomingReleases(upcoming)
+      } catch (err) {
+        console.error('Failed to load home page data', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadData()
+  }, [])
 
- if (loading) {
- return (
- <PageTransition className="mx-auto max-w-7xl px-6 py-20 flex justify-center items-center min-h-[50vh]">
- <div className="h-10 w-10 animate-spin rounded-full border-4 border-surface-700 border-t-pixel-blue"></div>
- </PageTransition>
- )
- }
+  if (loading) {
+    return (
+      <PageTransition className="mx-auto max-w-7xl px-6 py-20 flex justify-center items-center min-h-[50vh]">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#1E2638] border-t-brand-primary"></div>
+      </PageTransition>
+    )
+  }
 
- return (
- <PageTransition className="mx-auto max-w-7xl px-6 py-10 space-y-16">
- {/* ── Hero Section ──────────────────────────────────────── */}
- <section id="hero" className="animate-fade-up">
- <div className="relative overflow-hidden rounded-2xl border border-surface-700 bg-surface-800">
- <div className="relative px-8 py-16 sm:px-12 sm:py-20 lg:px-16">
- <div className="max-w-2xl">
- <span className="mb-4 inline-flex items-center rounded-full bg-pixel-blue/10 px-3 py-1 text-xs font-semibold text-pixel-blue">
- ✦ Hey there!
- </span>
- <h1 className="font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl lg:text-6xl">
- Let's play something
- <span className="text-pixel-blue"> Good</span>
- </h1>
- <p className="mt-5 text-lg leading-relaxed text-text-secondary max-w-xl">
- We play a lot of games. Like, probably too many. Here's a roundup of what's currently ruining our sleep schedules, along with some reviews and guides to help you find your next obsession.
- </p>
- <div className="mt-8 flex flex-wrap gap-3">
- <Link
- to="/reviews"
- id="hero-cta-reviews"
- className="rounded-2xl border border-surface-700 bg-pixel-blue px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-pixel-blue/85 active:scale-95"
- >
- Read Our Reviews
- </Link>
- <Link
- to="/gateway"
- id="hero-cta-gateway"
- className="rounded-2xl border border-surface-700 bg-surface-800 px-6 py-3 text-sm font-semibold text-text-primary transition-all hover:border-surface-600"
- >
- New to gaming? Start here →
- </Link>
- </div>
- </div>
- </div>
- </div>
- </section>
+  return (
+    <PageTransition className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16">
+      {/* ── Brand Hero Section ─────────────────────────────────── */}
+      <section id="hero" className="animate-fade-up relative">
+        <div className="relative overflow-hidden rounded-2xl border border-[#1E2638] bg-[#151A24] p-8 sm:p-12 lg:p-16">
+          <PixelPatternBg />
 
- {/* ── Trending Games ────────────────────────────────────── */}
- <section id="trending-games">
- <SectionHeader
- title="What Everyone's Playing"
- subtitle="The games that are currently blowing up our Discord."
- accent="violet"
- />
- <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
- {trendingGames.map((game) => (
- <GameCard key={game.id} {...game} variant="featured" tag="Trending" tagColor="violet" />
- ))}
- </div>
- </section>
+          <div className="relative z-10 grid gap-10 lg:grid-cols-12 items-center">
+            {/* Left Content */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-brand-primary/30 bg-brand-primary/10 px-3.5 py-1.5 text-xs font-mono font-medium text-brand-accent">
+                <span className="h-2 w-2 rounded-full bg-brand-accent animate-pulse" />
+                <span>Small pixels. Big possibilities.</span>
+              </div>
 
- {/* ── Recent Reviews (Highly Rated) ─────────────────────── */}
- <section id="recent-reviews">
- <SectionHeader
- title="Our Top Picks"
- subtitle="The games we literally can't stop talking about."
- accent="amber"
- />
- <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
- {recentReviews.map((game) => (
- <GameCard
- key={game.id}
- {...game}
- tag={game.rating >= 9 ? 'Masterpiece' : 'Great'}
- tagColor={game.rating >= 9 ? 'emerald' : 'amber'}
- />
- ))}
- </div>
- </section>
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-brand-text leading-[1.1]">
+                Play. Share.{' '}
+                <span className="text-brand-primary">
+                  Belong.
+                </span>
+              </h1>
 
- {/* ── Upcoming Releases (Preview) ───────────────────────── */}
- <section id="upcoming-preview">
- <SectionHeader
- title="On Our Radar"
- subtitle="The stuff we're currently saving up for."
- accent="cyan"
- />
- <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
- {upcomingReleases.slice(0, 6).map((release) => (
- <div
- key={release.id}
- className="flex items-center justify-between rounded-2xl border border-surface-700 bg-surface-800 px-5 py-4 transition-all hover:border-surface-500"
- >
- <div className="min-w-0 pr-4">
- <h4 className="text-sm font-semibold text-text-primary truncate">{release.title}</h4>
- <p className="mt-0.5 text-xs text-text-muted truncate">
- {release.genre} · {release.platform?.join(', ')}
- </p>
- </div>
- <div className="text-right shrink-0">
- <span className="block text-sm font-medium text-signal-blue">{release.date}</span>
- <span className="text-[10px] font-semibold uppercase tracking-wider text-signal-blue">
- Confirmed
- </span>
- </div>
- </div>
- ))}
- </div>
- <div className="mt-6 text-center">
- <Link
- to="/calendar"
- id="view-full-calendar"
- className="inline-flex items-center gap-1.5 text-sm font-medium text-text-secondary transition-colors hover:text-signal-blue"
- >
- View Full Calendar
- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-3.5 w-3.5">
- <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
- </svg>
- </Link>
- </div>
- </section>
+              <p className="text-base sm:text-lg leading-relaxed text-brand-muted max-w-xl font-sans">
+                The hub built for every player. From daily breaking updates and indie spotlights to deep-dive codex guides and release drops — small pixels, big possibilities.
+              </p>
 
- {/* ── Gateway CTA Banner ────────────────────────────────── */}
- <section id="gateway-cta">
- <div className="relative overflow-hidden rounded-2xl border border-surface-700 bg-surface-800">
- <div className="relative flex flex-col items-center justify-center px-8 py-14 text-center">
- <span className="mb-2 text-3xl">🎮</span>
- <h3 className="font-display text-2xl font-bold text-text-primary">
- New to all this?
- </h3>
- <p className="mt-3 max-w-md text-sm text-text-secondary">
- Don't sweat it. We put together a list of chill, easy-to-learn games and guides to help you get started without the stress.
- </p>
- <Link
- to="/gateway"
- id="gateway-banner-cta"
- className="mt-6 rounded-2xl border border-surface-700 bg-signal-blue px-6 py-3 text-sm font-semibold text-surface-950 transition-all hover:bg-signal-blue/85 active:scale-95"
- >
- Show me the ropes
- </Link>
- </div>
- </div>
- </section>
- </PageTransition>
- )
+              <div className="flex flex-wrap gap-3.5 pt-2">
+                <Link
+                  to="/codex"
+                  id="hero-cta-codex"
+                  className="rounded-xl bg-brand-primary px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-brand-primary/90 shadow-[0_0_20px_rgba(37,99,235,0.4)] active:scale-95 cursor-pointer font-sans"
+                >
+                  Explore The Codex →
+                </Link>
+                <Link
+                  to="/gateway"
+                  id="hero-cta-gateway"
+                  className="rounded-xl border border-[#1E2638] bg-[#0B0F17] px-6 py-3 text-sm font-semibold text-brand-text transition-all duration-200 hover:border-brand-accent/50 hover:bg-[#10151F] cursor-pointer font-sans"
+                >
+                  Starter Zone
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Brand 3D / Badge Card */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative w-full max-w-sm rounded-2xl border border-[#1E2638] bg-[#0B0F17] p-8 shadow-2xl">
+                <div className="flex items-center justify-between border-b border-[#1E2638] pb-4 mb-6">
+                  <div className="flex items-center gap-2">
+                    <PixelCross size={14} />
+                    <span className="font-mono text-xs font-semibold text-brand-accent uppercase tracking-wider">
+                      PIXELLON VIBE
+                    </span>
+                  </div>
+                  <span className="font-mono text-[10px] text-brand-muted">v1.0</span>
+                </div>
+
+                <div className="flex flex-col items-center text-center py-4 space-y-4">
+                  <div className="relative group">
+                    <div className="absolute -inset-1 rounded-2xl bg-brand-primary/30 opacity-60 blur-sm group-hover:opacity-90 transition-opacity" />
+                    <PixellonIcon size={72} className="relative shadow-xl" />
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-display text-xl font-bold text-brand-text">
+                      Built for Every Player
+                    </h3>
+                    <p className="mt-1 text-xs text-brand-muted">
+                      Games • People • Culture • Community
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-[#1E2638] grid grid-cols-3 gap-2 text-center text-xs font-mono">
+                  <div className="rounded-lg bg-[#151A24] p-2">
+                    <div className="text-brand-accent font-bold">100%</div>
+                    <div className="text-[10px] text-brand-muted">Honest</div>
+                  </div>
+                  <div className="rounded-lg bg-[#151A24] p-2">
+                    <div className="text-brand-accent2 font-bold">Live</div>
+                    <div className="text-[10px] text-brand-muted">Streams</div>
+                  </div>
+                  <div className="rounded-lg bg-[#151A24] p-2">
+                    <div className="text-brand-accent3 font-bold">Free</div>
+                    <div className="text-[10px] text-brand-muted">Drops</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Trending Games ────────────────────────────────────── */}
+      <section id="trending-games">
+        <SectionHeader
+          title="What Everyone's Playing"
+          subtitle="Trending titles currently dominating the leaderboards and community chats."
+          accent="blue"
+        />
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {trendingGames.map((game) => (
+            <GameCard key={game.id} {...game} variant="featured" tag="TRENDING" tagColor="blue" />
+          ))}
+        </div>
+      </section>
+
+      {/* ── Recent Reviews (Top Picks) ────────────────────────── */}
+      <section id="recent-reviews">
+        <SectionHeader
+          title="Top Rated Reviews"
+          subtitle="Critically acclaimed titles tested and rated by the community."
+          accent="accent"
+        />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {recentReviews.map((game) => (
+            <GameCard
+              key={game.id}
+              {...game}
+              tag={game.rating >= 9 ? 'Masterpiece' : 'Great'}
+              tagColor={game.rating >= 9 ? 'emerald' : 'blue'}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* ── Upcoming Releases ─────────────────────────────────── */}
+      <section id="upcoming-preview">
+        <SectionHeader
+          title="On Our Radar"
+          subtitle="Confirmed upcoming releases saving up wishlist slots."
+          accent="cyan"
+        />
+        <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+          {upcomingReleases.slice(0, 6).map((release) => (
+            <div
+              key={release.id}
+              className="flex items-center justify-between rounded-xl border border-[#1E2638] bg-[#151A24] px-5 py-4 transition-all hover:border-brand-primary/60 hover:shadow-md"
+            >
+              <div className="min-w-0 pr-4">
+                <h4 className="text-sm font-display font-bold text-brand-text truncate">{release.title}</h4>
+                <p className="mt-0.5 text-xs text-brand-muted truncate">
+                  {release.genre} · {release.platform?.join(', ')}
+                </p>
+              </div>
+              <div className="text-right shrink-0">
+                <span className="block text-sm font-mono font-medium text-brand-accent">{release.date}</span>
+                <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-brand-accent2">
+                  Confirmed
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-6 text-center">
+          <Link
+            to="/calendar"
+            id="view-full-calendar"
+            className="inline-flex items-center gap-2 text-sm font-medium text-brand-accent transition-colors hover:text-brand-accent2"
+          >
+            <span>View Full Calendar</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </Link>
+        </div>
+      </section>
+
+      {/* ── Gateway CTA Banner ────────────────────────────────── */}
+      <section id="gateway-cta">
+        <div className="relative overflow-hidden rounded-2xl border border-[#1E2638] bg-[#151A24] p-8 sm:p-12 text-center">
+          <PixelPatternBg />
+          <div className="relative z-10 flex flex-col items-center justify-center max-w-xl mx-auto">
+            <span className="mb-3 text-3xl">🎮</span>
+            <h3 className="font-display text-2xl sm:text-3xl font-bold text-brand-text">
+              New to the Gaming World?
+            </h3>
+            <p className="mt-3 text-sm sm:text-base text-brand-muted leading-relaxed">
+              No stress, no gatekeeping. Jump into beginner-friendly titles and jargon-free guides designed for anyone starting out.
+            </p>
+            <Link
+              to="/gateway"
+              id="gateway-banner-cta"
+              className="mt-6 rounded-xl bg-brand-accent px-6 py-3 text-sm font-bold text-[#0B0F17] transition-all hover:bg-brand-accent2 shadow-[0_0_16px_rgba(96,165,250,0.4)] active:scale-95 cursor-pointer font-sans"
+            >
+              Enter The Gateway →
+            </Link>
+          </div>
+        </div>
+      </section>
+    </PageTransition>
+  )
 }

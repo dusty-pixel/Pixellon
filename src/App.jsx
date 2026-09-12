@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import PixelCat from './components/PixelCat/PixelCat'
 import Home from './pages/Home'
 import Indie from './pages/Indie'
 import Reviews from './pages/Reviews'
@@ -43,6 +44,7 @@ export default function App() {
  </AnimatePresence>
  </main>
  <Footer />
+ <PixelCat />
  </div>
  )
 }
