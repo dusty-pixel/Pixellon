@@ -1,0 +1,272 @@
+/**
+ * Mock data layer for Pixellon.
+ * Each dataset is structured to mirror a future API response shape,
+ * making it trivial to swap in real fetch calls later.
+ */
+
+// ── Trending / Featured Games ──────────────────────────────────
+export const trendingGames = [
+ {
+ id: 1,
+ title: 'Elden Ring',
+ genre: 'Action RPG',
+ platform: ['PS5', 'Xbox', 'PC'],
+ rating: 9.4,
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg',
+ excerpt: 'A co-op reimagining that pushes the Soulslike formula into uncharted territory with roguelite loops and intense boss encounters.',
+ tag: 'Trending',
+ tagColor: 'violet',
+ },
+ {
+ id: 2,
+ title: 'Armored Core VI',
+ genre: 'Action',
+ platform: ['PS5', 'PC'],
+ rating: 9.1,
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1888160/header.jpg',
+ excerpt: 'Command your own mech in high-speed, omni-directional battles against massive enemies and rival ACs.',
+ tag: 'Hot',
+ tagColor: 'rose',
+ },
+ {
+ id: 3,
+ title: 'Ghost of Tsushima',
+ genre: 'Open World',
+ platform: ['PS5', 'PC'],
+ rating: 8.9,
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2215430/header.jpg',
+ excerpt: 'A feudal Japan epic with breathtaking visuals and a hauntingly beautiful open world to conquer.',
+ tag: 'Anticipated',
+ tagColor: 'amber',
+ },
+]
+
+// ── Recent Reviews ─────────────────────────────────────────────
+export const recentReviews = [
+ {
+ id: 101,
+ title: 'Persona 3 Reload',
+ genre: 'Turn-Based RPG',
+ platform: ['PS5', 'Xbox', 'PC'],
+ rating: 9.2,
+ verdict: 'Masterpiece',
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2161700/header.jpg',
+ excerpt: 'A turn-based RPG with cinematic flair that rivals the genre\'s best. The art direction alone is worth the price of admission.',
+ reviewDate: '2026-08-25',
+ pros: ['Stunning art direction', 'Deep combat system', 'Memorable characters'],
+ cons: ['Occasional pacing issues in Act 3'],
+ },
+ {
+ id: 102,
+ title: 'DOOM Eternal',
+ genre: 'FPS',
+ platform: ['PS5', 'Xbox', 'PC'],
+ rating: 9.0,
+ verdict: 'Essential',
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/782330/header.jpg',
+ excerpt: 'Heavier, more deliberate combat that still rips and tears with satisfying precision.',
+ reviewDate: '2026-08-20',
+ pros: ['Visceral combat', 'Incredible soundtrack', 'Epic boss battles'],
+ cons: ['Short campaign'],
+ },
+ {
+ id: 103,
+ title: 'The Outer Worlds',
+ genre: 'RPG',
+ platform: ['Xbox', 'PC'],
+ rating: 8.5,
+ verdict: 'Great',
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578650/header.jpg',
+ excerpt: 'Obsidian refines the formula with sharper writing, deeper RPG mechanics, and a galaxy worth exploring twice.',
+ reviewDate: '2026-08-18',
+ pros: ['Brilliant writing', 'Player choice matters', 'Gorgeous worlds'],
+ cons: ['Some technical issues at launch'],
+ },
+ {
+ id: 104,
+ title: 'Hollow Knight: Silksong',
+ genre: 'Metroidvania',
+ platform: ['Switch 2', 'PC'],
+ rating: 9.6,
+ verdict: 'Masterpiece',
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1030300/header.jpg',
+ excerpt: 'Was the wait worth it? Absolutely. Silksong is a towering achievement that transcends its predecessor in every way.',
+ reviewDate: '2026-08-15',
+ pros: ['Flawless level design', 'Incredible music', 'Hundreds of hours of content'],
+ cons: ['Steep difficulty curve for newcomers'],
+ },
+]
+
+// ── Indie Spotlights ───────────────────────────────────────────
+export const indieGames = [
+ {
+ id: 201,
+ title: 'Hades',
+ genre: 'Roguelike',
+ platform: ['PC', 'PS5'],
+ rating: 9.3,
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg',
+ excerpt: 'Supergiant does it again. A roguelike so polished it makes everything else feel unfinished.',
+ developer: 'Supergiant Games',
+ tag: 'Editor\'s Pick',
+ tagColor: 'emerald',
+ },
+ {
+ id: 202,
+ title: 'Risk of Rain 2',
+ genre: 'Open World Roguelite',
+ platform: ['PC'],
+ rating: 8.4,
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/632360/header.jpg',
+ excerpt: 'A stunning 3D roguelite with intense co-op action and endless replayability.',
+ developer: 'Hopoo Games',
+ tag: 'Innovative',
+ tagColor: 'cyan',
+ },
+ {
+ id: 203,
+ title: 'Neva',
+ genre: 'Action Adventure',
+ platform: ['PS5', 'Switch', 'PC'],
+ rating: 8.8,
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2420660/header.jpg',
+ excerpt: 'From the creators of GRIS — a painterly adventure about companionship and loss that will leave you breathless.',
+ developer: 'Nomada Studio',
+ tag: 'Artistic',
+ tagColor: 'violet',
+ },
+ {
+ id: 204,
+ title: 'Balatro',
+ genre: 'Roguelike Deckbuilder',
+ platform: ['PC', 'Mobile'],
+ rating: 9.0,
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2379780/header.jpg',
+ excerpt: 'The poker roguelike phenomenon. Prepare to lose hundreds of hours chasing the perfect flush five.',
+ developer: 'LocalThunk',
+ tag: 'Addictive',
+ tagColor: 'amber',
+ },
+ {
+ id: 205,
+ title: 'Windblown',
+ genre: 'Action Roguelite',
+ platform: ['PC'],
+ rating: 8.2,
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1911360/header.jpg',
+ excerpt: 'From the Dead Cells team — blistering fast combat with a co-op twist that breathes fresh life into the genre.',
+ developer: 'Motion Twin',
+ tag: 'Fast-Paced',
+ tagColor: 'rose',
+ },
+ {
+ id: 206,
+ title: 'Citizen Sleeper',
+ genre: 'Narrative RPG',
+ platform: ['PC', 'Xbox'],
+ rating: 9.1,
+ image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1578650/header.jpg',
+ excerpt: 'A dice-driven narrative RPG set aboard a starship, exploring identity, survival, and what it means to be alive.',
+ developer: 'Jump Over the Age',
+ tag: 'Story Rich',
+ tagColor: 'emerald',
+ },
+]
+
+// ── Upcoming Releases ──────────────────────────────────────────
+export const upcomingReleases = [
+ { id: 301, title: 'GTA VI', date: '2026-10-15', platform: ['PS5', 'Xbox'], genre: 'Open World', status: 'confirmed' },
+ { id: 302, title: 'Death Stranding 3', date: '2026-11-01', platform: ['PS5', 'PC'], genre: 'Action Adventure', status: 'confirmed' },
+ { id: 303, title: 'Fable', date: '2026-09-20', platform: ['Xbox', 'PC'], genre: 'RPG', status: 'confirmed' },
+ { id: 304, title: 'Wolverine', date: '2026-12-05', platform: ['PS5', 'PC'], genre: 'Action', status: 'rumored' },
+ { id: 305, title: 'Onimusha Reboot', date: '2027-01-15', platform: ['PS5', 'Xbox', 'PC'], genre: 'Action', status: 'confirmed' },
+ { id: 306, title: 'Perfect Dark', date: '2026-11-22', platform: ['Xbox', 'PC'], genre: 'FPS', status: 'confirmed' },
+ { id: 307, title: 'Judas', date: '2027-02-10', platform: ['PS5', 'Xbox', 'PC'], genre: 'FPS RPG', status: 'confirmed' },
+ { id: 308, title: 'Monster Hunter Wilds DLC', date: '2026-09-30', platform: ['PS5', 'Xbox', 'PC'], genre: 'Action RPG', status: 'confirmed' },
+ { id: 309, title: 'Star Wars: Eclipse', date: '2027-03-25', platform: ['PS5', 'Xbox', 'PC'], genre: 'Action Adventure', status: 'rumored' },
+ { id: 310, title: 'Pragmata', date: '2027-Q2', platform: ['PS5', 'Xbox', 'PC'], genre: 'Action Adventure', status: 'rumored' },
+]
+
+// ── Gateway: Curated Lists for Non-Gamers ──────────────────────
+export const gatewayCollections = [
+ {
+ id: 'cozy',
+ title: 'Chill Games to Start With',
+ description: 'Grab a blanket and some tea. No timers, no stress, just good vibes.',
+ emoji: '🌿',
+ color: 'emerald',
+ games: [
+ { id: 401, title: 'Stardew Valley', genre: 'Farming Sim', platform: ['Everything'], rating: 9.5, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg', excerpt: 'Build your dream farm, befriend townsfolk, and discover the magic of country life at your own pace.' },
+ { id: 402, title: 'Slime Rancher', genre: 'Life Sim', platform: ['PC', 'Xbox'], rating: 9.0, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/433340/header.jpg', excerpt: 'Explore a beautiful alien planet while farming adorable, bouncy slimes.' },
+ { id: 403, title: 'A Short Hike', genre: 'Adventure', platform: ['PC', 'Switch'], rating: 8.8, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1055540/header.jpg', excerpt: 'Climb a mountain at your own pace. A tiny, perfect game about the joy of exploration.' },
+ ],
+ },
+ {
+ id: 'story',
+ title: 'Games With Amazing Stories',
+ description: 'If you just want to get lost in a really good plot, start here.',
+ emoji: '📖',
+ color: 'violet',
+ games: [
+ { id: 404, title: 'The Last of Us Part I', genre: 'Action Adventure', platform: ['PS5', 'PC'], rating: 9.7, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1888930/header.jpg', excerpt: 'A post-apocalyptic journey of survival and love. One of the most emotionally powerful stories ever told in any medium.' },
+ { id: 405, title: 'Firewatch', genre: 'Walking Sim', platform: ['PC', 'PS4', 'Switch'], rating: 8.6, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/383870/header.jpg', excerpt: 'A mystery set in the Wyoming wilderness. Two hours of voice-acted perfection with a gut-punch ending.' },
+ { id: 406, title: 'What Remains of Edith Finch', genre: 'Narrative', platform: ['PC', 'PS4', 'Switch'], rating: 9.2, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/501300/header.jpg', excerpt: 'Explore a family\'s cursed history through a series of short, unforgettable vignettes. A masterwork of interactive storytelling.' },
+ ],
+ },
+ {
+ id: 'puzzle',
+ title: 'Stuff That Makes You Think',
+ description: 'No fast reflexes needed—just you, a cup of coffee, and some really clever puzzles.',
+ emoji: '🧩',
+ color: 'cyan',
+ games: [
+ { id: 407, title: 'Portal 2', genre: 'Puzzle', platform: ['PC', 'PS3', 'Xbox 360'], rating: 9.8, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/620/header.jpg', excerpt: 'Witty, brilliant, and endlessly inventive. Solve physics puzzles with a portal gun while a rogue AI tries to kill you.' },
+ { id: 408, title: 'The Witness', genre: 'Puzzle', platform: ['PC', 'PS4'], rating: 8.9, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/210970/header.jpg', excerpt: 'An island filled with hundreds of line puzzles that slowly teach you a new language of logic.' },
+ { id: 409, title: 'Return of the Obra Dinn', genre: 'Mystery Puzzle', platform: ['PC', 'Switch'], rating: 9.4, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/653530/header.jpg', excerpt: 'Investigate a ghost ship by witnessing frozen moments of death. A deduction game like no other.' },
+ ],
+ },
+ {
+ id: 'family',
+ title: 'Couch Co-op',
+ description: 'Grab a friend (or a partner) who doesn\'t play games. These are hilarious when played together.',
+ emoji: '🎮',
+ color: 'amber',
+ games: [
+ { id: 410, title: 'It Takes Two', genre: 'Co-op Adventure', platform: ['PS5', 'Xbox', 'PC'], rating: 9.3, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1426210/header.jpg', excerpt: 'A co-op adventure designed for two. Every level reinvents itself with new mechanics and genuine surprises.' },
+ { id: 411, title: 'Overcooked! 2', genre: 'Party', platform: ['Everything'], rating: 8.7, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/728880/header.jpg', excerpt: 'Chaotic kitchen co-op that will test your friendships. Simple controls, endless laughs.' },
+ { id: 412, title: 'Unravel Two', genre: 'Platformer', platform: ['PS4', 'Xbox', 'PC'], rating: 8.4, image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1225570/header.jpg', excerpt: 'Two yarn creatures navigate a beautiful world together. Gentle, gorgeous, and perfect for couch co-op.' },
+ ],
+ },
+]
+
+// ── Gateway: Beginner Guides ───────────────────────────────────
+export const beginnerGuides = [
+ {
+ id: 'g1',
+ title: 'What Controller Should I Buy?',
+ description: 'A no-nonsense guide to picking your first controller for PC, console, or mobile gaming.',
+ icon: '🎮',
+ readTime: '5 min',
+ },
+ {
+ id: 'g2',
+ title: 'Gaming Jargon Decoded',
+ description: 'FPS, RPG, NPC, DLC — we break down every acronym so you never feel lost.',
+ icon: '📚',
+ readTime: '8 min',
+ },
+ {
+ id: 'g3',
+ title: 'PC vs Console: Which Is Right for You?',
+ description: 'Honest pros and cons to help you pick the platform that fits your lifestyle and budget.',
+ icon: '💻',
+ readTime: '6 min',
+ },
+ {
+ id: 'g4',
+ title: 'How to Get Good (Without the Rage)',
+ description: 'Practical tips for improving at games without burning out. Spoiler: it\'s about having fun first.',
+ icon: '🚀',
+ readTime: '4 min',
+ },
+]

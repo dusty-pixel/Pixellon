@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* ── Design Tokens ─────────────────────────────────────────────── */
+@theme {
+ --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+ --font-display: 'Outfit', 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+ /* Brand Colors */
+ --color-pixel-blue: #3B82F6; /* Brighter blue for dark mode */
+ --color-signal-blue: #60A5FA;
+ --color-signal-green: #10B981;
+ --color-deep-ink: #0F172A; /* Slate 900 */
+ --color-grid-tint: rgba(255, 255, 255, 0.03);
+ --color-paper: #09090B; /* Zinc 950 */
+
+ /* Surface mapping for UI (Sleek Dark Theme) */
+ --color-surface-950: #09090B;
+ --color-surface-900: #18181B; /* Zinc 900 */
+ --color-surface-800: #27272A; /* Zinc 800 */
+ --color-surface-700: #3F3F46; /* Zinc 700 */
+ --color-surface-600: #52525B; /* Zinc 600 */
+
+ --color-text-primary: #FAFAFA; /* Zinc 50 */
+ --color-text-secondary: #A1A1AA; /* Zinc 400 */
+ --color-text-muted: #71717A; /* Zinc 500 */
+}
+
+/* ── Global Reset & Base ───────────────────────────────────────── */
+@layer base {
+ * {
+ scrollbar-width: thin;
+ scrollbar-color: var(--color-pixel-blue) transparent;
+ }
+
+ html {
+ scroll-behavior: smooth;
+ }
+
+ body {
+ @apply bg-paper text-text-primary font-sans antialiased;
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ }
+
+ ::selection {
+ @apply bg-pixel-blue/30 text-white;
+ }
+}
+
+/* ── Utilities ─────────────────────────────────────────────────── */
+@utility glow-pixel {
+ box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+@utility glow-signal {
+ box-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+}
+
+@utility animate-fade-up {
+ animation: fade-up 0.5s ease-out both;
+}
+
+@keyframes fade-up {
+ from {
+ opacity: 0;
+ transform: translateY(16px);
+ }
+ to {
+ opacity: 1;
+ transform: translateY(0);
+ }
+}
+
+@keyframes shimmer {
+ 0% { background-position: -200% 0; }
+ 100% { background-position: 200% 0; }
+}
