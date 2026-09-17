@@ -1,4 +1,6 @@
-const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
+import { curatedStreams, curatedEsportsMatches } from '../data/mockStreams.js';
+
+const API_KEY = import.meta.env?.VITE_RAWG_API_KEY || '';
 const BASE_URL = 'https://api.rawg.io/api';
 
 /**
@@ -128,17 +130,61 @@ export const getSteamDetails = async (appId) => {
 
 // ── New External APIs ─────────────────────────────────────────────
 
-export const getFreeGames = async (platform = 'all', category = '') => {
- try {
- let url = `https://www.freetogame.com/api/games?platform=${platform}`;
- if (category) url += `&category=${category}`;
- const res = await fetch(url);
- if (!res.ok) throw new Error('Failed to fetch free games');
- return await res.json();
- } catch (error) {
- console.error('Error fetching free games:', error);
- return [];
- }
+export const getWeeklyGiveaways = async (platform = '') => {
+  try {
+    let url = 'https://www.gamerpower.com/api/giveaways?type=game';
+    if (platform && platform !== 'all') {
+      url += `&platform=${platform}`;
+    }
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Failed to fetch weekly giveaways');
+    const data = await res.json();
+    if (!Array.isArray(data)) return [];
+
+    return data.map((g) => ({
+      ...g,
+      hdImage: g.image || g.thumbnail,
+    }));
+  } catch (error) {
+    console.error('Error fetching weekly giveaways:', error);
+    return [];
+  }
+};
+
+export const getFreeGames = async (platform = 'all', sortBy = 'release-date', category = '') => {
+  try {
+    let url = `https://www.freetogame.com/api/games?platform=${platform}`;
+    if (sortBy) url += `&sort-by=${sortBy}`;
+    if (category) url += `&category=${category}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Failed to fetch free games');
+    const data = await res.json();
+    if (!Array.isArray(data)) return [];
+
+    // Parallel fetch high-resolution 1080p screenshots for the top spotlight games
+    const topSpotlight = data.slice(0, 6);
+    await Promise.all(
+      topSpotlight.map(async (g) => {
+        try {
+          const detailRes = await fetch(`https://www.freetogame.com/api/game?id=${g.id}`);
+          if (detailRes.ok) {
+            const detail = await detailRes.json();
+            if (detail.screenshots && detail.screenshots.length > 0) {
+              g.hdImage = detail.screenshots[0].image;
+              g.screenshots = detail.screenshots.map((s) => s.image);
+            }
+          }
+        } catch (_) {
+          // fallback gracefully to thumbnail
+        }
+      })
+    );
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching free games:', error);
+    return [];
+  }
 };
 
 export const getGamingNews = async () => {
@@ -156,57 +202,58 @@ export const getGamingNews = async () => {
 };
 
 export const getTopStreams = async (gameName = '') => {
- try {
- const clientId = import.meta.env.VITE_TWITCH_CLIENT_ID;
- const token = import.meta.env.VITE_TWITCH_APP_TOKEN;
- if (!clientId || !token) {
- console.warn("Twitch API keys missing. Returning empty streams.");
- return [];
- }
+  try {
+    const clientId = import.meta.env?.VITE_TWITCH_CLIENT_ID;
+    const token = import.meta.env?.VITE_TWITCH_APP_TOKEN;
+    if (!clientId || !token) {
+      if (gameName) {
+        const filtered = curatedStreams.filter(s => s.game_name.toLowerCase().includes(gameName.toLowerCase()));
+        return filtered.length > 0 ? filtered : curatedStreams;
+      }
+      return curatedStreams;
+    }
 
- let url = 'https://api.twitch.tv/helix/streams?first=20';
- 
- // If a gameName is provided, we first need to get the game ID from Twitch
- if (gameName) {
- const gameRes = await fetch(`https://api.twitch.tv/helix/games?name=${encodeURIComponent(gameName)}`, {
- headers: { 'Client-ID': clientId, 'Authorization': `Bearer ${token}` }
- });
- if (gameRes.ok) {
- const gameData = await gameRes.json();
- if (gameData.data.length > 0) {
- url += `&game_id=${gameData.data[0].id}`;
- }
- }
- }
+    let url = 'https://api.twitch.tv/helix/streams?first=20';
+    
+    // If a gameName is provided, we first need to get the game ID from Twitch
+    if (gameName) {
+      const gameRes = await fetch(`https://api.twitch.tv/helix/games?name=${encodeURIComponent(gameName)}`, {
+        headers: { 'Client-ID': clientId, 'Authorization': `Bearer ${token}` }
+      });
+      if (gameRes.ok) {
+        const gameData = await gameRes.json();
+        if (gameData.data.length > 0) {
+          url += `&game_id=${gameData.data[0].id}`;
+        }
+      }
+    }
 
- const res = await fetch(url, {
- headers: { 'Client-ID': clientId, 'Authorization': `Bearer ${token}` }
- });
- if (!res.ok) throw new Error('Failed to fetch streams');
- const data = await res.json();
- return data.data;
- } catch (error) {
- console.error('Error fetching Twitch streams:', error);
- return [];
- }
+    const res = await fetch(url, {
+      headers: { 'Client-ID': clientId, 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) throw new Error('Failed to fetch streams');
+    const data = await res.json();
+    return data.data && data.data.length > 0 ? data.data : curatedStreams;
+  } catch (error) {
+    return curatedStreams;
+  }
 };
 
 export const getEsportsMatches = async () => {
- try {
- const apiKey = import.meta.env.VITE_PANDASCORE_API_KEY;
- if (!apiKey) {
- console.warn("PandaScore API key missing. Returning empty matches.");
- return [];
- }
- const res = await fetch(`https://api.pandascore.co/matches/upcoming?sort=begin_at&per_page=10`, {
- headers: { 'Authorization': `Bearer ${apiKey}` }
- });
- if (!res.ok) throw new Error('Failed to fetch esports matches');
- return await res.json();
- } catch (error) {
- console.error('Error fetching esports matches:', error);
- return [];
- }
+  try {
+    const apiKey = import.meta.env?.VITE_PANDASCORE_API_KEY;
+    if (!apiKey) {
+      return curatedEsportsMatches;
+    }
+    const res = await fetch(`https://api.pandascore.co/matches/upcoming?sort=begin_at&per_page=10`, {
+      headers: { 'Authorization': `Bearer ${apiKey}` }
+    });
+    if (!res.ok) throw new Error('Failed to fetch esports matches');
+    const data = await res.json();
+    return data && data.length > 0 ? data : curatedEsportsMatches;
+  } catch (error) {
+    return curatedEsportsMatches;
+  }
 };
 
 export const getIGDBDetails = async (gameName) => {

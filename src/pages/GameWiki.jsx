@@ -8,6 +8,7 @@ import Infobox from '../components/Infobox';
 import WikiSidebar from '../components/WikiSidebar';
 import PageTransition from '../components/PageTransition';
 import { getGameDetails, getSteamAppId, getSteamDetails, getIGDBDetails, getTopStreams } from '../utils/api';
+import { formatINR } from '../utils/currency';
 import { Trash2, Edit3, Plus, Save, X, Eye, Loader2 } from 'lucide-react';
 
 export default function GameWiki() {
@@ -55,7 +56,7 @@ export default function GameWiki() {
  const steamDetails = await getSteamDetails(appId);
  if (steamDetails) {
  if (steamDetails.price_overview) {
- steamPrice = steamDetails.price_overview.final_formatted;
+ steamPrice = formatINR(steamDetails.price_overview.final_formatted);
  } else if (steamDetails.is_free) {
  steamPrice = "Free to Play";
  }

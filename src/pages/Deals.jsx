@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Tag, Loader2, ExternalLink } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import { PixelPatternBg, PixelCross } from '../components/BrandDecorations'
+import { formatINR } from '../utils/currency'
 
 export default function Deals() {
   const [deals, setDeals] = useState([])
@@ -35,14 +36,14 @@ export default function Deals() {
             <div className="mb-2 inline-flex items-center gap-2 text-brand-accent">
               <Tag className="h-4 w-4" />
               <span className="text-xs font-mono font-semibold uppercase tracking-widest">
-                Price Drops • Steam & Digital
+                Price Drops • Steam & Digital (₹ INR)
               </span>
             </div>
             <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-brand-text">
               Real-Time Game Deals
             </h1>
             <p className="mt-1 text-sm text-brand-muted">
-              Live PC game sales and maximum savings tracker powered by CheapShark.
+              Live PC game sales and maximum savings tracker with automatic INR (₹) price conversions.
             </p>
           </div>
           <div className="hidden sm:block">
@@ -92,8 +93,8 @@ export default function Deals() {
                 
                 <div className="flex items-end justify-between mt-auto pt-2 border-t border-[#1E2638]">
                   <div className="flex flex-col font-mono">
-                    <span className="text-[11px] text-brand-muted line-through">${deal.normalPrice}</span>
-                    <span className="text-base font-bold text-brand-accent">${deal.salePrice}</span>
+                    <span className="text-[11px] text-brand-muted line-through">{formatINR(deal.normalPrice)}</span>
+                    <span className="text-base font-bold text-emerald-400">{formatINR(deal.salePrice)}</span>
                   </div>
                   <span className="text-xs font-mono font-semibold text-brand-accent group-hover:text-brand-accent2 transition-colors">
                     Claim Deal →
