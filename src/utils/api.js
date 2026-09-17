@@ -1,4 +1,5 @@
-import { curatedStreams, curatedEsportsMatches } from '../data/mockStreams.js';
+import { curatedStreams } from '../data/mockStreams.js';
+import { initialEsportsMatches } from '../data/esportsData.js';
 
 const API_KEY = import.meta.env?.VITE_RAWG_API_KEY || '';
 const BASE_URL = 'https://api.rawg.io/api';
@@ -241,18 +242,50 @@ export const getTopStreams = async (gameName = '') => {
 
 export const getEsportsMatches = async () => {
   try {
+    const savedCustom = localStorage.getItem('pixellon_custom_esports_matches');
+    const customMatches = savedCustom ? JSON.parse(savedCustom) : [];
+
     const apiKey = import.meta.env?.VITE_PANDASCORE_API_KEY;
     if (!apiKey) {
-      return curatedEsportsMatches;
+      return [...customMatches, ...initialEsportsMatches];
     }
     const res = await fetch(`https://api.pandascore.co/matches/upcoming?sort=begin_at&per_page=10`, {
       headers: { 'Authorization': `Bearer ${apiKey}` }
     });
     if (!res.ok) throw new Error('Failed to fetch esports matches');
     const data = await res.json();
-    return data && data.length > 0 ? data : curatedEsportsMatches;
+    const serverMatches = data && data.length > 0 ? data : initialEsportsMatches;
+    return [...customMatches, ...serverMatches];
   } catch (error) {
-    return curatedEsportsMatches;
+    const savedCustom = localStorage.getItem('pixellon_custom_esports_matches');
+    const customMatches = savedCustom ? JSON.parse(savedCustom) : [];
+    return [...customMatches, ...initialEsportsMatches];
+  }
+};
+
+export const saveCustomMatch = (newMatch) => {
+  try {
+    const saved = localStorage.getItem('pixellon_custom_esports_matches');
+    const list = saved ? JSON.parse(saved) : [];
+    const updated = [newMatch, ...list];
+    localStorage.setItem('pixellon_custom_esports_matches', JSON.stringify(updated));
+    return updated;
+  } catch (e) {
+    console.error('Failed to save custom match', e);
+    return [];
+  }
+};
+
+export const deleteCustomMatch = (matchId) => {
+  try {
+    const saved = localStorage.getItem('pixellon_custom_esports_matches');
+    const list = saved ? JSON.parse(saved) : [];
+    const updated = list.filter((m) => m.id !== matchId);
+    localStorage.setItem('pixellon_custom_esports_matches', JSON.stringify(updated));
+    return updated;
+  } catch (e) {
+    console.error('Failed to delete custom match', e);
+    return [];
   }
 };
 
