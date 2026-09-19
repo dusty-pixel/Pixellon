@@ -53,11 +53,11 @@ export default function WikiSidebar({ gameId, pages, wikiData }) {
 
       {/* Live Steam Stats */}
       {appId && (
-        <div className="bg-[#151A24] border border-brand-primary/50 rounded-xl p-4 relative overflow-hidden shadow-[0_0_16px_rgba(37,99,235,0.2)]">
+        <div className="bg-brand-surface border border-brand-primary/50 rounded-xl p-4 relative overflow-hidden shadow-[0_0_16px_rgba(37,99,235,0.2)]">
           <div className="absolute top-0 right-0 p-2 opacity-10 text-brand-primary">
             <Activity size={64} />
           </div>
-          <h3 className="font-display font-bold text-brand-accent text-base mb-4 border-b border-[#1E2638] pb-2 flex items-center gap-2">
+          <h3 className="font-display font-bold text-brand-accent text-base mb-4 border-b border-surface-700 pb-2 flex items-center gap-2">
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-accent"></span>
@@ -67,8 +67,8 @@ export default function WikiSidebar({ gameId, pages, wikiData }) {
           
           {loadingSteam ? (
             <div className="animate-pulse space-y-3">
-              <div className="h-4 bg-[#1E2638] rounded w-3/4"></div>
-              <div className="h-4 bg-[#1E2638] rounded w-1/2"></div>
+              <div className="h-4 bg-surface-700 rounded w-3/4"></div>
+              <div className="h-4 bg-surface-700 rounded w-1/2"></div>
             </div>
           ) : steamData ? (
             <div className="grid grid-cols-2 gap-4">
@@ -92,8 +92,8 @@ export default function WikiSidebar({ gameId, pages, wikiData }) {
       )}
 
       {/* Trending Pages */}
-      <div className="bg-[#151A24] rounded-xl border border-[#1E2638] shadow-lg p-4">
-        <h3 className="font-display font-bold text-brand-text text-base mb-4 border-b border-[#1E2638] pb-2">
+      <div className="bg-brand-surface rounded-xl border border-surface-700 shadow-lg p-4">
+        <h3 className="font-display font-bold text-brand-text text-base mb-4 border-b border-surface-700 pb-2">
           Trending Pages
         </h3>
         <ul className="space-y-3">
@@ -114,8 +114,8 @@ export default function WikiSidebar({ gameId, pages, wikiData }) {
       </div>
 
       {/* Community Stats */}
-      <div className="bg-[#151A24] rounded-xl border border-[#1E2638] shadow-lg p-4">
-        <h3 className="font-display font-bold text-brand-text text-base mb-4 border-b border-[#1E2638] pb-2">
+      <div className="bg-brand-surface rounded-xl border border-surface-700 shadow-lg p-4">
+        <h3 className="font-display font-bold text-brand-text text-base mb-4 border-b border-surface-700 pb-2">
           Wiki Activity
         </h3>
         <div className="grid grid-cols-2 gap-4 text-center">

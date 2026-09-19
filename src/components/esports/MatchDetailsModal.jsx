@@ -72,10 +72,10 @@ export default function MatchDetailsModal({
           initial={{ opacity: 0, scale: 0.95, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 16 }}
-          className="relative z-10 w-full max-w-3xl rounded-2xl border border-[#1E2638] bg-[#151A24] shadow-2xl overflow-hidden my-8"
+          className="relative z-10 w-full max-w-3xl rounded-2xl border border-surface-700 bg-brand-surface shadow-2xl overflow-hidden my-8"
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-[#1E2638] bg-[#0B0F17] px-6 py-4">
+          <div className="flex items-center justify-between border-b border-surface-700 bg-surface-900 px-6 py-4">
             <div className="flex items-center gap-3">
               {match.league?.image_url ? (
                 <img
@@ -114,7 +114,7 @@ export default function MatchDetailsModal({
               )}
               <button
                 onClick={onClose}
-                className="rounded-lg p-1.5 text-brand-muted hover:bg-[#1E2638] hover:text-white transition-colors"
+                className="rounded-lg p-1.5 text-brand-muted hover:bg-surface-800 hover:text-brand-text transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -124,12 +124,12 @@ export default function MatchDetailsModal({
           <div className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
             {/* Match Arena Scoreboard */}
             <div
-              className="relative overflow-hidden rounded-3xl border border-[#1E2638] p-6 sm:p-8 shadow-2xl"
+              className="relative overflow-hidden rounded-3xl border border-surface-700 p-6 sm:p-8 shadow-2xl"
               style={{
                 background: `
                   radial-gradient(ellipse 70% 60% at 10% 50%, ${team1?.color || '#38BDF8'}25 0%, transparent 65%),
                   radial-gradient(ellipse 70% 60% at 90% 50%, ${team2?.color || '#F43F5E'}25 0%, transparent 65%),
-                  #0C101A
+                  var(--color-brand-surface)
                 `,
               }}
             >
@@ -221,7 +221,7 @@ export default function MatchDetailsModal({
               </div>
 
               {/* Match Meta Footer */}
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[#1E2638] pt-4 text-xs font-mono text-brand-muted">
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-surface-700 pt-4 text-xs font-mono text-brand-muted">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-3.5 w-3.5 text-brand-accent" />
                   <span>{formatMatchTime(match.begin_at)}</span>
@@ -235,7 +235,7 @@ export default function MatchDetailsModal({
 
             {/* Real-time Simulator Controls */}
             {isRunning && (
-              <div className="rounded-xl border border-brand-primary/30 bg-[#0B0F17] p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="rounded-xl border border-brand-primary/30 bg-surface-900 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-brand-accent flex items-center gap-1.5">
                     <Flame className="h-4 w-4 text-orange-400" />
@@ -257,7 +257,7 @@ export default function MatchDetailsModal({
 
                   <button
                     onClick={() => setEditingScore(!editingScore)}
-                    className="rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-2 text-xs font-mono font-semibold text-brand-muted hover:text-white hover:border-[#2C3549] transition-colors"
+                    className="rounded-lg border border-surface-700 bg-brand-surface px-3 py-2 text-xs font-mono font-semibold text-brand-muted hover:text-brand-text hover:border-brand-primary/50 transition-colors"
                   >
                     {editingScore ? 'Cancel Edit' : 'Edit Score'}
                   </button>
@@ -281,7 +281,7 @@ export default function MatchDetailsModal({
                       min="0"
                       value={customScore1}
                       onChange={(e) => setCustomScore1(e.target.value)}
-                      className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#0B0F17] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                      className="w-full mt-1 rounded-lg border border-surface-700 bg-surface-900 px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                     />
                   </div>
                   <div className="flex-1">
@@ -293,7 +293,7 @@ export default function MatchDetailsModal({
                       min="0"
                       value={customScore2}
                       onChange={(e) => setCustomScore2(e.target.value)}
-                      className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#0B0F17] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                      className="w-full mt-1 rounded-lg border border-surface-700 bg-surface-900 px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                     />
                   </div>
                   <button
@@ -320,8 +320,8 @@ export default function MatchDetailsModal({
                         m.status === 'live'
                           ? 'border-red-500/40 bg-red-500/10'
                           : m.status === 'finished'
-                          ? 'border-[#1E2638] bg-[#0B0F17]'
-                          : 'border-dashed border-[#1E2638] bg-[#0B0F17]/50 text-brand-muted'
+                          ? 'border-surface-700 bg-surface-900'
+                          : 'border-dashed border-surface-700 bg-surface-900/50 text-brand-muted'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -359,7 +359,7 @@ export default function MatchDetailsModal({
                 <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-brand-accent">
                   Live Match Events & Highlights
                 </h4>
-                <div className="rounded-xl border border-[#1E2638] bg-[#0B0F17] p-4 space-y-2 font-mono text-xs">
+                <div className="rounded-xl border border-surface-700 bg-surface-900 p-4 space-y-2 font-mono text-xs">
                   {live.recentEvents.map((event, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-brand-text/90">
                       <span className="text-brand-accent font-bold">•</span>
@@ -372,7 +372,7 @@ export default function MatchDetailsModal({
 
             {/* Delete button for custom matches */}
             {match.isCustom && (
-              <div className="flex justify-end pt-2 border-t border-[#1E2638]">
+              <div className="flex justify-end pt-2 border-t border-surface-700">
                 <button
                   onClick={() => {
                     if (window.confirm('Delete this custom match?')) {

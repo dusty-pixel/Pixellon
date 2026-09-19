@@ -26,7 +26,7 @@ export default function Indie() {
   if (loading) {
     return (
       <PageTransition className="mx-auto max-w-7xl px-6 py-20 flex justify-center items-center min-h-[50vh]">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#1E2638] border-t-brand-primary"></div>
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-surface-700 border-t-brand-primary"></div>
       </PageTransition>
     )
   }
@@ -37,7 +37,7 @@ export default function Indie() {
   return (
     <PageTransition className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16">
       {/* Header */}
-      <section id="indie-header" className="relative overflow-hidden rounded-2xl border border-[#1E2638] bg-[#151A24] p-8 sm:p-12 text-center">
+      <section id="indie-header" className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-8 sm:p-12 text-center">
         <PixelPatternBg />
         <div className="relative z-10 max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-accent/10 px-4 py-1.5 text-xs font-mono font-medium text-brand-accent">

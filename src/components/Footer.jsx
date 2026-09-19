@@ -4,9 +4,9 @@ import { BrandPillarsBar, PixelCross } from './BrandDecorations'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#1E2638] bg-[#0B0F17] w-full">
+    <footer className="border-t border-surface-700 bg-surface-900 w-full">
       {/* Brand Pillars Strip */}
-      <div className="border-b border-[#1E2638] bg-[#151A24]/40 py-3.5 px-6 sm:px-10 lg:px-12 w-full">
+      <div className="border-b border-surface-700 bg-brand-surface/40 py-3.5 px-6 sm:px-10 lg:px-12 w-full">
         <BrandPillarsBar />
       </div>
 
@@ -106,7 +106,7 @@ export default function Footer() {
                 type="email"
                 placeholder="player@pixellon.gg"
                 id="newsletter-email"
-                className="flex-1 rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-2 text-sm text-brand-text placeholder:text-brand-muted outline-none transition-colors focus:border-brand-primary focus:ring-1 focus:ring-brand-primary"
+                className="flex-1 rounded-lg border border-surface-700 bg-brand-surface px-3 py-2 text-sm text-brand-text placeholder:text-brand-muted outline-none transition-colors focus:border-brand-primary focus:ring-1 focus:ring-brand-primary"
               />
               <button
                 id="newsletter-subscribe"
@@ -118,7 +118,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-[#1E2638] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-brand-muted font-mono">
+        <div className="mt-10 border-t border-surface-700 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-brand-muted font-mono">
           <div>
             © {new Date().getFullYear()} Pixellon. Play. Share. Belong.
           </div>

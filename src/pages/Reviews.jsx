@@ -24,7 +24,7 @@ export default function Reviews() {
   if (loading) {
     return (
       <PageTransition className="mx-auto max-w-7xl px-6 py-20 flex justify-center items-center min-h-[50vh]">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#1E2638] border-t-brand-primary"></div>
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-surface-700 border-t-brand-primary"></div>
       </PageTransition>
     )
   }
@@ -33,7 +33,7 @@ export default function Reviews() {
     <PageTransition className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
       {/* ── Header ────────────────────────────────────────────── */}
       <section id="reviews-header" className="animate-fade-up relative">
-        <div className="relative overflow-hidden rounded-2xl border border-[#1E2638] bg-[#151A24] p-8 sm:p-10">
+        <div className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-8 sm:p-10">
           <PixelPatternBg />
           <div className="relative z-10 flex flex-col gap-2">
             <div className="flex items-center gap-2">
@@ -58,7 +58,7 @@ export default function Reviews() {
           <article
             key={review.id}
             id={`review-${review.id}`}
-            className="group grid gap-6 overflow-hidden rounded-xl border border-[#1E2638] bg-[#151A24] p-5 transition-all hover:border-brand-primary hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] md:grid-cols-[280px_1fr]"
+            className="group grid gap-6 overflow-hidden rounded-xl border border-surface-700 bg-brand-surface p-5 transition-all hover:border-brand-primary hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] md:grid-cols-[280px_1fr]"
           >
             {/* Image */}
             <div className="relative aspect-[16/10] overflow-hidden rounded-lg md:aspect-auto md:h-full">
@@ -68,10 +68,10 @@ export default function Reviews() {
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
               />
-              <div className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-lg border border-[#1E2638] bg-[#0B0F17]/90 shadow-md">
+              <div className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-lg border border-surface-700 bg-surface-900/90 shadow-md">
                 <span className="text-sm font-bold font-mono text-brand-accent">{review.rating ? (review.rating * 10) : 'N/A'}</span>
               </div>
-              <div className="absolute left-3 top-3 flex h-7 w-7 items-center justify-center rounded-md bg-[#0B0F17]/90 border border-[#1E2638]">
+              <div className="absolute left-3 top-3 flex h-7 w-7 items-center justify-center rounded-md bg-surface-900/90 border border-surface-700">
                 <span className="text-xs font-mono font-bold text-brand-text">#{index + 1}</span>
               </div>
             </div>

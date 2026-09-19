@@ -1,8 +1,10 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { Sun, Moon } from 'lucide-react'
 import { PixellonLogo } from './PixellonLogo'
 import DiscordWebhookModal from './DiscordWebhookModal'
 import { isWebhookConfigured } from '../utils/discordWebhook'
+import { useTheme } from '../context/ThemeContext'
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -20,6 +22,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isDiscordModalOpen, setIsDiscordModalOpen] = useState(false)
   const [hasDiscord, setHasDiscord] = useState(isWebhookConfigured())
+  const { toggleColorMode, isDark } = useTheme()
 
   useEffect(() => {
     // Check initial status
@@ -28,7 +31,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 border-b border-[#1E2638] bg-[#0B0F17]/95 backdrop-blur-md w-full">
+      <nav className="sticky top-0 z-50 border-b border-surface-700 bg-brand-bg/95 backdrop-blur-md w-full transition-colors duration-200">
         <div className="flex w-full items-center justify-between px-4 sm:px-8 lg:px-12 py-3.5">
           {/* Logo */}
           <Link to="/" className="flex items-center group transition-transform duration-200 hover:scale-[1.02]">
@@ -45,8 +48,8 @@ export default function Navbar() {
                 className={({ isActive }) =>
                   `px-3 py-1.5 text-sm font-medium transition-all duration-150 rounded-lg ${
                     isActive
-                      ? 'bg-brand-primary/15 text-brand-accent border border-brand-primary/30 shadow-[0_0_12px_rgba(37,99,235,0.25)]'
-                      : 'text-brand-muted hover:bg-[#151A24] hover:text-brand-text'
+                      ? 'bg-brand-primary/15 text-brand-accent border border-brand-primary/30 shadow-[0_0_12px_rgba(0,210,255,0.25)]'
+                      : 'text-brand-muted hover:bg-brand-surface hover:text-brand-text'
                   }`
                 }
               >
@@ -56,14 +59,35 @@ export default function Navbar() {
           </div>
 
           {/* Right Header Actions */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2.5">
+            {/* Dark / Light Mode Toggle */}
+            <button
+              onClick={toggleColorMode}
+              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              aria-label="Toggle dark and light mode"
+              className="relative inline-flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-xs font-mono font-medium transition-all cursor-pointer border border-surface-700 bg-brand-surface text-brand-text hover:border-brand-accent/50 hover:shadow-xs"
+            >
+              {isDark ? (
+                <>
+                  <Moon className="h-3.5 w-3.5 text-brand-accent" />
+                  <span className="hidden lg:inline text-brand-muted">Dark</span>
+                </>
+              ) : (
+                <>
+                  <Sun className="h-3.5 w-3.5 text-amber-500" />
+                  <span className="hidden lg:inline text-slate-700 font-semibold">Light</span>
+                </>
+              )}
+            </button>
+
+            {/* Discord Button */}
             <button
               onClick={() => setIsDiscordModalOpen(true)}
               title="Discord Bot & Alerts Settings"
               className={`relative inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-mono font-medium transition-all cursor-pointer border ${
                 hasDiscord
                   ? 'border-[#5865F2]/50 bg-[#5865F2]/15 text-[#8a94fd] hover:bg-[#5865F2]/25 shadow-[0_0_12px_rgba(88,101,242,0.2)]'
-                  : 'border-[#1E2638] bg-[#121722] text-brand-muted hover:border-[#5865F2]/40 hover:text-white'
+                  : 'border-surface-700 bg-brand-surface text-brand-muted hover:border-[#5865F2]/40 hover:text-brand-text'
               }`}
             >
               <svg className="h-4 w-4 fill-current text-[#5865F2]" viewBox="0 0 24 24">
@@ -73,7 +97,7 @@ export default function Navbar() {
               {hasDiscord ? (
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               ) : (
-                <span className="text-[10px] text-brand-muted bg-[#1E2638] px-1 rounded">Connect</span>
+                <span className="text-[10px] text-brand-muted bg-surface-700/50 px-1 rounded">Connect</span>
               )}
             </button>
           </div>
@@ -82,7 +106,7 @@ export default function Navbar() {
           <button
             id="mobile-menu-toggle"
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-brand-muted transition-colors hover:bg-[#151A24] hover:text-brand-text md:hidden cursor-pointer"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-brand-muted transition-colors hover:bg-surface-900 hover:text-brand-text md:hidden cursor-pointer"
             aria-label="Toggle menu"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-5 w-5">
@@ -97,7 +121,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {mobileOpen && (
-          <div className="border-t border-[#1E2638] bg-[#0B0F17] px-4 py-3 md:hidden space-y-1">
+          <div className="border-t border-surface-700 bg-brand-surface px-4 py-3 md:hidden space-y-1 shadow-xl">
             {navLinks.map((link) => (
               <NavLink
                 key={link.to}
@@ -108,7 +132,7 @@ export default function Navbar() {
                   `block px-3.5 py-2 text-sm font-medium rounded-lg transition-colors ${
                     isActive
                       ? 'bg-brand-primary/15 text-brand-accent border border-brand-primary/30'
-                      : 'text-brand-muted hover:bg-[#151A24] hover:text-brand-text'
+                      : 'text-brand-muted hover:bg-surface-900 hover:text-brand-text'
                   }`
                 }
               >
@@ -116,7 +140,27 @@ export default function Navbar() {
               </NavLink>
             ))}
 
-            <div className="pt-2 border-t border-[#1E2638]">
+            <div className="pt-2 border-t border-surface-700 space-y-2">
+              <div className="flex items-center justify-between px-1 py-1">
+                <span className="text-xs text-brand-muted font-mono">Theme Mode</span>
+                <button
+                  onClick={toggleColorMode}
+                  className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-mono border border-surface-700 bg-brand-surface text-brand-text"
+                >
+                  {isDark ? (
+                    <>
+                      <Moon className="h-3.5 w-3.5 text-brand-accent" />
+                      <span>Dark Mode</span>
+                    </>
+                  ) : (
+                    <>
+                      <Sun className="h-3.5 w-3.5 text-amber-500" />
+                      <span>Light Mode</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
               <button
                 onClick={() => {
                   setMobileOpen(false)

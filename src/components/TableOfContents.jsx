@@ -1,7 +1,7 @@
 export default function TableOfContents({ sections }) {
   return (
-    <div className="bg-[#151A24] border border-[#1E2638] rounded-xl p-4 mb-8 inline-block min-w-[250px] shadow-sm">
-      <h3 className="font-display font-bold text-brand-text text-sm mb-3 border-b border-[#1E2638] pb-2">
+    <div className="bg-brand-surface border border-surface-700 rounded-xl p-4 mb-8 inline-block min-w-[250px] shadow-sm">
+      <h3 className="font-display font-bold text-brand-text text-sm mb-3 border-b border-surface-700 pb-2">
         Contents
       </h3>
       <ul className="space-y-1.5 text-xs font-mono">

@@ -29,7 +29,7 @@ export default function Deals() {
   return (
     <PageTransition className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       {/* Header */}
-      <section id="deals-header" className="relative overflow-hidden rounded-2xl border border-[#1E2638] bg-[#151A24] p-8 sm:p-10">
+      <section id="deals-header" className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-8 sm:p-10">
         <PixelPatternBg />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -54,7 +54,7 @@ export default function Deals() {
 
       {loading && (
         <div className="flex justify-center items-center py-24">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#1E2638] border-t-brand-primary"></div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-surface-700 border-t-brand-primary"></div>
         </div>
       )}
 
@@ -72,9 +72,9 @@ export default function Deals() {
               href={`https://www.cheapshark.com/redirect?dealID=${deal.dealID}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col overflow-hidden rounded-xl border border-[#1E2638] bg-[#151A24] transition-all hover:border-brand-primary hover:shadow-[0_0_20px_rgba(37,99,235,0.25)] hover:-translate-y-1 cursor-pointer"
+              className="group flex flex-col overflow-hidden rounded-xl border border-surface-700 bg-brand-surface transition-all hover:border-brand-primary hover:shadow-[0_0_20px_rgba(37,99,235,0.25)] hover:-translate-y-1 cursor-pointer"
             >
-              <div className="relative aspect-[16/9] overflow-hidden bg-[#0B0F17] p-2">
+              <div className="relative aspect-[16/9] overflow-hidden bg-surface-900 p-2">
                 <img
                   src={deal.thumb}
                   alt={deal.title}
@@ -91,7 +91,7 @@ export default function Deals() {
                   {deal.title}
                 </h3>
                 
-                <div className="flex items-end justify-between mt-auto pt-2 border-t border-[#1E2638]">
+                <div className="flex items-end justify-between mt-auto pt-2 border-t border-surface-700">
                   <div className="flex flex-col font-mono">
                     <span className="text-[11px] text-brand-muted line-through">{formatINR(deal.normalPrice)}</span>
                     <span className="text-base font-bold text-emerald-400">{formatINR(deal.salePrice)}</span>

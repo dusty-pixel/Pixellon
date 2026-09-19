@@ -97,12 +97,12 @@ export default function DiscordWebhookModal({ isOpen, onClose, onWebhookUpdated 
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-[#1E2638] bg-[#121722] p-6 sm:p-8 shadow-2xl"
+          className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-6 sm:p-8 shadow-2xl"
         >
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 rounded-lg p-2 text-brand-muted hover:bg-[#1E2638] hover:text-white transition-colors cursor-pointer"
+            className="absolute right-4 top-4 rounded-lg p-2 text-brand-muted hover:bg-surface-900 hover:text-brand-text transition-colors cursor-pointer"
           >
             <X className="h-5 w-5" />
           </button>
@@ -115,7 +115,7 @@ export default function DiscordWebhookModal({ isOpen, onClose, onWebhookUpdated 
               </svg>
             </div>
             <div>
-              <h2 className="font-display text-xl font-bold text-white flex items-center gap-2">
+              <h2 className="font-display text-xl font-bold text-brand-text flex items-center gap-2">
                 Connect Discord Bot
                 {isSaved && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-mono text-emerald-400 border border-emerald-500/40">
@@ -131,14 +131,14 @@ export default function DiscordWebhookModal({ isOpen, onClose, onWebhookUpdated 
           </div>
 
           {/* Quick Guide */}
-          <div className="rounded-xl border border-[#1E2638] bg-[#0B0F17] p-4 mb-5 text-xs text-brand-muted space-y-2">
+          <div className="rounded-xl border border-surface-700 bg-surface-900 p-4 mb-5 text-xs text-brand-muted space-y-2">
             <div className="flex items-center gap-1.5 font-mono font-semibold text-brand-text">
               <ShieldCheck className="h-4 w-4 text-[#5865F2]" />
               <span>How to get your Webhook URL in 3 steps:</span>
             </div>
             <ol className="list-decimal list-inside space-y-1 pl-1 text-[11px] leading-relaxed">
-              <li>In Discord, right-click your text channel and select <strong className="text-white">Edit Channel</strong>.</li>
-              <li>Go to <strong className="text-white">Integrations</strong> → <strong className="text-white">Webhooks</strong> → click <strong className="text-white">New Webhook</strong>.</li>
+              <li>In Discord, right-click your text channel and select <strong className="text-brand-text">Edit Channel</strong>.</li>
+              <li>Go to <strong className="text-brand-text">Integrations</strong> → <strong className="text-brand-text">Webhooks</strong> → click <strong className="text-brand-text">New Webhook</strong>.</li>
               <li>Click <strong className="text-[#5865F2]">Copy Webhook URL</strong> and paste it below.</li>
             </ol>
           </div>
@@ -154,13 +154,13 @@ export default function DiscordWebhookModal({ isOpen, onClose, onWebhookUpdated 
                 placeholder="https://discord.com/api/webhooks/123456789/abcdef..."
                 value={webhookInput}
                 onChange={(e) => setWebhookInput(e.target.value)}
-                className="w-full rounded-xl border border-[#1E2638] bg-[#0B0F17] py-3 pl-3.5 pr-10 text-xs font-mono text-brand-text placeholder:text-brand-muted/50 focus:border-[#5865F2] focus:outline-none focus:ring-1 focus:ring-[#5865F2] transition-all"
+                className="w-full rounded-xl border border-surface-700 bg-surface-900 py-3 pl-3.5 pr-10 text-xs font-mono text-brand-text placeholder:text-brand-muted/50 focus:border-[#5865F2] focus:outline-none focus:ring-1 focus:ring-[#5865F2] transition-all"
               />
               {webhookInput && (
                 <button
                   type="button"
                   onClick={() => setWebhookInput('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-brand-text"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -177,7 +177,7 @@ export default function DiscordWebhookModal({ isOpen, onClose, onWebhookUpdated 
                     ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
                     : statusMessage.type === 'error'
                     ? 'bg-rose-500/15 text-rose-400 border border-rose-500/30'
-                    : 'bg-[#1E2638] text-brand-muted'
+                    : 'bg-surface-900 text-brand-muted border border-surface-700'
                 }`}
               >
                 {statusMessage.type === 'success' ? (
@@ -191,7 +191,7 @@ export default function DiscordWebhookModal({ isOpen, onClose, onWebhookUpdated 
           </div>
 
           {/* Action buttons */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#1E2638]">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-surface-700">
             {isSaved && (
               <button
                 type="button"

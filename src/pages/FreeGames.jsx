@@ -185,59 +185,60 @@ export default function FreeGames() {
 
   return (
     <PageTransition>
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-10">
-        {/* Hero Header */}
-        <header className="relative overflow-hidden rounded-3xl border border-[#1E2638] bg-gradient-to-b from-[#151A26] to-[#0D111A] p-8 sm:p-12 text-center shadow-2xl">
+      <div className="mx-auto max-w-[1600px] 2xl:max-w-[1720px] px-4 sm:px-6 lg:px-8 xl:px-10 py-6 sm:py-8 space-y-6">
+        {/* Compact Modern Header */}
+        <header className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-5 sm:p-6 shadow-xl">
           <PixelPatternBg />
-          <div className="relative z-10 max-w-3xl mx-auto space-y-5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-mono font-medium text-emerald-400 backdrop-blur-md">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Epic Games & Steam Weekly Free Drop Radar</span>
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            {/* Left Info */}
+            <div className="space-y-1.5">
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[11px] font-mono font-medium text-emerald-400">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Epic Games & Steam Weekly Radar</span>
+              </div>
+              <h1 className="font-display text-2xl sm:text-3xl font-extrabold text-brand-text">
+                Free Games <span className="bg-gradient-to-r from-brand-primary via-blue-400 to-indigo-400 bg-clip-text text-transparent">Vault</span>
+              </h1>
+              <p className="text-xs sm:text-sm text-brand-muted">
+                Claim limited-time weekly 100% OFF giveaways and freshly released free-to-play drops.
+              </p>
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white">
-              Free Games <span className="bg-gradient-to-r from-brand-primary via-blue-400 to-indigo-400 bg-clip-text text-transparent">Vault</span>
-            </h1>
-
-            <p className="mx-auto max-w-xl text-sm sm:text-base text-zinc-400 leading-relaxed font-sans">
-              Claim limited-time weekly 100% OFF giveaways from Epic Games & Steam, plus freshly released free-to-play titles.
-            </p>
-
-            {/* Quick Actions Bar */}
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-3">
+            {/* Right Actions */}
+            <div className="flex flex-wrap items-center gap-2.5 shrink-0">
               <button
                 onClick={() => setIsDiscordModalOpen(true)}
-                className={`inline-flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-mono font-medium transition-all duration-200 cursor-pointer border ${
+                className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-mono font-medium transition-all duration-200 cursor-pointer border ${
                   discordConfigured
-                    ? 'border-[#5865F2]/40 bg-[#5865F2]/15 text-[#9ba4fe] hover:bg-[#5865F2]/25 shadow-[0_0_20px_rgba(88,101,242,0.2)]'
-                    : 'border-[#222C3E] bg-[#0E131F]/90 text-zinc-400 hover:border-[#5865F2]/50 hover:text-white'
+                    ? 'border-[#5865F2]/40 bg-[#5865F2]/15 text-[#9ba4fe] hover:bg-[#5865F2]/25 shadow-[0_0_15px_rgba(88,101,242,0.2)]'
+                    : 'border-surface-700 bg-surface-900 text-brand-muted hover:border-[#5865F2]/50 hover:text-brand-text'
                 }`}
               >
-                <svg className="h-4 w-4 fill-current text-[#5865F2]" viewBox="0 0 24 24">
+                <svg className="h-3.5 w-3.5 fill-current text-[#5865F2]" viewBox="0 0 24 24">
                   <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
                 </svg>
-                <span>Discord Bot Alerts</span>
+                <span>Discord Alerts</span>
                 {discordConfigured ? (
                   <span className="flex items-center gap-1 text-[10px] text-emerald-400 font-sans font-semibold">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     Active
                   </span>
                 ) : (
-                  <span className="text-[10px] text-zinc-400 bg-[#1A2232] px-1.5 py-0.5 rounded">Setup</span>
+                  <span className="text-[9px] text-brand-muted bg-brand-surface border border-surface-700 px-1 py-0.5 rounded">Setup</span>
                 )}
               </button>
 
               <button
                 onClick={handleBroadcastTopDrops}
                 disabled={isBroadcasting || !games.length}
-                className="inline-flex items-center gap-2 rounded-xl bg-brand-primary/20 border border-brand-primary/40 px-4 py-2.5 text-xs font-mono font-semibold text-brand-accent hover:bg-brand-primary hover:text-white transition-all duration-200 shadow-[0_0_15px_rgba(37,99,235,0.25)] cursor-pointer disabled:opacity-50"
+                className="inline-flex items-center gap-2 rounded-xl bg-brand-primary/20 border border-brand-primary/40 px-3.5 py-2 text-xs font-mono font-semibold text-brand-accent hover:bg-brand-primary hover:text-white transition-all duration-200 shadow-[0_0_15px_rgba(37,99,235,0.25)] cursor-pointer disabled:opacity-50"
               >
                 {isBroadcasting ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
                 ) : (
                   <Radio className="h-3.5 w-3.5 text-brand-accent" />
                 )}
-                <span>{isBroadcasting ? 'Broadcasting Drops...' : 'Broadcast Top Drops'}</span>
+                <span>{isBroadcasting ? 'Broadcasting...' : 'Broadcast Top Drops'}</span>
               </button>
             </div>
           </div>
@@ -250,7 +251,7 @@ export default function FreeGames() {
           <section
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
-            className="relative overflow-hidden rounded-3xl border border-[#1E2638] bg-[#0B0F19] shadow-2xl transition-all"
+            className="relative overflow-hidden rounded-3xl border border-surface-700 bg-brand-surface shadow-2xl transition-all"
           >
             {/* Ambient Background Glow matching the game's artwork */}
             <div
@@ -259,10 +260,10 @@ export default function FreeGames() {
                 backgroundImage: `url(${featuredGame.hdImage || featuredGame.image || featuredGame.thumbnail})`,
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#080C14] via-[#0B0F19]/90 to-transparent pointer-events-none z-0" />
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-surface via-brand-surface/90 to-transparent pointer-events-none z-0" />
 
             {/* Top Auto-Rotation Progress Bar */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-[#1A2234] z-20 overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-surface-700/60 z-20 overflow-hidden">
               {!isPaused && (
                 <motion.div
                   key={progressKey}
@@ -281,29 +282,29 @@ export default function FreeGames() {
                 <div className="flex flex-wrap items-center gap-2">
                   {feedMode === 'giveaways' ? (
                     <>
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-400 border border-amber-500/40 backdrop-blur-md">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-500 dark:text-amber-400 border border-amber-500/40 backdrop-blur-md">
                         <Sparkles className="h-3.5 w-3.5" />
                         WEEKLY 100% OFF SPOTLIGHT
                       </span>
                       {featuredGame.worth && featuredGame.worth !== 'N/A' && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/40">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/40">
                           -100% OFF
                         </span>
                       )}
                     </>
                   ) : feedMode === 'newest' ? (
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-bold text-cyan-400 border border-cyan-500/40 backdrop-blur-md">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-bold text-cyan-600 dark:text-cyan-400 border border-cyan-500/40 backdrop-blur-md">
                       <Zap className="h-3.5 w-3.5" />
                       BRAND NEW RELEASE
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-500/20 px-3 py-1 text-xs font-bold text-purple-400 border border-purple-500/40 backdrop-blur-md">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-500/20 px-3 py-1 text-xs font-bold text-purple-600 dark:text-purple-400 border border-purple-500/40 backdrop-blur-md">
                       <Flame className="h-3.5 w-3.5" />
                       ALL-TIME COMMUNITY HIT
                     </span>
                   )}
 
-                  <span className="rounded-full bg-[#1A2234] px-3 py-1 text-xs font-mono font-medium text-zinc-300 border border-white/5">
+                  <span className="rounded-full bg-surface-700/60 px-3 py-1 text-xs font-mono font-medium text-brand-text border border-surface-700">
                     {featuredGame.platforms || (featuredGame.platform === 'PC (Windows)' ? 'PC Windows' : 'Web Browser')}
                   </span>
                 </div>
@@ -318,7 +319,7 @@ export default function FreeGames() {
                     transition={{ duration: 0.2 }}
                     className="space-y-4"
                   >
-                    <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                    <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-brand-text tracking-tight leading-tight">
                       {featuredGame.title}
                     </h2>
 
@@ -326,19 +327,19 @@ export default function FreeGames() {
                     <div className="flex flex-wrap items-center gap-4 py-0.5">
                       {featuredGame.worth && featuredGame.worth !== 'N/A' ? (
                         <div className="flex items-center gap-2.5">
-                          <span className="text-zinc-500 line-through text-base sm:text-lg font-medium">
+                          <span className="text-brand-muted line-through text-base sm:text-lg font-medium">
                             {formatINR(featuredGame.worth)}
                           </span>
-                          <span className="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-display">
+                          <span className="text-2xl sm:text-3xl font-extrabold text-emerald-500 dark:text-emerald-400 font-display">
                             FREE
                           </span>
-                          <span className="text-xs font-medium text-zinc-400 border border-zinc-700/60 rounded px-2 py-0.5">
+                          <span className="text-xs font-medium text-brand-muted border border-surface-700 rounded px-2 py-0.5">
                             Keep Forever
                           </span>
                         </div>
                       ) : (
                         <div className="flex items-center gap-2">
-                          <span className="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-display">
+                          <span className="text-2xl sm:text-3xl font-extrabold text-emerald-500 dark:text-emerald-400 font-display">
                             FREE TO PLAY
                           </span>
                           {featuredGame.genre && (
@@ -350,21 +351,21 @@ export default function FreeGames() {
                       )}
 
                       {featuredGame.end_date && featuredGame.end_date !== 'N/A' && (
-                        <div className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-amber-300 bg-amber-950/40 border border-amber-500/30 px-3 py-1 rounded-lg">
-                          <Clock className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
+                        <div className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-amber-600 dark:text-amber-300 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-lg">
+                          <Clock className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400 animate-pulse" />
                           <span>Ends {featuredGame.end_date.split(' ')[0]}</span>
                         </div>
                       )}
 
                       {!featuredGame.end_date && featuredGame.release_date && (
-                        <div className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-400 bg-[#141925] border border-white/5 px-3 py-1 rounded-lg">
+                        <div className="inline-flex items-center gap-1.5 text-xs font-mono text-brand-muted bg-surface-700/40 border border-surface-700 px-3 py-1 rounded-lg">
                           <span>Released: {featuredGame.release_date}</span>
                         </div>
                       )}
                     </div>
 
                     {/* Synopsis */}
-                    <p className="text-sm sm:text-base text-zinc-300/90 leading-relaxed font-sans line-clamp-3">
+                    <p className="text-sm sm:text-base text-brand-muted leading-relaxed font-sans line-clamp-3">
                       {featuredGame.description || featuredGame.short_description || featuredGame.instructions}
                     </p>
                   </motion.div>
@@ -387,7 +388,7 @@ export default function FreeGames() {
                     type="button"
                     onClick={(e) => handleShareToDiscord(featuredGame, e)}
                     disabled={sharingGameId === featuredGame.id}
-                    className="inline-flex items-center gap-2 rounded-xl border border-[#5865F2]/50 bg-[#5865F2]/20 px-5 py-3.5 text-xs font-mono font-medium text-[#9ba4fe] hover:bg-[#5865F2]/30 hover:text-white transition-all cursor-pointer disabled:opacity-50"
+                    className="inline-flex items-center gap-2 rounded-xl border border-[#5865F2]/50 bg-[#5865F2]/20 px-5 py-3.5 text-xs font-mono font-medium text-[#7985f7] dark:text-[#9ba4fe] hover:bg-[#5865F2]/30 transition-all cursor-pointer disabled:opacity-50"
                   >
                     {sharingGameId === featuredGame.id ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -401,9 +402,9 @@ export default function FreeGames() {
                   <button
                     onClick={() => setIsPaused(!isPaused)}
                     title={isPaused ? 'Resume Auto-Rotation' : 'Pause Auto-Rotation'}
-                    className="p-3 rounded-xl border border-[#1E2638] bg-[#0E131F] text-zinc-400 hover:text-white hover:bg-[#1A2234] transition-colors cursor-pointer ml-auto hidden sm:flex items-center gap-1.5 text-xs font-mono"
+                    className="p-3 rounded-xl border border-surface-700 bg-brand-surface text-brand-muted hover:text-brand-text hover:bg-surface-700/40 transition-colors cursor-pointer ml-auto hidden sm:flex items-center gap-1.5 text-xs font-mono"
                   >
-                    {isPaused ? <Play className="h-3.5 w-3.5 text-emerald-400" /> : <Pause className="h-3.5 w-3.5 text-amber-400" />}
+                    {isPaused ? <Play className="h-3.5 w-3.5 text-emerald-500" /> : <Pause className="h-3.5 w-3.5 text-amber-500" />}
                     <span>{isPaused ? 'Paused' : 'Auto-Rotating'}</span>
                   </button>
                 </div>
@@ -411,7 +412,7 @@ export default function FreeGames() {
 
               {/* Right Column: High-Res Artwork & Rotating Slider controls */}
               <div className="lg:col-span-6 space-y-3 order-1 lg:order-2">
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[#222C3E] shadow-2xl bg-[#090D15] group">
+                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-surface-700 shadow-2xl bg-surface-900 group">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={featuredGame.id}
@@ -425,8 +426,6 @@ export default function FreeGames() {
                       className="h-full w-full object-cover select-none"
                     />
                   </AnimatePresence>
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-transparent to-transparent opacity-60 pointer-events-none" />
 
                   {/* Previous / Next Arrow Controls */}
                   <div className="absolute inset-y-0 left-3 right-3 flex items-center justify-between pointer-events-none">
@@ -450,7 +449,7 @@ export default function FreeGames() {
                 {/* Rotating Thumbnails Bar */}
                 {spotlightList.length > 1 && (
                   <div className="pt-2">
-                    <div className="text-[11px] font-mono text-zinc-400 mb-2 flex items-center justify-between">
+                    <div className="text-[11px] font-mono text-brand-muted mb-2 flex items-center justify-between">
                       <span className="flex items-center gap-1.5">
                         <span className="h-1.5 w-1.5 rounded-full bg-brand-accent animate-ping" />
                         FEATURED HIGHLIGHTS ({featuredIndex + 1} of {spotlightList.length}):
@@ -467,8 +466,8 @@ export default function FreeGames() {
                             onClick={() => handleSelectSlide(idx)}
                             className={`group/thumb relative aspect-[16/9] overflow-hidden rounded-lg border transition-all cursor-pointer ${
                               isSelected
-                                ? 'border-amber-400 ring-2 ring-amber-400/40 shadow-[0_0_15px_rgba(245,158,11,0.3)] scale-[1.03]'
-                                : 'border-[#1E2638] opacity-60 hover:opacity-100 hover:border-zinc-500'
+                                ? 'border-amber-500 ring-2 ring-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.3)] scale-[1.03]'
+                                : 'border-surface-700 opacity-60 hover:opacity-100 hover:border-brand-accent'
                             }`}
                           >
                             <img
@@ -494,9 +493,9 @@ export default function FreeGames() {
         {/* ========================================================================= */}
         {/* FEED MODE TABS & PLATFORM FILTER BAR                                      */}
         {/* ========================================================================= */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 rounded-2xl border border-[#1E2638] bg-[#121622]/90 backdrop-blur-md p-3 sm:px-5 sm:py-3.5">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 rounded-2xl border border-surface-700 bg-brand-surface/95 backdrop-blur-md p-3 sm:px-5 sm:py-3.5 shadow-sm">
           {/* Main Feed Tabs */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-[#090D15] border border-[#1E2638] w-full lg:w-auto justify-center">
+          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-surface-900 border border-surface-700 w-full lg:w-auto justify-center">
             {[
               { id: 'giveaways', label: 'Weekly Giveaways', icon: Gift, badge: 'Hot' },
               { id: 'newest', label: 'Newest Releases', icon: Zap },
@@ -513,15 +512,15 @@ export default function FreeGames() {
                   }}
                   className={`inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-medium transition-all duration-150 cursor-pointer relative ${
                     isActive
-                      ? 'bg-brand-primary text-white font-semibold shadow-[0_2px_10px_rgba(37,99,235,0.45)]'
-                      : 'text-zinc-400 hover:text-white hover:bg-[#151C2B]'
+                      ? 'bg-brand-primary text-white font-semibold shadow-[0_2px_10px_rgba(2,132,199,0.35)]'
+                      : 'text-brand-muted hover:text-brand-text hover:bg-surface-700/40'
                   }`}
                 >
                   <Icon className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-brand-accent'}`} />
                   <span>{tab.label}</span>
                   {tab.badge && (
                     <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-bold uppercase ${
-                      isActive ? 'bg-white/20 text-white' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                      isActive ? 'bg-white/20 text-white' : 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
                     }`}>
                       {tab.badge}
                     </span>
@@ -533,12 +532,12 @@ export default function FreeGames() {
 
           {/* Platform Filters */}
           <div className="flex items-center gap-2 w-full lg:w-auto justify-center">
-            <div className="flex items-center gap-1 text-xs font-mono text-zinc-400 mr-1 hidden sm:flex">
+            <div className="flex items-center gap-1 text-xs font-mono text-brand-muted mr-1 hidden sm:flex">
               <Filter className="h-3 w-3 text-brand-accent" />
               <span>PLATFORM:</span>
             </div>
 
-            <div className="flex items-center gap-1 p-1 rounded-xl bg-[#090D15] border border-[#1E2638]">
+            <div className="flex items-center gap-1 p-1 rounded-xl bg-surface-900 border border-surface-700">
               {feedMode === 'giveaways' ? (
                 [
                   { id: 'all', label: 'All Stores' },
@@ -551,8 +550,8 @@ export default function FreeGames() {
                     onClick={() => setPlatform(p.id)}
                     className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all cursor-pointer ${
                       platform === p.id
-                        ? 'bg-[#1E283D] text-white font-semibold border border-brand-primary/40'
-                        : 'text-zinc-400 hover:text-white'
+                        ? 'bg-brand-primary text-white font-semibold shadow-xs'
+                        : 'text-brand-muted hover:text-brand-text'
                     }`}
                   >
                     {p.label}
@@ -569,8 +568,8 @@ export default function FreeGames() {
                     onClick={() => setPlatform(p.id)}
                     className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all cursor-pointer ${
                       platform === p.id
-                        ? 'bg-[#1E283D] text-white font-semibold border border-brand-primary/40'
-                        : 'text-zinc-400 hover:text-white'
+                        ? 'bg-brand-primary text-white font-semibold shadow-xs'
+                        : 'text-brand-muted hover:text-brand-text'
                     }`}
                   >
                     {p.label}
@@ -583,7 +582,7 @@ export default function FreeGames() {
 
         {/* Section Heading */}
         <div className="flex items-center justify-between pt-2">
-          <h3 className="font-display text-xl font-bold text-white flex items-center gap-2">
+          <h3 className="font-display text-xl font-bold text-brand-text flex items-center gap-2">
             <span>
               {feedMode === 'giveaways'
                 ? 'All Weekly Giveaways & Drops'
@@ -592,7 +591,7 @@ export default function FreeGames() {
                 : 'All-Time Popular Free Titles'}
             </span>
             {!loading && (
-              <span className="rounded-full bg-[#1A2234] px-2.5 py-0.5 text-xs font-mono text-brand-accent border border-brand-primary/20">
+              <span className="rounded-full bg-surface-700/60 px-2.5 py-0.5 text-xs font-mono text-brand-accent border border-surface-700">
                 {games.length}
               </span>
             )}
@@ -605,15 +604,15 @@ export default function FreeGames() {
         {loading ? (
           <div className="flex min-h-[40vh] flex-col items-center justify-center gap-4">
             <Loader2 className="h-10 w-10 animate-spin text-brand-primary" />
-            <p className="text-xs font-mono text-zinc-400 tracking-wider">
+            <p className="text-xs font-mono text-brand-muted tracking-wider">
               {feedMode === 'giveaways' ? 'FETCHING WEEKLY GIVEAWAYS...' : 'FETCHING FREE GAMES...'}
             </p>
           </div>
         ) : games.length === 0 ? (
-          <div className="rounded-2xl border border-[#1E2638] bg-[#121622] p-12 text-center">
+          <div className="rounded-2xl border border-surface-700 bg-brand-surface p-12 text-center shadow-sm">
             <Gift className="h-10 w-10 text-brand-muted mx-auto mb-3" />
-            <p className="text-white font-semibold">No active games found for this filter</p>
-            <p className="text-xs text-zinc-400 mt-1">Try switching the platform filter to "All".</p>
+            <p className="text-brand-text font-semibold">No active games found for this filter</p>
+            <p className="text-xs text-brand-muted mt-1">Try switching the platform filter to "All".</p>
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -630,27 +629,26 @@ export default function FreeGames() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: Math.min(i * 0.025, 0.25) }}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#1E2638] bg-gradient-to-b from-[#131824] to-[#0D111A] transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-primary/50 hover:shadow-[0_12px_30px_-8px_rgba(37,99,235,0.3)]"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-primary/50 hover:shadow-xl"
                 >
                   {/* Thumbnail & Badges */}
-                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#090D15]">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface-900">
                     <img
                       src={thumbnail}
                       alt={game.title}
                       className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D111A] via-[#0D111A]/20 to-transparent" />
 
                     {/* Top-Left: Discount Badge / Free Badge */}
                     <div className="absolute left-3 top-3 flex items-center gap-1.5">
                       {isGiveaway ? (
-                        <div className="inline-flex items-center gap-1 rounded-full bg-amber-500/20 px-2.5 py-0.5 text-[10px] font-bold text-amber-400 border border-amber-500/40 backdrop-blur-md shadow-sm">
+                        <div className="inline-flex items-center gap-1 rounded-full bg-amber-500/20 px-2.5 py-0.5 text-[10px] font-bold text-amber-500 dark:text-amber-400 border border-amber-500/40 backdrop-blur-md shadow-sm">
                           <Tag className="h-3 w-3" />
                           <span>-100% OFF</span>
                         </div>
                       ) : (
-                        <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-400 border border-emerald-500/30 backdrop-blur-md shadow-sm">
+                        <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 backdrop-blur-md shadow-sm">
                           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                           FREE
                         </div>
@@ -675,7 +673,7 @@ export default function FreeGames() {
                     </button>
 
                     {/* Bottom-Right platform indicator */}
-                    <div className="absolute right-3 bottom-2.5 rounded-md bg-[#0A0E18]/80 px-2 py-0.5 text-[10px] font-mono font-medium text-zinc-300 backdrop-blur-sm border border-white/5 line-clamp-1 max-w-[140px]">
+                    <div className="absolute right-3 bottom-2.5 rounded-md bg-black/60 px-2 py-0.5 text-[10px] font-mono font-medium text-white backdrop-blur-sm border border-white/10 line-clamp-1 max-w-[140px]">
                       {platformLabel}
                     </div>
                   </div>
@@ -688,38 +686,38 @@ export default function FreeGames() {
                         {game.genre || game.type || 'Game'}
                       </span>
                       {game.end_date && game.end_date !== 'N/A' && (
-                        <span className="flex items-center gap-1 text-amber-400 font-medium">
+                        <span className="flex items-center gap-1 text-amber-500 dark:text-amber-400 font-medium">
                           <Clock className="h-3 w-3" />
                           <span>Ends {game.end_date.split(' ')[0]}</span>
                         </span>
                       )}
                       {!game.end_date && releaseDate && (
-                        <span className="text-zinc-500">
+                        <span className="text-brand-muted">
                           {releaseDate}
                         </span>
                       )}
                     </div>
 
                     {/* Title */}
-                    <h3 className="mb-1.5 font-display text-base font-bold text-white transition-colors group-hover:text-brand-accent line-clamp-1">
+                    <h3 className="mb-1.5 font-display text-base font-bold text-brand-text transition-colors group-hover:text-brand-accent line-clamp-1">
                       {game.title}
                     </h3>
 
                     {/* Pricing / Value Comparison */}
                     {isGiveaway ? (
                       <div className="mb-3 flex items-center gap-2 text-xs">
-                        <span className="text-zinc-500 line-through">{formatINR(game.worth)}</span>
-                        <span className="font-bold text-emerald-400">FREE</span>
-                        <span className="text-[10px] text-zinc-500">• Keep Forever</span>
+                        <span className="text-brand-muted line-through">{formatINR(game.worth)}</span>
+                        <span className="font-bold text-emerald-500 dark:text-emerald-400">FREE</span>
+                        <span className="text-[10px] text-brand-muted">• Keep Forever</span>
                       </div>
                     ) : (
-                      <p className="mb-4 text-xs leading-relaxed text-zinc-400 line-clamp-2">
+                      <p className="mb-4 text-xs leading-relaxed text-brand-muted line-clamp-2">
                         {game.short_description || game.description}
                       </p>
                     )}
 
                     {isGiveaway && (
-                      <p className="mb-4 text-xs leading-relaxed text-zinc-400 line-clamp-2">
+                      <p className="mb-4 text-xs leading-relaxed text-brand-muted line-clamp-2">
                         {game.description || game.instructions}
                       </p>
                     )}

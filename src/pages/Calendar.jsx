@@ -49,7 +49,7 @@ export default function Calendar() {
   if (loading) {
     return (
       <PageTransition className="mx-auto max-w-7xl px-6 py-20 flex justify-center items-center min-h-[50vh]">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#1E2638] border-t-brand-primary"></div>
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-surface-700 border-t-brand-primary"></div>
       </PageTransition>
     )
   }
@@ -57,7 +57,7 @@ export default function Calendar() {
   return (
     <PageTransition className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
       {/* Header */}
-      <section id="calendar-header" className="relative overflow-hidden rounded-2xl border border-[#1E2638] bg-[#151A24] p-8 sm:p-10">
+      <section id="calendar-header" className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-8 sm:p-10">
         <PixelPatternBg />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -93,7 +93,7 @@ export default function Calendar() {
             className={`rounded-lg px-3.5 py-1.5 text-xs font-mono font-medium transition-all cursor-pointer ${
               activePlatform === platform
                 ? 'bg-brand-primary text-white shadow-[0_0_12px_rgba(37,99,235,0.4)]'
-                : 'bg-[#151A24] text-brand-muted hover:bg-[#1E2638] hover:text-brand-text border border-[#1E2638]'
+                : 'bg-brand-surface text-brand-muted hover:bg-surface-700 hover:text-brand-text border border-surface-700'
             }`}
           >
             {platform}
@@ -105,7 +105,7 @@ export default function Calendar() {
       <section id="calendar-list" className="space-y-10">
         {Object.entries(groupedReleases).map(([month, releases]) => (
           <div key={month} className="relative pl-4 sm:pl-0">
-            <div className="hidden sm:block absolute left-36 top-0 bottom-0 w-px bg-[#1E2638]"></div>
+            <div className="hidden sm:block absolute left-36 top-0 bottom-0 w-px bg-surface-700"></div>
             
             <div className="sm:flex gap-8">
               {/* Month Header */}
@@ -122,14 +122,14 @@ export default function Calendar() {
                 {releases.map((game) => (
                   <div
                     key={game.id}
-                    className="group relative overflow-hidden rounded-xl border border-[#1E2638] bg-[#151A24] p-4 sm:p-5 transition-all hover:border-brand-primary hover:shadow-[0_0_16px_rgba(37,99,235,0.2)] flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    className="group relative overflow-hidden rounded-xl border border-surface-700 bg-brand-surface p-4 sm:p-5 transition-all hover:border-brand-primary hover:shadow-[0_0_16px_rgba(37,99,235,0.2)] flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                   >
                     <div>
                       <h3 className="font-display text-base sm:text-lg font-bold text-brand-text group-hover:text-brand-accent transition-colors">
                         {game.title}
                       </h3>
                       <div className="mt-1 flex flex-wrap items-center gap-2 text-xs font-mono">
-                        <span className="rounded bg-[#0B0F17] px-2 py-0.5 text-brand-muted border border-[#1E2638]">
+                        <span className="rounded bg-surface-900 px-2 py-0.5 text-brand-muted border border-surface-700">
                           {game.genre}
                         </span>
                         <span className="text-brand-muted">•</span>

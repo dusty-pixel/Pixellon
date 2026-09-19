@@ -186,10 +186,10 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative z-10 w-full max-w-3xl rounded-2xl border border-[#1E2638] bg-[#151A24] shadow-2xl overflow-hidden my-8"
+          className="relative z-10 w-full max-w-3xl rounded-2xl border border-surface-700 bg-brand-surface shadow-2xl overflow-hidden my-8"
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-[#1E2638] bg-[#0B0F17] px-6 py-4">
+          <div className="flex items-center justify-between border-b border-surface-700 bg-surface-900 px-6 py-4">
             <div className="flex items-center gap-2 text-brand-primary">
               <Trophy className="h-5 w-5 text-brand-accent" />
               <h2 className="font-display text-lg font-bold text-brand-text">
@@ -198,7 +198,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
             </div>
             <button
               onClick={onClose}
-              className="rounded-lg p-1.5 text-brand-muted hover:bg-[#1E2638] hover:text-white transition-colors"
+              className="rounded-lg p-1.5 text-brand-muted hover:bg-surface-800 hover:text-brand-text transition-colors"
             >
               <X className="h-5 w-5" />
             </button>
@@ -219,7 +219,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-mono font-semibold border transition-all ${
                       selectedGame === g.name
                         ? 'border-brand-primary bg-brand-primary/20 text-brand-text shadow-[0_0_12px_rgba(37,99,235,0.3)]'
-                        : 'border-[#1E2638] bg-[#0B0F17] text-brand-muted hover:border-[#2C3549] hover:text-brand-text'
+                        : 'border-surface-700 bg-surface-900 text-brand-muted hover:border-brand-primary/50 hover:text-brand-text'
                     }`}
                   >
                     <span
@@ -243,7 +243,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                   required
                   value={tournamentName}
                   onChange={(e) => setTournamentName(e.target.value)}
-                  className="w-full rounded-lg border border-[#1E2638] bg-[#0B0F17] px-3.5 py-2 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                  className="w-full rounded-lg border border-surface-700 bg-surface-900 px-3.5 py-2 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                   placeholder="e.g. IEM Cologne 2026, VCT Masters"
                 />
               </div>
@@ -258,7 +258,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                     setBestOf(val)
                     setStageName(`Best of ${val}`)
                   }}
-                  className="w-full rounded-lg border border-[#1E2638] bg-[#0B0F17] px-3 py-2 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                  className="w-full rounded-lg border border-surface-700 bg-surface-900 px-3 py-2 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                 >
                   <option value={1}>Best of 1</option>
                   <option value={3}>Best of 3</option>
@@ -280,7 +280,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                   className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-mono font-bold border transition-all ${
                     status === 'running'
                       ? 'border-red-500 bg-red-500/20 text-red-400 shadow-[0_0_15px_rgba(239,68,68,0.25)]'
-                      : 'border-[#1E2638] bg-[#0B0F17] text-brand-muted hover:border-[#2C3549]'
+                      : 'border-surface-700 bg-surface-900 text-brand-muted hover:border-brand-primary/50'
                   }`}
                 >
                   <span className="relative flex h-2 w-2">
@@ -295,7 +295,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                   className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-mono font-bold border transition-all ${
                     status === 'not_started'
                       ? 'border-blue-500 bg-blue-500/20 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.25)]'
-                      : 'border-[#1E2638] bg-[#0B0F17] text-brand-muted hover:border-[#2C3549]'
+                      : 'border-surface-700 bg-surface-900 text-brand-muted hover:border-brand-primary/50'
                   }`}
                 >
                   <Clock className="h-3.5 w-3.5" />
@@ -307,7 +307,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                   className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-mono font-bold border transition-all ${
                     status === 'finished'
                       ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.25)]'
-                      : 'border-[#1E2638] bg-[#0B0F17] text-brand-muted hover:border-[#2C3549]'
+                      : 'border-surface-700 bg-surface-900 text-brand-muted hover:border-brand-primary/50'
                   }`}
                 >
                   <Check className="h-3.5 w-3.5" />
@@ -318,7 +318,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
 
             {/* Quick Presets for Selected Game */}
             {availablePresets.length > 0 && (
-              <div className="rounded-xl border border-[#1E2638] bg-[#0B0F17] p-3">
+              <div className="rounded-xl border border-surface-700 bg-surface-900 p-3">
                 <div className="flex items-center gap-1.5 mb-2 text-xs font-mono text-brand-accent">
                   <Sparkles className="h-3.5 w-3.5" />
                   <span>Quick Presets for {selectedGame}</span>
@@ -329,7 +329,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                       <button
                         type="button"
                         onClick={() => handleSelectPreset(p, 1)}
-                        className="text-[11px] font-mono px-2 py-1 rounded bg-[#151A24] border border-[#1E2638] text-brand-text hover:border-brand-primary hover:text-white"
+                        className="text-[11px] font-mono px-2 py-1 rounded bg-brand-surface border border-surface-700 text-brand-text hover:border-brand-primary hover:text-white"
                         title={`Set as Team 1`}
                       >
                         Set as T1: <span className="font-bold">{p.acronym}</span>
@@ -337,7 +337,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                       <button
                         type="button"
                         onClick={() => handleSelectPreset(p, 2)}
-                        className="text-[11px] font-mono px-2 py-1 rounded bg-[#151A24] border border-[#1E2638] text-brand-muted hover:border-brand-primary hover:text-white"
+                        className="text-[11px] font-mono px-2 py-1 rounded bg-brand-surface border border-surface-700 text-brand-muted hover:border-brand-primary hover:text-white"
                         title={`Set as Team 2`}
                       >
                         T2: <span className="font-bold">{p.acronym}</span>
@@ -351,7 +351,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
             {/* 4. Teams Setup (Side by Side) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Team 1 */}
-              <div className="rounded-xl border border-[#1E2638] bg-[#0B0F17] p-4 space-y-3">
+              <div className="rounded-xl border border-surface-700 bg-surface-900 p-4 space-y-3">
                 <div className="flex items-center gap-3">
                   <TeamLogo
                     src={team1Logo}
@@ -377,7 +377,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                     required
                     value={team1Name}
                     onChange={(e) => setTeam1Name(e.target.value)}
-                    className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                    className="w-full mt-1 rounded-lg border border-surface-700 bg-brand-surface px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                   />
                 </div>
 
@@ -388,7 +388,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                       type="text"
                       value={team1Acronym}
                       onChange={(e) => setTeam1Acronym(e.target.value)}
-                      className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                      className="w-full mt-1 rounded-lg border border-surface-700 bg-brand-surface px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                     />
                   </div>
                   <div>
@@ -397,13 +397,13 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                       type="text"
                       value={team1Logo}
                       onChange={(e) => setTeam1Logo(e.target.value)}
-                      className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                      className="w-full mt-1 rounded-lg border border-surface-700 bg-brand-surface px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                     />
                   </div>
                 </div>
 
                 {status !== 'not_started' && (
-                  <div className="grid grid-cols-2 gap-2 pt-1 border-t border-[#1E2638]">
+                  <div className="grid grid-cols-2 gap-2 pt-1 border-t border-surface-700">
                     <div>
                       <label className="text-[11px] font-mono text-brand-accent font-semibold">
                         Maps Won
@@ -414,7 +414,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                         max={bestOf}
                         value={team1MapScore}
                         onChange={(e) => setTeam1MapScore(e.target.value)}
-                        className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                        className="w-full mt-1 rounded-lg border border-surface-700 bg-brand-surface px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                       />
                     </div>
                     <div>
@@ -426,7 +426,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                         min="0"
                         value={team1RoundScore}
                         onChange={(e) => setTeam1RoundScore(e.target.value)}
-                        className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                        className="w-full mt-1 rounded-lg border border-surface-700 bg-brand-surface px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                       />
                     </div>
                   </div>
@@ -434,7 +434,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
               </div>
 
               {/* Team 2 */}
-              <div className="rounded-xl border border-[#1E2638] bg-[#0B0F17] p-4 space-y-3">
+              <div className="rounded-xl border border-surface-700 bg-surface-900 p-4 space-y-3">
                 <div className="flex items-center gap-3">
                   <TeamLogo
                     src={team2Logo}
@@ -460,7 +460,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                     required
                     value={team2Name}
                     onChange={(e) => setTeam2Name(e.target.value)}
-                    className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                    className="w-full mt-1 rounded-lg border border-surface-700 bg-brand-surface px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                   />
                 </div>
 
@@ -471,7 +471,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                       type="text"
                       value={team2Acronym}
                       onChange={(e) => setTeam2Acronym(e.target.value)}
-                      className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                      className="w-full mt-1 rounded-lg border border-surface-700 bg-brand-surface px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                     />
                   </div>
                   <div>
@@ -480,13 +480,13 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                       type="text"
                       value={team2Logo}
                       onChange={(e) => setTeam2Logo(e.target.value)}
-                      className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                      className="w-full mt-1 rounded-lg border border-surface-700 bg-brand-surface px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                     />
                   </div>
                 </div>
 
                 {status !== 'not_started' && (
-                  <div className="grid grid-cols-2 gap-2 pt-1 border-t border-[#1E2638]">
+                  <div className="grid grid-cols-2 gap-2 pt-1 border-t border-surface-700">
                     <div>
                       <label className="text-[11px] font-mono text-brand-accent font-semibold">
                         Maps Won
@@ -497,7 +497,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                         max={bestOf}
                         value={team2MapScore}
                         onChange={(e) => setTeam2MapScore(e.target.value)}
-                        className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                        className="w-full mt-1 rounded-lg border border-surface-700 bg-brand-surface px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                       />
                     </div>
                     <div>
@@ -509,7 +509,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                         min="0"
                         value={team2RoundScore}
                         onChange={(e) => setTeam2RoundScore(e.target.value)}
-                        className="w-full mt-1 rounded-lg border border-[#1E2638] bg-[#151A24] px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                        className="w-full mt-1 rounded-lg border border-surface-700 bg-brand-surface px-3 py-1.5 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                       />
                     </div>
                   </div>
@@ -528,7 +528,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                   value={currentMap}
                   onChange={(e) => setCurrentMap(e.target.value)}
                   placeholder="e.g. Inferno, Bind, Game 3"
-                  className="w-full rounded-lg border border-[#1E2638] bg-[#0B0F17] px-3.5 py-2 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                  className="w-full rounded-lg border border-surface-700 bg-surface-900 px-3.5 py-2 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                 />
               </div>
 
@@ -542,7 +542,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                     value={roundStatus}
                     onChange={(e) => setRoundStatus(e.target.value)}
                     placeholder="e.g. Bomb Planted, Baron Contest"
-                    className="w-full rounded-lg border border-[#1E2638] bg-[#0B0F17] px-3.5 py-2 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                    className="w-full rounded-lg border border-surface-700 bg-surface-900 px-3.5 py-2 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                   />
                 </div>
               )}
@@ -555,13 +555,13 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                   type="datetime-local"
                   value={matchDate}
                   onChange={(e) => setMatchDate(e.target.value)}
-                  className="w-full rounded-lg border border-[#1E2638] bg-[#0B0F17] px-3.5 py-2 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
+                  className="w-full rounded-lg border border-surface-700 bg-surface-900 px-3.5 py-2 text-xs font-mono text-brand-text focus:border-brand-primary focus:outline-none"
                 />
               </div>
             </div>
 
             {/* 6. Live Card Preview */}
-            <div className="rounded-xl border border-brand-primary/30 bg-[#0B0F17] p-4">
+            <div className="rounded-xl border border-brand-primary/30 bg-surface-900 p-4">
               <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-brand-accent mb-3 flex items-center justify-between">
                 <span>Match Preview</span>
                 <span className="text-xs text-brand-muted">{selectedGame}</span>
@@ -620,11 +620,11 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
             </div>
 
             {/* Actions */}
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#1E2638]">
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-surface-700">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 rounded-lg border border-[#1E2638] bg-[#0B0F17] text-xs font-mono font-semibold text-brand-muted hover:text-white transition-colors"
+                className="px-4 py-2 rounded-lg border border-surface-700 bg-surface-900 text-xs font-mono font-semibold text-brand-muted hover:text-brand-text transition-colors"
               >
                 Cancel
               </button>

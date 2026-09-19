@@ -46,7 +46,7 @@ export default function Gateway() {
     <PageTransition className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16">
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section id="gateway-hero" className="animate-fade-up relative">
-        <div className="relative overflow-hidden rounded-2xl border border-[#1E2638] bg-[#151A24] p-8 sm:p-14 text-center">
+        <div className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-8 sm:p-14 text-center">
           <PixelPatternBg />
           <div className="relative z-10 max-w-3xl mx-auto space-y-4">
             <span className="inline-flex items-center rounded-full border border-brand-accent/30 bg-brand-accent/10 px-4 py-1.5 text-xs font-mono font-semibold text-brand-accent">
@@ -76,7 +76,7 @@ export default function Gateway() {
           ].map((stat) => (
             <div
               key={stat.label}
-              className="rounded-xl border border-[#1E2638] bg-[#151A24] px-5 py-6 text-center transition-all hover:border-brand-primary/50"
+              className="rounded-xl border border-surface-700 bg-brand-surface px-5 py-6 text-center transition-all hover:border-brand-primary/50"
             >
               <span className="text-2xl">{stat.icon}</span>
               <p className="mt-2 font-display text-2xl font-bold text-brand-text">{stat.value}</p>
@@ -95,7 +95,7 @@ export default function Gateway() {
         />
         
         {loading ? (
-          <div className="flex min-h-[200px] flex-col items-center justify-center gap-4 rounded-xl border border-[#1E2638] bg-[#151A24]">
+          <div className="flex min-h-[200px] flex-col items-center justify-center gap-4 rounded-xl border border-surface-700 bg-brand-surface">
             <Loader2 className="h-8 w-8 animate-spin text-brand-primary" />
             <p className="text-sm font-mono text-brand-muted">Fetching top picks...</p>
           </div>
@@ -112,7 +112,7 @@ export default function Gateway() {
             ))}
           </div>
         ) : (
-          <div className="rounded-xl border border-[#1E2638] bg-[#151A24] p-8 text-center text-brand-muted">
+          <div className="rounded-xl border border-surface-700 bg-brand-surface p-8 text-center text-brand-muted">
             Could not fetch live suggestions at this time.
           </div>
         )}
@@ -123,7 +123,7 @@ export default function Gateway() {
         const colors = COLLECTION_COLORS[collection.color] || COLLECTION_COLORS.violet
         return (
           <section key={collection.id} id={`collection-${collection.id}`}>
-            <div className="rounded-2xl border border-[#1E2638] bg-[#151A24] p-6 sm:p-8 space-y-6">
+            <div className="rounded-2xl border border-surface-700 bg-brand-surface p-6 sm:p-8 space-y-6">
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-2xl">{collection.emoji}</span>
@@ -159,9 +159,9 @@ export default function Gateway() {
             <article
               key={guide.id}
               id={`guide-${guide.id}`}
-              className="group flex gap-4 rounded-xl border border-[#1E2638] bg-[#151A24] p-5 transition-all duration-200 hover:border-brand-accent hover:bg-[#1A2232] cursor-pointer"
+              className="group flex gap-4 rounded-xl border border-surface-700 bg-brand-surface p-5 transition-all duration-200 hover:border-brand-accent hover:bg-surface-900 cursor-pointer"
             >
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border border-[#1E2638] bg-[#0B0F17] text-xl transition-transform group-hover:scale-110">
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border border-surface-700 bg-surface-900 text-xl transition-transform group-hover:scale-110">
                 {guide.icon}
               </div>
               <div className="min-w-0">
@@ -169,7 +169,7 @@ export default function Gateway() {
                   <h4 className="text-sm font-display font-bold text-brand-text group-hover:text-brand-accent transition-colors">
                     {guide.title}
                   </h4>
-                  <span className="flex-shrink-0 rounded bg-[#0B0F17] px-2 py-0.5 text-[10px] font-mono text-brand-muted">
+                  <span className="flex-shrink-0 rounded bg-surface-900 px-2 py-0.5 text-[10px] font-mono text-brand-muted">
                     {guide.readTime}
                   </span>
                 </div>
@@ -182,7 +182,7 @@ export default function Gateway() {
 
       {/* ── Getting Started CTA ───────────────────────────────── */}
       <section id="gateway-getting-started">
-        <div className="rounded-2xl border border-[#1E2638] bg-[#151A24] px-8 py-14 text-center">
+        <div className="rounded-2xl border border-surface-700 bg-brand-surface px-8 py-14 text-center">
           <h3 className="font-display text-2xl sm:text-3xl font-bold text-brand-text">
             Where to Next?
           </h3>
@@ -200,7 +200,7 @@ export default function Gateway() {
             <Link
               to="/indie"
               id="gateway-to-indie"
-              className="rounded-xl border border-[#1E2638] bg-[#0B0F17] px-6 py-3 text-sm font-semibold text-brand-text transition-all hover:border-brand-primary/50 cursor-pointer font-sans"
+              className="rounded-xl border border-surface-700 bg-surface-900 px-6 py-3 text-sm font-semibold text-brand-text transition-all hover:border-brand-primary/50 cursor-pointer font-sans"
             >
               Discover Indie Gems
             </Link>

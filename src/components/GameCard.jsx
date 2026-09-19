@@ -1,10 +1,10 @@
 const TAG_COLORS = {
   blue: 'bg-brand-primary/15 text-brand-accent border-brand-primary/30',
-  accent: 'bg-brand-accent/15 text-brand-accent2 border-brand-accent/30',
-  violet: 'bg-brand-primary/15 text-brand-accent border-brand-primary/30',
-  cyan: 'bg-brand-accent/15 text-brand-accent2 border-brand-accent/30',
-  amber: 'bg-brand-primary/15 text-brand-accent3 border-brand-primary/30',
-  emerald: 'bg-brand-accent/15 text-brand-text border-brand-accent/30',
+  accent: 'bg-brand-accent/15 text-brand-accent border-brand-accent/30',
+  violet: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
+  cyan: 'bg-brand-accent/15 text-brand-accent border-brand-accent/30',
+  amber: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+  emerald: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
 }
 
 /**
@@ -28,21 +28,20 @@ export default function GameCard({
     return (
       <article
         onClick={onClick}
-        className="group relative overflow-hidden rounded-xl border border-[#1E2638] bg-[#151A24] transition-all duration-300 hover:border-brand-primary hover:shadow-[0_0_20px_rgba(37,99,235,0.25)] hover:-translate-y-1 cursor-pointer"
+        className="group flex flex-col h-full overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface transition-all duration-300 hover:border-brand-primary hover:shadow-[0_0_20px_rgba(2,132,199,0.25)] hover:-translate-y-1 cursor-pointer shadow-sm"
       >
-        <div className="relative aspect-[16/9] overflow-hidden">
+        <div className="relative aspect-[16/9] w-full overflow-hidden">
           <img
             src={image}
             alt={title}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-[#0B0F17]/50 to-transparent" />
 
           {/* Tag */}
           {tag && (
-            <div className="absolute left-4 top-4">
-              <span className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-mono font-semibold border ${TAG_COLORS[tagColor] || TAG_COLORS.blue}`}>
+            <div className="absolute left-3 top-3">
+              <span className={`inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-mono font-semibold backdrop-blur-md border ${TAG_COLORS[tagColor] || TAG_COLORS.blue}`}>
                 {tag}
               </span>
             </div>
@@ -50,27 +49,27 @@ export default function GameCard({
 
           {/* Rating */}
           {rating && (
-            <div className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-lg border border-[#1E2638] bg-[#0B0F17]/90 shadow-md">
-              <span className="text-sm font-bold font-mono text-brand-accent">{rating}</span>
+            <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg border border-surface-700 bg-brand-surface/90 shadow-md backdrop-blur-sm">
+              <span className="text-xs font-bold font-mono text-brand-accent">{rating}</span>
             </div>
           )}
+        </div>
 
-          {/* Content over image */}
-          <div className="absolute bottom-0 left-0 right-0 p-6">
-            <div className="mb-2 flex items-center gap-2">
-              <span className="text-xs font-mono font-semibold uppercase tracking-wider text-brand-accent">
-                {genre}
-              </span>
-              <span className="text-brand-muted">•</span>
-              <span className="text-xs font-medium text-brand-text/80">{platform.join(' / ')}</span>
-            </div>
-            <h3 className="font-display text-2xl font-bold text-brand-text transition-colors group-hover:text-brand-accent">
-              {title}
-            </h3>
-            {excerpt && (
-              <p className="mt-2 text-sm leading-relaxed text-brand-muted line-clamp-2">{excerpt}</p>
-            )}
+        {/* Content cleanly below image */}
+        <div className="flex flex-1 flex-col p-5 sm:p-6">
+          <div className="mb-2 flex items-center gap-2">
+            <span className="text-xs font-mono font-semibold uppercase tracking-wider text-brand-accent">
+              {genre}
+            </span>
+            <span className="text-brand-muted">•</span>
+            <span className="text-xs font-medium text-brand-muted">{platform.join(' / ')}</span>
           </div>
+          <h3 className="font-display text-xl sm:text-2xl font-bold text-brand-text transition-colors group-hover:text-brand-accent">
+            {title}
+          </h3>
+          {excerpt && (
+            <p className="mt-2 text-sm leading-relaxed text-brand-muted line-clamp-2">{excerpt}</p>
+          )}
         </div>
       </article>
     )
@@ -80,7 +79,7 @@ export default function GameCard({
     return (
       <article
         onClick={onClick}
-        className="group flex gap-4 rounded-xl border border-[#1E2638] bg-[#151A24] p-3 transition-all duration-200 hover:border-brand-primary/50 hover:shadow-md cursor-pointer"
+        className="group flex gap-4 rounded-xl border border-surface-700 bg-brand-surface p-3 transition-all duration-200 hover:border-brand-primary/50 hover:shadow-md cursor-pointer shadow-sm"
       >
         <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg">
           <img
@@ -90,7 +89,7 @@ export default function GameCard({
             loading="lazy"
           />
           {rating && (
-            <div className="absolute bottom-1 right-1 flex h-5 w-7 items-center justify-center rounded bg-[#0B0F17] border border-[#1E2638]">
+            <div className="absolute bottom-1 right-1 flex h-5 w-7 items-center justify-center rounded bg-brand-surface border border-surface-700">
               <span className="text-[10px] font-mono font-bold text-brand-accent">{rating}</span>
             </div>
           )}
@@ -116,7 +115,7 @@ export default function GameCard({
   return (
     <article
       onClick={onClick}
-      className="group flex flex-col h-full overflow-hidden rounded-xl border border-[#1E2638] bg-[#151A24] transition-all duration-200 hover:border-brand-primary hover:shadow-[0_0_16px_rgba(37,99,235,0.2)] hover:-translate-y-1 cursor-pointer"
+      className="group flex flex-col h-full overflow-hidden rounded-xl border border-surface-700 bg-brand-surface transition-all duration-200 hover:border-brand-primary hover:shadow-[0_0_16px_rgba(2,132,199,0.2)] hover:-translate-y-1 cursor-pointer shadow-sm"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         <img
@@ -125,7 +124,6 @@ export default function GameCard({
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#151A24] via-[#151A24]/30 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
 
         {tag && (
           <div className="absolute left-3 top-3">
@@ -136,7 +134,7 @@ export default function GameCard({
         )}
 
         {rating && (
-          <div className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-lg border border-[#1E2638] bg-[#0B0F17]/90 shadow-sm">
+          <div className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-lg border border-surface-700 bg-brand-surface/90 shadow-sm backdrop-blur-sm">
             <span className="text-xs font-mono font-bold text-brand-accent">{rating}</span>
           </div>
         )}
@@ -164,7 +162,7 @@ export default function GameCard({
           {platform.map((p) => (
             <span
               key={p}
-              className="rounded border border-[#1E2638] bg-[#0B0F17] px-2 py-0.5 text-[10px] font-mono font-medium text-brand-muted"
+              className="rounded border border-surface-700 bg-surface-900 px-2 py-0.5 text-[10px] font-mono font-medium text-brand-muted"
             >
               {p}
             </span>

@@ -170,9 +170,9 @@ export default function Streams() {
 
   return (
     <PageTransition>
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+      <div className="mx-auto max-w-[1600px] 2xl:max-w-[1720px] px-4 sm:px-6 lg:px-8 xl:px-10 py-6 sm:py-10 space-y-8">
         {/* Header with Multi-Game Live Stats */}
-        <header className="relative overflow-hidden rounded-2xl border border-[#1E2638] bg-[#151A24] p-6 sm:p-8">
+        <header className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-6 sm:p-8">
           <PixelPatternBg />
           <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
@@ -189,7 +189,7 @@ export default function Streams() {
             </div>
 
             {/* Quick Live Stats Badge */}
-            <div className="flex items-center gap-3 self-start md:self-auto rounded-xl border border-[#1E2638] bg-[#0B0F17]/90 px-4 py-2.5 backdrop-blur-md">
+            <div className="flex items-center gap-3 self-start md:self-auto rounded-xl border border-surface-700 bg-surface-900/90 px-4 py-2.5 backdrop-blur-md">
               <div className="flex flex-col">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-brand-muted">Active Feeds</span>
                 <span className="text-base font-bold font-mono text-brand-text flex items-center gap-1.5">
@@ -197,7 +197,7 @@ export default function Streams() {
                   {streams.length} Live Channels
                 </span>
               </div>
-              <div className="h-8 w-px bg-[#1E2638]" />
+              <div className="h-8 w-px bg-surface-700" />
               <div className="flex flex-col">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-brand-muted">Spectators</span>
                 <span className="text-base font-bold font-mono text-emerald-400">
@@ -214,7 +214,7 @@ export default function Streams() {
             <p className="text-sm font-mono text-brand-muted">Tuning in to studio broadcasts and 24/7 streams...</p>
           </div>
         ) : streams.length === 0 ? (
-          <div className="flex min-h-[35vh] flex-col items-center justify-center rounded-2xl border border-dashed border-[#1E2638] bg-[#151A24] p-8 text-center">
+          <div className="flex min-h-[35vh] flex-col items-center justify-center rounded-2xl border border-dashed border-surface-700 bg-brand-surface p-8 text-center">
             <Tv className="mb-4 h-12 w-12 text-brand-muted" />
             <h2 className="mb-2 font-display text-xl font-bold text-brand-text">No Streams Found</h2>
             <p className="max-w-md text-sm text-brand-muted">
@@ -225,7 +225,7 @@ export default function Streams() {
           <>
             {/* Interactive Stream Theater Hero with Carousel Controls */}
             {selectedStream && (
-              <section className="relative overflow-hidden rounded-2xl border border-[#1E2638] bg-[#0F1420] shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+              <section className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
                 <div className="grid grid-cols-1 lg:grid-cols-12">
                   {/* Player / Video Stage (8 cols) */}
                   <div className="lg:col-span-8 relative aspect-video bg-black flex items-center justify-center overflow-hidden">
@@ -247,7 +247,7 @@ export default function Streams() {
                             e.currentTarget.src = FALLBACK_HERO_IMAGE
                           }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-black/40 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
                         {/* Carousel Arrows on Stage */}
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -341,17 +341,20 @@ export default function Streams() {
                               </p>
                             </div>
                           </div>
-
-                          <div className="hidden sm:flex items-center gap-1 text-xs font-mono text-zinc-400 bg-black/60 px-3 py-1.5 rounded-lg border border-white/5">
-                            <span>Channel {selectedIndex + 1} of {streams.length}</span>
-                          </div>
+                          <button
+                            onClick={() => setEmbedMode(true)}
+                            className="group/btn flex items-center gap-3 rounded-2xl bg-brand-primary/95 px-6 py-3.5 text-sm font-bold text-white shadow-[0_0_30px_rgba(37,99,235,0.6)] backdrop-blur-md transition-all hover:scale-105 hover:bg-brand-primary active:scale-95 cursor-pointer"
+                          >
+                            <Play className="h-5 w-5 fill-white text-white transition-transform group-hover/btn:scale-110" />
+                            <span>Tune In To Broadcast</span>
+                          </button>
                         </div>
                       </div>
                     )}
                   </div>
 
                   {/* Sidebar Info & Controls (4 cols) */}
-                  <div className="lg:col-span-4 p-6 sm:p-7 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-[#1E2638] bg-[#121722]">
+                  <div className="lg:col-span-4 p-6 sm:p-7 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-surface-700 bg-surface-900">
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-accent flex items-center gap-1.5">
@@ -361,26 +364,26 @@ export default function Streams() {
                         {embedMode && (
                           <button
                             onClick={() => setEmbedMode(false)}
-                            className="text-xs font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                            className="text-xs font-mono text-brand-muted hover:text-brand-text transition-colors cursor-pointer"
                           >
                             Close Player
                           </button>
                         )}
                       </div>
 
-                      <h2 className="font-display text-lg font-bold text-white leading-snug">
+                      <h2 className="font-display text-lg font-bold text-brand-text leading-snug">
                         {selectedStream.title}
                       </h2>
 
                       {/* Studio / Game Details Info Box */}
-                      <div className="rounded-xl border border-[#1E2638] bg-[#0B0F17] p-3.5 space-y-2 text-xs font-mono">
+                      <div className="rounded-xl border border-surface-700 bg-brand-surface p-3.5 space-y-2 text-xs font-mono">
                         {selectedStream.studio && (
-                          <div className="flex items-center justify-between text-zinc-400">
+                          <div className="flex items-center justify-between text-brand-muted">
                             <span>Official Studio:</span>
-                            <span className="text-amber-300 font-bold">{selectedStream.studio}</span>
+                            <span className="text-amber-400 font-bold">{selectedStream.studio}</span>
                           </div>
                         )}
-                        <div className="flex items-center justify-between text-zinc-400">
+                        <div className="flex items-center justify-between text-brand-muted">
                           <span>Game Title:</span>
                           <span
                             className={`font-bold px-2 py-0.5 rounded border text-[11px] ${getGameBadgeColor(
@@ -391,11 +394,11 @@ export default function Streams() {
                             {selectedStream.game_name}
                           </span>
                         </div>
-                        <div className="flex items-center justify-between text-zinc-400">
+                        <div className="flex items-center justify-between text-brand-muted">
                           <span>Channel:</span>
                           <span className="text-brand-accent font-bold">@{selectedStream.user_login}</span>
                         </div>
-                        <div className="flex items-center justify-between text-zinc-400">
+                        <div className="flex items-center justify-between text-brand-muted">
                           <span>Live Viewers:</span>
                           <span className="text-emerald-400 font-bold">
                             {new Intl.NumberFormat('en-IN').format(selectedStream.viewer_count)}
@@ -409,7 +412,7 @@ export default function Streams() {
                           {selectedStream.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="rounded-md bg-[#182030] px-2 py-0.5 text-[11px] font-mono text-zinc-300 border border-white/5"
+                              className="rounded-md bg-brand-surface px-2 py-0.5 text-[11px] font-mono text-brand-muted border border-surface-700"
                             >
                               #{tag}
                             </span>
@@ -419,7 +422,7 @@ export default function Streams() {
 
                       {/* Quick Switch Top Channel Pills */}
                       <div className="pt-2">
-                        <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 block mb-2">
+                        <span className="text-[11px] font-mono uppercase tracking-wider text-brand-muted block mb-2">
                           Quick Switch Channel:
                         </span>
                         <div className="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto pr-1 scrollbar-thin">
@@ -433,7 +436,7 @@ export default function Streams() {
                               className={`rounded-lg px-2.5 py-1 text-[11px] font-mono font-medium transition-all cursor-pointer border ${
                                 selectedIndex === idx
                                   ? 'bg-brand-primary text-white border-brand-primary shadow-sm'
-                                  : 'bg-[#182030] text-zinc-300 border-white/5 hover:border-brand-primary/50'
+                                  : 'bg-brand-surface text-brand-muted border-surface-700 hover:border-brand-primary/50'
                               }`}
                             >
                               {s.isOfficial ? `🏢 ${s.user_name}` : s.is24_7 ? `⚡ ${s.user_name.split(' ')[0]}` : s.game_name.split(':')[0]}
@@ -444,7 +447,7 @@ export default function Streams() {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="space-y-2.5 pt-4 border-t border-[#1E2638]/80 mt-4">
+                    <div className="space-y-2.5 pt-4 border-t border-surface-700 mt-4">
                       <a
                         href={`https://twitch.tv/${selectedStream.user_login}`}
                         target="_blank"
@@ -476,10 +479,10 @@ export default function Streams() {
                     <span className="flex items-center justify-center h-6 w-6 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-400">
                       <Zap className="h-3.5 w-3.5 fill-amber-400" />
                     </span>
-                    <h2 className="font-display text-lg sm:text-xl font-bold text-white">
+                    <h2 className="font-display text-lg sm:text-xl font-bold text-brand-text">
                       24/7 Non-Stop Broadcasts
                     </h2>
-                    <span className="text-xs font-mono text-zinc-400 bg-[#151A24] border border-[#1E2638] px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-mono text-brand-muted bg-surface-900 border border-surface-700 px-2 py-0.5 rounded-full">
                       Always Playing
                     </span>
                   </div>
@@ -504,7 +507,7 @@ export default function Streams() {
                         className={`group text-left relative overflow-hidden rounded-xl border p-2.5 transition-all cursor-pointer ${
                           isPlaying
                             ? 'border-amber-500 bg-amber-950/20 ring-1 ring-amber-500/50'
-                            : 'border-[#1E2638] bg-[#151A24] hover:border-amber-500/50 hover:bg-[#1A2234]'
+                            : 'border-surface-700 bg-brand-surface hover:border-amber-500/50 hover:bg-surface-700'
                         }`}
                       >
                         <div className="relative aspect-video rounded-lg overflow-hidden mb-2 bg-black">
@@ -525,10 +528,10 @@ export default function Streams() {
                             <Play className="h-5 w-5 fill-white text-white" />
                           </div>
                         </div>
-                        <h4 className="text-xs font-display font-bold text-white truncate group-hover:text-amber-300 transition-colors">
+                        <h4 className="text-xs font-display font-bold text-brand-text truncate group-hover:text-amber-300 transition-colors">
                           {s.user_name}
                         </h4>
-                        <p className="text-[10px] font-mono text-zinc-400 truncate">
+                        <p className="text-[10px] font-mono text-brand-muted truncate">
                           {s.game_name}
                         </p>
                       </button>
@@ -547,7 +550,7 @@ export default function Streams() {
                   className={`rounded-xl px-3.5 py-1.5 text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                     selectedCategory === 'all'
                       ? 'bg-brand-primary text-white shadow-[0_0_16px_rgba(37,99,235,0.4)]'
-                      : 'border border-[#1E2638] bg-[#151A24] text-brand-muted hover:border-brand-primary/50 hover:text-white'
+                      : 'border border-surface-700 bg-brand-surface text-brand-muted hover:border-brand-primary/50 hover:text-brand-text'
                   }`}
                 >
                   <span>All Channels</span>
@@ -561,7 +564,7 @@ export default function Streams() {
                   className={`rounded-xl px-3.5 py-1.5 text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                     selectedCategory === '24-7'
                       ? 'bg-amber-500 text-black shadow-[0_0_16px_rgba(245,158,11,0.4)]'
-                      : 'border border-amber-500/30 bg-[#151A24] text-amber-300 hover:border-amber-500 hover:text-white'
+                      : 'border border-amber-500/30 bg-brand-surface text-amber-300 hover:border-amber-500 hover:text-white'
                   }`}
                 >
                   <Zap className="h-3 w-3 fill-current" />
@@ -576,7 +579,7 @@ export default function Streams() {
                   className={`rounded-xl px-3.5 py-1.5 text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                     selectedCategory === 'official'
                       ? 'bg-blue-600 text-white shadow-[0_0_16px_rgba(37,99,235,0.4)]'
-                      : 'border border-blue-500/30 bg-[#151A24] text-blue-300 hover:border-blue-500 hover:text-white'
+                      : 'border border-blue-500/30 bg-brand-surface text-blue-300 hover:border-blue-500 hover:text-white'
                   }`}
                 >
                   <Building2 className="h-3 w-3" />
@@ -595,7 +598,7 @@ export default function Streams() {
                       className={`rounded-xl px-3 py-1.5 text-xs font-mono font-medium transition-all whitespace-nowrap cursor-pointer ${
                         selectedCategory === cat
                           ? 'bg-brand-primary text-white shadow-[0_0_16px_rgba(37,99,235,0.4)]'
-                          : 'border border-[#1E2638] bg-[#151A24] text-brand-muted hover:border-brand-primary/50 hover:text-white'
+                          : 'border border-surface-700 bg-brand-surface text-brand-muted hover:border-brand-primary/50 hover:text-brand-text'
                       }`}
                     >
                       {cat}
@@ -612,7 +615,7 @@ export default function Streams() {
                   placeholder="Search studio, GTA, CS2, 24/7..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-xl border border-[#1E2638] bg-[#151A24] py-2 pl-9 pr-4 text-xs font-mono text-brand-text placeholder:text-brand-muted outline-none transition-colors focus:border-brand-primary focus:ring-1 focus:ring-brand-primary"
+                  className="w-full rounded-xl border border-surface-700 bg-surface-900 py-2 pl-9 pr-4 text-xs font-mono text-brand-text placeholder:text-brand-muted outline-none transition-colors focus:border-brand-primary focus:ring-1 focus:ring-brand-primary"
                 />
               </div>
             </div>
@@ -631,8 +634,8 @@ export default function Streams() {
                     transition={{ delay: Math.min(i * 0.02, 0.3) }}
                     className={`group relative flex flex-col overflow-hidden rounded-2xl border transition-all ${
                       isCurrent
-                        ? 'border-brand-primary bg-[#161D2B] shadow-[0_0_24px_rgba(37,99,235,0.3)] ring-1 ring-brand-primary'
-                        : 'border-[#1E2638] bg-[#151A24] hover:border-brand-primary/80 hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:-translate-y-1'
+                        ? 'border-brand-primary bg-brand-surface shadow-[0_0_24px_rgba(37,99,235,0.3)] ring-1 ring-brand-primary'
+                        : 'border-surface-700 bg-brand-surface hover:border-brand-primary/80 hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:-translate-y-1'
                     }`}
                   >
                     {/* Thumbnail Stage */}
@@ -647,7 +650,6 @@ export default function Streams() {
                           e.currentTarget.src = FALLBACK_HERO_IMAGE
                         }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-black/20 to-transparent" />
 
                       {/* LIVE / 24/7 Badge */}
                       <div className="absolute left-3 top-3 flex items-center gap-1.5">
@@ -706,7 +708,7 @@ export default function Streams() {
                     <div className="flex flex-1 flex-col p-4 sm:p-5">
                       {/* Streamer Avatar & Name */}
                       <div className="mb-2 flex items-center gap-2.5">
-                        <div className="h-8 w-8 rounded-lg overflow-hidden border border-[#1E2638] bg-zinc-800 shrink-0">
+                        <div className="h-8 w-8 rounded-lg overflow-hidden border border-surface-700 bg-surface-900 shrink-0">
                           <img
                             src={stream.avatar_url || getThumbnail(stream.thumbnail_url, 60, 60)}
                             alt={stream.user_name}
@@ -744,7 +746,7 @@ export default function Streams() {
                       </h3>
 
                       {/* Bottom Footer Action */}
-                      <div className="mt-auto pt-4 flex items-center justify-between border-t border-[#1E2638]/80 text-xs font-mono">
+                      <div className="mt-auto pt-4 flex items-center justify-between border-t border-surface-700 text-xs font-mono">
                         <button
                           onClick={() => {
                             setSelectedIndex(streamIndex)
@@ -757,7 +759,7 @@ export default function Streams() {
                         </button>
                         <button
                           onClick={() => handleShareToDiscord(stream)}
-                          className="text-zinc-400 hover:text-[#5865F2] transition-colors p-1 cursor-pointer"
+                          className="text-brand-muted hover:text-[#5865F2] transition-colors p-1 cursor-pointer"
                           title="Share to Discord"
                         >
                           <Send className="h-3.5 w-3.5" />
@@ -770,14 +772,14 @@ export default function Streams() {
             </div>
 
             {/* Community Streamer & Discord Callout Banner */}
-            <section className="relative overflow-hidden rounded-2xl border border-brand-primary/30 bg-gradient-to-r from-brand-primary/10 via-[#151A24] to-[#121722] p-8 sm:p-10 shadow-lg">
+            <section className="relative overflow-hidden rounded-2xl border border-brand-primary/30 bg-gradient-to-r from-brand-primary/10 via-brand-surface to-brand-surface p-8 sm:p-10 shadow-lg">
               <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="space-y-2 max-w-2xl">
                   <div className="inline-flex items-center gap-2 rounded-full bg-brand-primary/20 border border-brand-primary/40 px-3 py-0.5 text-xs font-mono font-semibold text-brand-accent">
                     <Sparkles className="h-3.5 w-3.5" />
                     <span>CREATOR & STUDIO SPOTLIGHT</span>
                   </div>
-                  <h3 className="font-display text-2xl font-bold text-white">
+                  <h3 className="font-display text-2xl font-bold text-brand-text">
                     Are You a Streamer, Indie Studio, or Tournament Host?
                   </h3>
                   <p className="text-sm text-brand-muted">
