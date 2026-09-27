@@ -22,13 +22,28 @@ import {
 } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import { PixelPatternBg } from '../components/BrandDecorations'
-import { getTopStreams } from '../utils/api'
+import { getLiveStreams } from '../utils/livestreams'
 import DiscordWebhookModal from '../components/DiscordWebhookModal'
 import ToastNotification from '../components/ToastNotification'
 import { postToDiscord, isWebhookConfigured } from '../utils/discordWebhook'
 
 const FALLBACK_HERO_IMAGE = 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1817070/library_hero.jpg'
 const FALLBACK_AVATAR_IMAGE = 'https://unavatar.io/twitch/playstation'
+
+const PLATFORM_META = {
+  twitch: { label: 'Twitch', color: '#9146FF', watch: 'Watch on Twitch.tv' },
+  kick: { label: 'Kick', color: '#53FC18', watch: 'Watch on Kick' },
+  youtube: { label: 'YouTube', color: '#FF0000', watch: 'Watch on YouTube' },
+}
+
+const platformOf = (s) => PLATFORM_META[s.platform] || PLATFORM_META.twitch
+
+const getEmbedSrc = (stream, hostname) => {
+  if (!stream) return ''
+  if (stream.platform === 'kick') return `https://player.kick.com/${stream.user_login}`
+  if (stream.platform === 'youtube') return `https://www.youtube.com/embed/${stream.user_login}?autoplay=1`
+  return `https://player.twitch.tv/?channel=${stream.user_login}&parent=${hostname}&muted=false`
+}
 
 export default function Streams() {
   const [streams, setStreams] = useState([])
@@ -47,7 +62,7 @@ export default function Streams() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true)
-      const data = await getTopStreams()
+      const data = await getLiveStreams()
       setStreams(data)
       setSelectedIndex(0)
       setLoading(false)
@@ -80,6 +95,8 @@ export default function Streams() {
         matchesCat = Boolean(stream.is24_7)
       } else if (selectedCategory === 'official') {
         matchesCat = Boolean(stream.isOfficial)
+      } else if (['twitch', 'kick', 'youtube'].includes(selectedCategory)) {
+        matchesCat = stream.platform === selectedCategory
       } else if (selectedCategory !== 'all') {
         matchesCat =
           (stream.category && stream.category.toLowerCase() === selectedCategory.toLowerCase()) ||
@@ -123,8 +140,8 @@ export default function Streams() {
         content: `🔴 **LIVE NOW** • **${stream.user_name}** is streaming **${stream.game_name}** to **${new Intl.NumberFormat('en-IN').format(stream.viewer_count)}** viewers!`,
         embeds: [
           {
-            title: `📺 Watch ${stream.user_name} on Twitch`,
-            url: `https://twitch.tv/${stream.user_login}`,
+            title: `📺 Watch ${stream.user_name} on ${platformOf(stream).label}`,
+            url: stream.url,
             description: stream.title,
             color: 0x9146ff, // Twitch Purple
             fields: [
@@ -231,7 +248,7 @@ export default function Streams() {
                   <div className="lg:col-span-8 relative aspect-video bg-black flex items-center justify-center overflow-hidden">
                     {embedMode ? (
                       <iframe
-                        src={`https://player.twitch.tv/?channel=${selectedStream.user_login}&parent=${hostname}&muted=false`}
+                        src={getEmbedSrc(selectedStream, hostname)}
                         title={selectedStream.title}
                         className="w-full h-full border-0"
                         allowFullScreen
@@ -291,6 +308,13 @@ export default function Streams() {
                           )}
 
                           <span
+                            className="rounded-lg px-2.5 py-1 text-xs font-mono font-bold border backdrop-blur-md text-white"
+                            style={{ backgroundColor: `${platformOf(selectedStream).color}33`, borderColor: `${platformOf(selectedStream).color}66` }}
+                          >
+                            {platformOf(selectedStream).label.toUpperCase()}
+                          </span>
+
+                          <span
                             className={`rounded-lg px-2.5 py-1 text-xs font-mono font-bold border backdrop-blur-md ${getGameBadgeColor(
                               selectedStream.game_name,
                               selectedStream.isOfficial
@@ -310,7 +334,7 @@ export default function Streams() {
                             <span>Play Live Stream in Theater</span>
                           </button>
                           <span className="text-xs font-mono text-zinc-400 bg-black/60 px-3 py-1 rounded-lg backdrop-blur-sm">
-                            Powered by Official Twitch Player
+                            Powered by Official {platformOf(selectedStream).label} Player
                           </span>
                         </div>
 
@@ -449,13 +473,14 @@ export default function Streams() {
                     {/* Action Buttons */}
                     <div className="space-y-2.5 pt-4 border-t border-surface-700 mt-4">
                       <a
-                        href={`https://twitch.tv/${selectedStream.user_login}`}
+                        href={selectedStream.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#9146FF] px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-[#772CE8] shadow-[0_0_15px_rgba(145,70,255,0.3)] cursor-pointer"
+                        className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold text-white transition-all shadow-[0_0_15px_rgba(145,70,255,0.3)] cursor-pointer"
+                        style={{ backgroundColor: platformOf(selectedStream).color }}
                       >
                         <ExternalLink className="h-4 w-4" />
-                        <span>Watch on Twitch.tv</span>
+                        <span>{platformOf(selectedStream).watch}</span>
                       </a>
 
                       <button
@@ -589,6 +614,29 @@ export default function Streams() {
                   </span>
                 </button>
 
+                {/* Platform filters */}
+                {['twitch', 'kick', 'youtube'].map((plat) => {
+                  const count = streams.filter((s) => s.platform === plat).length
+                  if (!count) return null
+                  return (
+                    <button
+                      key={plat}
+                      onClick={() => setSelectedCategory(plat)}
+                      className={`rounded-lg px-3.5 py-1.5 text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
+                        selectedCategory === plat
+                          ? 'text-white shadow-[0_0_16px_rgba(37,99,235,0.4)]'
+                          : 'border border-surface-700 bg-brand-surface text-brand-muted hover:text-brand-text'
+                      }`}
+                      style={selectedCategory === plat ? { backgroundColor: PLATFORM_META[plat].color } : undefined}
+                    >
+                      <span>{PLATFORM_META[plat].label}</span>
+                      <span className="text-[10px] px-1.5 py-0.2 rounded-lg bg-black/30 text-white">
+                        {count}
+                      </span>
+                    </button>
+                  )
+                })}
+
                 {/* Other categories */}
                 {['PlayStation', 'Xbox', 'Nintendo', 'Grand Theft Auto V', 'Counter-Strike 2', 'Fortnite', 'Call of Duty', 'Minecraft', 'VALORANT'].map(
                   (cat) => (
@@ -671,6 +719,13 @@ export default function Streams() {
                             OFFICIAL
                           </div>
                         )}
+
+                        <div
+                          className="rounded-lg px-2 py-0.5 text-[10px] font-mono font-bold text-white shadow-md"
+                          style={{ backgroundColor: platformOf(stream).color }}
+                        >
+                          {platformOf(stream).label.toUpperCase()}
+                        </div>
                       </div>
 
                       {/* Viewers Counter */}
@@ -693,11 +748,12 @@ export default function Streams() {
                           <span>Watch in Theater</span>
                         </button>
                         <a
-                          href={`https://twitch.tv/${stream.user_login}`}
+                          href={stream.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center justify-center rounded-lg bg-[#9146FF] p-2 text-white shadow-lg transition-transform hover:scale-105 cursor-pointer"
-                          title="Open on Twitch"
+                          className="flex items-center justify-center rounded-lg p-2 text-white shadow-lg transition-transform hover:scale-105 cursor-pointer"
+                          style={{ backgroundColor: platformOf(stream).color }}
+                          title={`Open on ${platformOf(stream).label}`}
                         >
                           <ExternalLink className="h-4 w-4" />
                         </a>

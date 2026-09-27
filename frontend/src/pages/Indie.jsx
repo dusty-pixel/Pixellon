@@ -4,6 +4,8 @@ import SectionHeader from '../components/SectionHeader'
 import PageTransition from '../components/PageTransition'
 import { PixelPatternBg, PixelCross } from '../components/BrandDecorations'
 import { getIndieGames } from '../utils/api'
+import { indieGames as mockIndie } from '../data/mockData'
+import { Stagger, StaggerItem } from '../components/motion/Reveal'
 
 export default function Indie() {
   const [indies, setIndies] = useState([])
@@ -13,7 +15,7 @@ export default function Indie() {
     async function loadData() {
       try {
         const data = await getIndieGames()
-        setIndies(data)
+        setIndies(data.length ? data : mockIndie)
       } catch (err) {
         console.error('Failed to load indie games', err)
       } finally {
@@ -71,11 +73,20 @@ export default function Indie() {
           subtitle="Top recommended indie titles to add to your collection."
           accent="accent"
         />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {otherIndies.map((game) => (
-            <GameCard key={game.id} {...game} tagColor="accent" />
-          ))}
-        </div>
+        {otherIndies.length ? (
+          <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4" stagger={0.06}>
+            {otherIndies.map((game) => (
+              <StaggerItem key={game.id} className="h-full">
+                <GameCard {...game} tagColor="accent" />
+              </StaggerItem>
+            ))}
+          </Stagger>
+        ) : (
+          <div className="flex flex-col items-center rounded-2xl border border-dashed border-surface-700 bg-brand-surface p-12 text-center">
+            <p className="font-display text-lg font-bold text-brand-text">No indie titles right now</p>
+            <p className="mt-1 text-sm text-brand-muted">Check back soon — the radar never sleeps.</p>
+          </div>
+        )}
       </section>
     </PageTransition>
   )

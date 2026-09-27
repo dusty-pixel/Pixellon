@@ -18,6 +18,7 @@ import {
 import PageTransition from '../components/PageTransition'
 import { PixelPatternBg } from '../components/BrandDecorations'
 import { getEsportsMatches, saveCustomMatch, deleteCustomMatch } from '../utils/api'
+import { getEsportsLive } from '../utils/esportsLive'
 import { GAMES_LIST } from '../data/esportsData'
 import TeamLogo from '../components/esports/TeamLogo'
 import AddMatchModal from '../components/esports/AddMatchModal'
@@ -74,10 +75,11 @@ export default function Esports() {
     return `${teamName} outplays ${oppName} to secure key round`
   }
 
-  // Load matches
+  // Load matches: custom + PandaScore/mock, wrapped with live OpenDota feed
   const loadMatches = useCallback(async () => {
     const data = await getEsportsMatches()
-    setMatches(data)
+    const { live, pro } = await getEsportsLive()
+    setMatches([...live, ...data, ...pro])
     setLoading(false)
   }, [])
 
@@ -91,7 +93,7 @@ export default function Esports() {
 
     const interval = setInterval(() => {
       setMatches((prevMatches) => {
-        const liveMatches = prevMatches.filter((m) => m.status === 'running')
+        const liveMatches = prevMatches.filter((m) => m.status === 'running' && !m.source?.startsWith('opendota'))
         if (liveMatches.length === 0) return prevMatches
 
         // Randomly choose one live match to update
@@ -601,6 +603,14 @@ export default function Esports() {
                         className={`rounded-full border px-3 py-0.5 text-[10px] font-mono font-bold truncate max-w-[130px] ${gameStyle.border} ${gameStyle.bg} ${gameStyle.text}`}
                       >
                         {match.videogame.name}
+                      </span>
+                    )}
+                    {match.source?.startsWith('opendota') && (
+                      <span
+                        className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[9px] font-mono font-bold text-emerald-300 whitespace-nowrap"
+                        title="Live data via OpenDota"
+                      >
+                        ● OPENDOTA
                       </span>
                     )}
                   </div>
