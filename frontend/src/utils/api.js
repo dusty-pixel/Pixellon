@@ -27,7 +27,7 @@ const mapGameData = (game) => {
  */
 const fetchGames = async (params = '') => {
  try {
- const res = await fetch(`${BASE_URL}/games?key=${API_KEY}&${params}`);
+ const res = await fetch(`${BASE_URL}/games?key=${API_KEY}&${params}`, { signal: AbortSignal.timeout(8000) });
  if (!res.ok) throw new Error('Failed to fetch games');
  const data = await res.json();
  return data.results.map(mapGameData);
@@ -347,4 +347,16 @@ export const getSteamOwnedGames = async (steamId) => {
  console.error('Error fetching owned games:', error);
  return [];
  }
+};
+
+export const getLivePlayers = async (appId) => {
+try {
+const base = import.meta.env?.VITE_API_URL || 'http://localhost:5000/api';
+const res = await fetch(`${base}/vault/steam-players/${appId}`, { signal: AbortSignal.timeout(6000) });
+if (!res.ok) return null;
+const data = await res.json();
+return typeof data.players === 'number' ? data : null;
+} catch (error) {
+return null;
+}
 };

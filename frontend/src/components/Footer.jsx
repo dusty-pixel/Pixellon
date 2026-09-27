@@ -40,7 +40,7 @@ export default function Footer() {
                 { to: '/esports', label: 'Esports' },
                 { to: '/indie', label: 'Indie Spotlights' },
                 { to: '/deals', label: 'Game Deals' },
-                { to: '/codex', label: 'The Codex' },
+                { to: '/vault', label: 'The Vault' },
               ].map((link) => (
                 <li key={link.to}>
                   <Link

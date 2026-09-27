@@ -4,6 +4,8 @@ import { Search, BookOpen, Loader2 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import { PixelPatternBg, PixelCross } from '../components/BrandDecorations';
 import { getGamesByGenre, searchGames } from '../utils/api';
+import { searchWikidataGames } from '../utils/wikidata';
+import { trendingGames as mockTrending, recentReviews as mockReviews, indieGames as mockIndie } from '../data/mockData';
 
 const CATEGORIES = [
   { id: 'role-playing-games-rpg', title: 'Role-Playing Games' },
@@ -20,6 +22,13 @@ export default function CodexHub() {
   const [categoryData, setCategoryData] = useState({});
   const [loadingCategories, setLoadingCategories] = useState(true);
 
+  const CATEGORY_FALLBACK = {
+    'role-playing-games-rpg': [...mockReviews, ...mockTrending],
+    'action': [...mockTrending, ...mockIndie],
+    'shooter': [...mockTrending, ...mockReviews],
+    'strategy': [...mockIndie, ...mockTrending],
+  };
+
   useEffect(() => {
     async function loadCategories() {
       const data = {};
@@ -27,12 +36,14 @@ export default function CodexHub() {
         await Promise.all(
           CATEGORIES.map(async (cat) => {
             const games = await getGamesByGenre(cat.id);
-            data[cat.id] = games;
+            data[cat.id] = games.length
+              ? games
+              : (CATEGORY_FALLBACK[cat.id] || mockTrending).slice(0, 6);
           })
         );
         setCategoryData(data);
       } catch (err) {
-        console.error('Failed to load codex categories', err);
+        console.error('Failed to load vault categories', err);
       } finally {
         setLoadingCategories(false);
       }
@@ -44,7 +55,11 @@ export default function CodexHub() {
     const delayDebounceFn = setTimeout(async () => {
       if (searchQuery.length > 2) {
         setIsSearching(true);
-        const results = await searchGames(searchQuery);
+        let results = await searchGames(searchQuery);
+        if (!results.length) {
+          // RAWG key missing/empty → fall back to open Wikidata (CC0).
+          results = await searchWikidataGames(searchQuery);
+        }
         setSearchResults(results);
         setIsSearching(false);
       } else {
@@ -60,7 +75,7 @@ export default function CodexHub() {
       {games.map(game => (
         <Link
           key={game.id}
-          to={`/codex/${game.id}`}
+          to={`/vault/${game.id}`}
           className="group block rounded-xl bg-brand-surface border border-surface-700 hover:border-brand-primary transition-all overflow-hidden shadow-sm hover:shadow-[0_0_20px_rgba(37,99,235,0.25)] hover:-translate-y-1"
         >
           <div className="relative h-52 w-full overflow-hidden border-b border-surface-700">
@@ -99,7 +114,7 @@ export default function CodexHub() {
               </div>
               <div>
                 <h1 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-brand-text">
-                  The Codex
+                  The Vault
                 </h1>
                 <p className="text-xs font-mono text-brand-accent2 uppercase tracking-widest mt-0.5">
                   Universal Gaming Encyclopedia

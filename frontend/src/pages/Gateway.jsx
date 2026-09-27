@@ -107,7 +107,7 @@ export default function Gateway() {
                 {...game}
                 tag="TRENDING"
                 tagColor="blue"
-                onClick={() => navigate(`/codex/${game.id}`)}
+                onClick={() => navigate(`/vault/${game.id}`)}
               />
             ))}
           </div>

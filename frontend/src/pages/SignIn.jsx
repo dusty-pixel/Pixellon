@@ -94,7 +94,7 @@ export default function SignIn() {
                   Your Command Center for Modern Gaming
                 </h1>
                 <p className="text-xs sm:text-sm text-brand-muted leading-relaxed">
-                  Join thousands of players tracking free game drops, tournament feeds, verified steam cards, and community codex guides.
+                  Join thousands of players tracking free game drops, tournament feeds, verified steam cards, and community vault guides.
                 </p>
               </div>
             </div>
@@ -145,7 +145,7 @@ export default function SignIn() {
                 <p className="text-xs text-brand-muted mt-1">
                   {isSignUp
                     ? 'Start building your squad reputation and game collection.'
-                    : 'Access your saved drops, codex notes, and squad network.'}
+                    : 'Access your saved drops, vault notes, and squad network.'}
                 </p>
               </div>
 

@@ -16,7 +16,7 @@ export default function WikiNavbar({ gameId, gameName, pages = {} }) {
             {pageKeys.map((key) => (
               <Link
                 key={key}
-                to={`/codex/${gameId}/${key}`}
+                to={`/vault/${gameId}/${key}`}
                 className="text-sm font-medium text-brand-muted transition-colors hover:text-brand-text"
               >
                 {pages[key].title}

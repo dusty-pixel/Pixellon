@@ -39,11 +39,11 @@ export const BADGES = [
   },
   {
     id: 'b-codex',
-    title: 'Codex Scribe',
+    title: 'Vault Scribe',
     category: 'Rare',
     icon: BookOpen,
     color: 'text-cyan-400 border-cyan-500/40 bg-cyan-500/10 shadow-[0_0_15px_rgba(6,182,212,0.2)]',
-    description: 'Authored and contributed community guides to the Game Codex.',
+    description: 'Authored and contributed community guides to the Game Vault.',
     unlockedAt: 'August 2026',
   },
   {

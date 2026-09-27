@@ -193,7 +193,7 @@ export function AuthProvider({ children }) {
         battleStation: 'Custom Gaming Rig',
         role: 'Rookie Vanguard',
         headline: `Pixellon Gamer • #${trimmedUsername}`,
-        bio: 'New player exploring the Pixellon community codex and live game drops.',
+        bio: 'New player exploring the Pixellon community vault and live game drops.',
         location: 'Global',
         level: 1,
         steamId: '',

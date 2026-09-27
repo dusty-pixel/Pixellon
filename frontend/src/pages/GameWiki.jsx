@@ -7,7 +7,12 @@ import WikiNavbar from '../components/WikiNavbar';
 import Infobox from '../components/Infobox';
 import WikiSidebar from '../components/WikiSidebar';
 import PageTransition from '../components/PageTransition';
-import { getGameDetails, getSteamAppId, getSteamDetails, getIGDBDetails, getTopStreams } from '../utils/api';
+import { getGameDetails, getSteamAppId, getSteamDetails, getIGDBDetails, getTopStreams, getLivePlayers } from '../utils/api';
+import { findWikidataGameId, getWikidataGame } from '../utils/wikidata';
+import { getGameDeals } from '../utils/deals';
+import { buildVaultRecord } from '../utils/vaultRecord';
+import { loadWikidataVaultPage } from '../utils/vaultGame';
+import DealsPanel from '../components/DealsPanel';
 import { formatINR } from '../utils/currency';
 import { Trash2, Edit3, Plus, Save, X, Eye, Loader2 } from 'lucide-react';
 
@@ -38,6 +43,11 @@ export default function GameWiki() {
  useEffect(() => {
  async function loadGame() {
  setLoading(true);
+ if (String(gameId).startsWith('wd-')) {
+ setWikiData(await loadWikidataVaultPage(gameId));
+ setLoading(false);
+ return;
+ }
  const details = await getGameDetails(gameId);
  if (details) {
  
@@ -46,14 +56,18 @@ export default function GameWiki() {
  let controllerSupport = null;
 
  // Fetch parallel data
- const [appId, igdbData, twitchStreams] = await Promise.all([
+ const [appId, igdbData, twitchStreams, wikidata, deals] = await Promise.all([
  getSteamAppId(gameId),
  getIGDBDetails(details.name),
- getTopStreams(details.name)
+ getTopStreams(details.name),
+ findWikidataGameId(details.name).then((qid) => (qid ? getWikidataGame(qid) : null)),
+ getGameDeals(details.name)
  ]);
 
- if (appId) {
- const steamDetails = await getSteamDetails(appId);
+ const steamId = appId || wikidata?.steamAppId || null;
+ const livePlayers = steamId ? await getLivePlayers(steamId) : null;
+ if (steamId) {
+ const steamDetails = await getSteamDetails(steamId);
  if (steamDetails) {
  if (steamDetails.price_overview) {
  steamPrice = formatINR(steamDetails.price_overview.final_formatted);
@@ -99,6 +113,15 @@ export default function GameWiki() {
  if (controllerSupport) {
  infoData.push({ label: 'Controller', value: controllerSupport });
  }
+ if (livePlayers) {
+ infoData.push({ label: 'Steam Players Live', value: livePlayers.players.toLocaleString() + ' online' });
+ }
+ if (wikidata?.series?.length) {
+ infoData.push({ label: 'Series', value: wikidata.series.join(', ') });
+ }
+ if (wikidata) {
+ infoData.push({ label: 'Wikidata', value: wikidata.wikidataUrl, type: 'link' });
+ }
  if (details.website) {
  infoData.push({ label: 'Website', value: details.website, type: 'link' });
  }
@@ -116,8 +139,8 @@ export default function GameWiki() {
  }
  }
 
- if (appId) {
- infoData.push({ label: 'Steam App ID', value: appId.toString() });
+ if (steamId) {
+ infoData.push({ label: 'Steam App ID', value: steamId.toString() });
  }
  
  if (igdbData && igdbData.involved_companies) {
@@ -128,7 +151,7 @@ export default function GameWiki() {
  // Build base wiki data
  let contentStr = details.description_raw 
  ? `# Overview\n\n${details.description_raw}` 
- : `# Welcome to the ${details.name} Codex!\n\nInformation is currently limited. Be the first to add to this wiki!`;
+ : `# Welcome to the ${details.name} Vault!\n\nInformation is currently limited. Be the first to add to this wiki!`;
  
  if (igdbData && igdbData.storyline) {
  contentStr += `\n\n## Storyline (IGDB)\n\n${igdbData.storyline}`;
@@ -146,6 +169,8 @@ export default function GameWiki() {
  infoboxData: infoData,
  igdbData,
  twitchStreams,
+ deals,
+ record: buildVaultRecord({ rawg: details, wikidata, steamAppId: steamId, deals, streams: twitchStreams }),
  pages: {
  'home': {
  title: 'Overview',
@@ -177,7 +202,7 @@ export default function GameWiki() {
  return (
  <PageTransition className="min-h-screen bg-surface-900 flex items-center justify-center flex-col gap-4">
  <Loader2 className="animate-spin text-pixel-blue" size={48} />
- <p className="text-text-secondary font-bold">Decoding the Codex...</p>
+ <p className="text-text-secondary font-bold">Decoding the Vault...</p>
  </PageTransition>
  );
  }
@@ -185,9 +210,9 @@ export default function GameWiki() {
  if (!wikiData) {
  return (
  <PageTransition className="min-h-screen bg-surface-900 flex items-center justify-center flex-col gap-4">
- <h1 className="font-display text-4xl text-text-primary">Codex Not Found</h1>
+ <h1 className="font-display text-4xl text-text-primary">Vault Not Found</h1>
  <p className="text-text-secondary">Could not find game data in the database.</p>
- <button onClick={() => navigate('/codex')} className="text-pixel-blue hover:underline">Return to Hub</button>
+ <button onClick={() => navigate('/vault')} className="text-pixel-blue hover:underline">Return to Hub</button>
  </PageTransition>
  );
  }
@@ -196,7 +221,7 @@ export default function GameWiki() {
  if (pageId === 'home') return; // Cannot delete home page
  if (confirm(`Are you sure you want to delete the ${currentPage.title} page?`)) {
  deletePage(gameId, pageId);
- navigate(`/codex/${gameId}`);
+ navigate(`/vault/${gameId}`);
  }
  };
 
@@ -208,7 +233,7 @@ export default function GameWiki() {
  const newId = editTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-');
  addPage(gameId, newId, { title: editTitle, content: editContent });
  setIsAddingPage(false);
- navigate(`/codex/${gameId}/${newId}`);
+ navigate(`/vault/${gameId}/${newId}`);
  } else {
  updatePage(gameId, pageId, editContent);
  setIsEditing(false);
@@ -377,7 +402,7 @@ export default function GameWiki() {
                   <Edit3 className="text-brand-muted" size={24} />
                 </div>
                 <h2 className="text-2xl font-display font-bold text-brand-text mb-2">Page Not Found</h2>
-                <p className="text-brand-muted max-w-md mx-auto mb-6 text-sm">This page doesn't exist yet, or it was deleted. You can create it now to start building the Codex.</p>
+                <p className="text-brand-muted max-w-md mx-auto mb-6 text-sm">This page doesn't exist yet, or it was deleted. You can create it now to start building the Vault.</p>
                 <button 
                   onClick={startAddingNewPage}
                   className="bg-brand-primary hover:bg-brand-primary/85 text-white px-6 py-2.5 rounded-xl font-mono text-xs font-bold inline-flex items-center gap-2 shadow-[0_0_12px_rgba(37,99,235,0.3)] cursor-pointer"
@@ -388,6 +413,7 @@ export default function GameWiki() {
             )}
 
           </div>
+          {wikiData?.deals?.deals?.length ? <DealsPanel deals={wikiData.deals} /> : null}
         </div>
 
         <WikiSidebar gameId={gameId} pages={allPages} wikiData={wikiData} />

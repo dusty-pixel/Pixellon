@@ -13,8 +13,11 @@ const TAG_COLORS = {
 
 /**
  * Reusable game card component used across all pages.
+ * Wrapped in ParallaxCard for tactile cursor tilt + specular highlight.
  */
-export default function GameCard({
+import ParallaxCard from './motion/ParallaxCard'
+
+function GameCardInner({
   title,
   genre,
   platform = [],
@@ -174,5 +177,16 @@ export default function GameCard({
         </div>
       </div>
     </article>
+  )
+}
+
+export default function GameCard(props) {
+  const compact = props.variant === 'compact'
+  return (
+    <div data-cursor="game" className={compact ? '' : 'h-full'}>
+      <ParallaxCard className={compact ? '' : 'h-full'} glow={!compact}>
+        <GameCardInner {...props} />
+      </ParallaxCard>
+    </div>
   )
 }

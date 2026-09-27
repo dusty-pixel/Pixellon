@@ -6,6 +6,7 @@
   --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-heading: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-pixel: 'DotGothic16', 'JetBrains Mono', ui-monospace, monospace;
 
   /* Strict Brand Kit Color Palette - Dynamic CSS variables */
   --color-brand-primary: var(--theme-primary, #0284C7);
@@ -515,4 +516,211 @@ html.light footer {
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
+}
+
+/* ── Pixellon Arena motion layer ─────────────────────────────── */
+:root {
+  --mouse-x: 50vw;
+  --mouse-y: 30vh;
+}
+
+/* Cursor-following ambient light (very low intensity) */
+.cursor-light {
+  background:
+    radial-gradient(
+      circle 340px at var(--mouse-x) var(--mouse-y),
+      rgba(0, 210, 255, 0.055),
+      transparent 70%
+    );
+  mix-blend-mode: screen;
+}
+html.light .cursor-light {
+  background:
+    radial-gradient(
+      circle 340px at var(--mouse-x) var(--mouse-y),
+      rgba(2, 132, 199, 0.06),
+      transparent 70%
+    );
+  mix-blend-mode: multiply;
+}
+
+/* Custom cursor takes over the native pointer on fine-pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button,
+  body.has-custom-cursor [role="button"] {
+    cursor: none;
+  }
+}
+
+/* Arena nav links: sliding underline marker */
+.arena-link {
+  position: relative;
+}
+.arena-link::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 4px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--theme-accent, #00D2FF);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.arena-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Intro scanlines + blinking caret */
+.scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.22) 4px
+  );
+}
+.blink {
+  animation: arena-blink 0.8s steps(1) infinite;
+}
+@keyframes arena-blink {
+  50% { opacity: 0; }
+}
+
+/* Respect reduced motion globally for decorative loops */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float {
+    animation: none;
+  }
+}
+
+/* ── Pixellon retro-LED + arcade layer ────────────────────────── */
+
+/* LED ticker bar */
+.led-ticker {
+  background: #05070b;
+  border-bottom: 1px solid rgba(255, 176, 32, 0.22);
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(0, 0, 0, 0.8);
+}
+.led-ticker-text {
+  color: #ffb020;
+  text-shadow: 0 0 6px rgba(255, 176, 32, 0.75), 0 0 18px rgba(255, 140, 0, 0.35);
+  animation: led-flicker 4s infinite;
+  white-space: nowrap;
+}
+.led-dots {
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.6) 1px, transparent 1.3px);
+  background-size: 3px 3px;
+}
+.led-ticker-track {
+  display: inline-flex;
+  animation: led-marquee 22s linear infinite;
+}
+.led-ticker:hover .led-ticker-track {
+  animation-play-state: paused;
+}
+@keyframes led-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes led-flicker {
+  0%, 100% { opacity: 1; }
+  3% { opacity: 0.86; }
+  6% { opacity: 1; }
+  52% { opacity: 0.94; }
+  55% { opacity: 1; }
+  81% { opacity: 0.9; }
+  84% { opacity: 1; }
+}
+
+/* Neon Pixellon sign — the primary glowing element */
+.neon-sign {
+  border: 2px solid rgba(0, 210, 255, 0.65);
+  border-radius: 12px;
+  box-shadow:
+    0 0 12px rgba(0, 210, 255, 0.45),
+    0 0 42px rgba(0, 210, 255, 0.18),
+    inset 0 0 14px rgba(0, 210, 255, 0.12);
+  animation: neon-flicker 6s infinite;
+}
+.neon-sign-text {
+  color: #eafcff;
+  text-shadow:
+    0 0 8px rgba(0, 210, 255, 0.9),
+    0 0 28px rgba(0, 210, 255, 0.55),
+    0 0 64px rgba(0, 210, 255, 0.3);
+}
+@keyframes neon-flicker {
+  0%, 100% { opacity: 1; }
+  7% { opacity: 0.92; }
+  8% { opacity: 1; }
+  46% { opacity: 0.96; }
+  47% { opacity: 1; }
+}
+
+/* Global CRT texture: scanlines + faint noise, extremely low opacity */
+.crt-overlay {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.16) 3px
+  );
+  opacity: 0.5;
+}
+.crt-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.05;
+}
+
+/* Boot glitch burst */
+.glitch-burst {
+  animation: glitch-burst 0.45s steps(2) 1;
+}
+@keyframes glitch-burst {
+  0% { transform: translate(0); filter: none; }
+  20% { transform: translate(-4px, 2px); filter: hue-rotate(40deg) saturate(2); }
+  40% { transform: translate(4px, -2px); }
+  60% { transform: translate(-2px, 0); filter: invert(0.08); }
+  80% { transform: translate(2px, 1px); filter: none; }
+  100% { transform: translate(0); }
+}
+
+/* Ghost typography for Choose-Your-Path */
+.ghost-word {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(148, 163, 184, 0.28);
+  user-select: none;
+}
+
+/* Terminal caret */
+.term-caret::after {
+  content: '▌';
+  color: var(--theme-accent, #00D2FF);
+  animation: arena-blink 0.9s steps(1) infinite;
+}
+
+/* Node pulse for discover network */
+.node-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: node-pulse 2.6s ease-in-out infinite;
+}
+@keyframes node-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .led-ticker-track,
+  .led-ticker-text,
+  .neon-sign,
+  .glitch-burst,
+  .node-pulse {
+    animation: none;
+  }
 }

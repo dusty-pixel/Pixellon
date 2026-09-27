@@ -1,7 +1,17 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ParallaxBackground from './components/ParallaxBackground'
+import Cursor from './components/motion/Cursor'
+import CursorLight from './components/motion/CursorLight'
+import ArenaIntro, { ARENA_KEY } from './components/intro/ArenaIntro'
+import MascotDirector from './components/mascot/MascotDirector'
+import PixelTicker from './retro/PixelTicker'
+import { TickerProvider } from './retro/TickerProvider'
+import CRTOverlay from './retro/CRTOverlay'
+import { useEasterEggs } from './motion/easterEggs'
 import Home from './pages/Home'
 import Indie from './pages/Indie'
 import Reviews from './pages/Reviews'
@@ -17,24 +27,39 @@ import Esports from './pages/Esports'
 import Profile from './pages/Profile'
 import SignIn from './pages/SignIn'
 
-export default function App() {
- const location = useLocation()
- 
+function LegacyCodexRedirect() {
+ const { pathname, search, hash } = useLocation()
+ return <Navigate to={`${pathname.replace(/^\/codex/, '/vault')}${search}${hash}`} replace />
+}
+
+function Shell() {
+ const [entered, setEntered] = useState(() => sessionStorage.getItem(ARENA_KEY) === '1')
+ useEasterEggs()
+
  return (
  <div className="flex min-h-screen flex-col">
+ <CursorLight />
+ <ParallaxBackground />
+ <CRTOverlay />
+ <Cursor />
+ <AnimatePresence>
+ {!entered && <ArenaIntro key="arena-intro" onEnter={() => setEntered(true)} />}
+ </AnimatePresence>
+ <PixelTicker />
  <Navbar />
- <main className="flex-1">
+ <main className="relative z-10 flex-1">
  <AnimatePresence mode="wait">
- <Routes location={location} key={location.pathname}>
+ <Routes>
  <Route path="/" element={<Home />} />
  <Route path="/indie" element={<Indie />} />
  <Route path="/reviews" element={<Reviews />} />
  <Route path="/calendar" element={<Calendar />} />
  <Route path="/deals" element={<Deals />} />
  <Route path="/gateway" element={<Gateway />} />
- <Route path="/codex" element={<CodexHub />} />
- <Route path="/codex/:gameId" element={<GameWiki />} />
- <Route path="/codex/:gameId/:pageId" element={<GameWiki />} />
+ <Route path="/vault" element={<CodexHub />} />
+ <Route path="/vault/:gameId" element={<GameWiki />} />
+ <Route path="/vault/:gameId/:pageId" element={<GameWiki />} />
+ <Route path="/codex/*" element={<LegacyCodexRedirect />} />
  <Route path="/free-games" element={<FreeGames />} />
  <Route path="/news" element={<News />} />
  <Route path="/streams" element={<Streams />} />
@@ -46,7 +71,18 @@ export default function App() {
  </Routes>
  </AnimatePresence>
  </main>
+ <div className="relative z-10">
  <Footer />
  </div>
+ {entered && <MascotDirector />}
+ </div>
+ )
+}
+
+export default function App() {
+ return (
+ <TickerProvider>
+ <Shell />
+ </TickerProvider>
  )
 }

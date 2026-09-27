@@ -15,13 +15,14 @@ const navLinks = [
   { to: '/esports', label: 'Esports' },
   { to: '/indie', label: 'Indie' },
   { to: '/deals', label: 'Deals' },
-  { to: '/codex', label: 'Codex' },
+  { to: '/vault', label: 'Vault' },
 ]
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isDiscordModalOpen, setIsDiscordModalOpen] = useState(false)
   const [hasDiscord, setHasDiscord] = useState(isWebhookConfigured())
+  const [scrolled, setScrolled] = useState(false)
   const { toggleColorMode, isDark } = useTheme()
   const { user, isAuthenticated } = useAuth()
 
@@ -30,30 +31,38 @@ export default function Navbar() {
     setHasDiscord(isWebhookConfigured())
   }, [])
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <>
-      <nav className="sticky top-0 z-50 border-b border-surface-700 bg-brand-bg/95 backdrop-blur-md w-full transition-colors duration-200">
-        <div className="flex w-full items-center justify-between px-4 sm:px-8 lg:px-12 py-3.5">
+      <nav className={`sticky top-0 z-50 w-full border-b border-surface-700 bg-brand-bg/95 backdrop-blur-md transition-all duration-300 ${scrolled ? 'shadow-[0_8px_30px_rgba(0,0,0,0.35)]' : ''}`}>
+        <div className={`mx-auto flex w-full items-center justify-between px-4 transition-all duration-300 sm:px-8 lg:px-12 ${scrolled ? 'py-2 max-w-[1400px]' : 'py-3.5'}`}>
           {/* Logo */}
-          <Link to="/" className="flex items-center group transition-transform duration-200 hover:scale-[1.02]">
+          <Link to="/" data-easter="logo" className="flex items-center group transition-transform duration-200 hover:scale-[1.02]">
             <PixellonLogo size="md" />
           </Link>
 
           {/* Desktop Links */}
           <div className="hidden items-center gap-1 lg:gap-2 md:flex">
-            {navLinks.map((link) => (
+            {navLinks.map((link, i) => (
               <NavLink
                 key={link.to}
                 to={link.to}
                 end={link.to === '/'}
                 className={({ isActive }) =>
-                  `px-3 py-1.5 text-sm font-medium transition-all duration-150 rounded-lg ${
+                  `arena-link px-3 py-1.5 text-sm font-medium transition-all duration-150 rounded-lg ${
                     isActive
                       ? 'bg-brand-primary/15 text-brand-accent border border-brand-primary/30'
                       : 'text-brand-muted hover:bg-brand-surface hover:text-brand-text'
                   }`
                 }
               >
+                <span className="mr-1.5 font-mono text-[10px] font-bold text-brand-primary/70">0{i + 1}</span>
                 {link.label}
               </NavLink>
             ))}

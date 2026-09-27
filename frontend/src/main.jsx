@@ -5,6 +5,8 @@ import App from './App.jsx'
 import { CodexProvider } from './context/CodexContext.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
+import { MotionProvider } from './motion/MotionProvider.jsx'
+import { XPProvider } from './gamification/XPProvider.jsx'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
@@ -13,7 +15,11 @@ createRoot(document.getElementById('root')).render(
       <ThemeProvider>
         <AuthProvider>
           <CodexProvider>
-            <App />
+            <MotionProvider>
+              <XPProvider>
+                <App />
+              </XPProvider>
+            </MotionProvider>
           </CodexProvider>
         </AuthProvider>
       </ThemeProvider>
