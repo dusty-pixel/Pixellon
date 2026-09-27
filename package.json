@@ -10,7 +10,8 @@
     "build": "npm install --prefix frontend && npm run build --prefix frontend",
     "build:frontend": "npm run build --prefix frontend",
     "start:backend": "npm start --prefix backend",
-    "lint": "npm run lint --prefix frontend"
+    "lint": "npm run lint --prefix frontend",
+    "deploy": "npm run build && wrangler deploy"
   }
 }
 
