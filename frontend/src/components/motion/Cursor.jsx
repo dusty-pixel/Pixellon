@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { motion, useMotionTemplate, useSpring, useTransform } from 'framer-motion'
+import { motion, useSpring, useTransform } from 'framer-motion'
 import { usePointer } from '../../motion/MotionProvider'
 
 /**
- * Pixellon custom cursor: small core + trailing ring.
- * States derived from hovered element: link / button / card / disabled.
+ * Pixellon reticle cursor: diamond-sight core + slow-orbit dashed ring.
+ * States derived from hovered element: link / button / game / drag / disabled.
  * Renders only on fine-pointer interactive setups; otherwise returns null.
  */
 function resolveState(el) {
@@ -18,12 +18,12 @@ function resolveState(el) {
 }
 
 const RING = {
-  default: { scale: 1, opacity: 0.7, border: 'rgba(0,210,255,0.5)' },
-  link: { scale: 1.5, opacity: 0.9, border: 'rgba(0,210,255,0.9)' },
-  button: { scale: 1.8, opacity: 1, border: 'rgba(0,210,255,1)' },
-  game: { scale: 2.1, opacity: 1, border: 'rgba(56,189,248,0.9)' },
-  drag: { scale: 1.6, opacity: 0.9, border: 'rgba(148,163,184,0.9)' },
-  disabled: { scale: 0.8, opacity: 0.3, border: 'rgba(100,116,139,0.6)' },
+  default: { scale: 1, opacity: 0.75, color: 'rgba(0,210,255,0.55)' },
+  link: { scale: 1.45, opacity: 0.95, color: 'rgba(0,210,255,0.9)' },
+  button: { scale: 1.7, opacity: 1, color: 'rgba(0,210,255,1)' },
+  game: { scale: 2, opacity: 1, color: 'rgba(251,191,36,0.9)' },
+  drag: { scale: 1.5, opacity: 0.9, color: 'rgba(148,163,184,0.9)' },
+  disabled: { scale: 0.75, opacity: 0.3, color: 'rgba(100,116,139,0.6)' },
 }
 
 export default function Cursor() {
@@ -31,10 +31,10 @@ export default function Cursor() {
   const [state, setState] = useState('default')
   const [pressed, setPressed] = useState(false)
 
-  const rx = useSpring(x, { stiffness: 220, damping: 24, mass: 0.7 })
-  const ry = useSpring(y, { stiffness: 220, damping: 24, mass: 0.7 })
+  const rx = useSpring(x, { stiffness: 200, damping: 23, mass: 0.8 })
+  const ry = useSpring(y, { stiffness: 200, damping: 23, mass: 0.8 })
   const speed = useTransform([velX], ([v]) => Math.min(Math.abs(v) / 40, 1))
-  const stretchX = useTransform(speed, (s) => 1 + s * 0.35)
+  const stretchX = useTransform(speed, (s) => 1 + s * 0.3)
 
   useEffect(() => {
     if (!interactive) return
@@ -53,40 +53,56 @@ export default function Cursor() {
     }
   }, [interactive])
 
-  const ringX = useMotionTemplate`${rx}px`
-  const ringY = useMotionTemplate`${ry}px`
-  const dotX = useMotionTemplate`${x}px`
-  const dotY = useMotionTemplate`${y}px`
-
   if (!interactive) return null
   const cfg = RING[state] || RING.default
 
   return (
     <>
-      {/* core dot — exact pointer position */}
+      {/* reticle core — exact pointer position */}
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[100] h-1.5 w-1.5"
-        style={{ x: dotX, y: dotY, translateX: '-50%', translateY: '-50%' }}
-      >
-        <div className="h-full w-full rounded-[2px] bg-brand-accent shadow-[0_0_8px_rgba(0,210,255,0.9)]" />
-      </motion.div>
-      {/* trailing ring — reacts to state + speed */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[100] h-9 w-9"
-        style={{ x: ringX, y: ringY, translateX: '-50%', translateY: '-50%' }}
+        className="pointer-events-none fixed left-0 top-0 z-[100]"
+        style={{ x, y, translateX: '-50%', translateY: '-50%' }}
       >
         <motion.div
-          className="h-full w-full rounded-full border"
-          animate={{
-            scale: cfg.scale * (pressed ? 0.82 : 1),
-            opacity: cfg.opacity,
-            borderColor: cfg.border,
+          className="relative flex h-4 w-4 items-center justify-center"
+          animate={{ scale: pressed ? 0.75 : 1, rotate: state === 'game' ? 45 : 0 }}
+          transition={{ type: 'spring', stiffness: 500, damping: 22 }}
+        >
+          <span
+            className="absolute inset-0 rotate-45 border-2 transition-colors"
+            style={{ borderColor: cfg.color }}
+          />
+          <span className="h-1 w-1 rounded-full bg-white shadow-[0_0_6px_rgba(0,210,255,1)]" />
+        </motion.div>
+      </motion.div>
+      {/* orbit ring — trails behind, reacts to state */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none fixed left-0 top-0 z-[100] h-10 w-10"
+        style={{ x: rx, y: ry, translateX: '-50%', translateY: '-50%', scaleX: stretchX }}
+      >
+        <motion.div
+          className="cursor-orbit h-full w-full rounded-full"
+          animate={{ scale: cfg.scale * (pressed ? 0.85 : 1), opacity: cfg.opacity, borderColor: cfg.color, rotate: 360 }}
+          transition={{
+            scale: { type: 'spring', stiffness: 320, damping: 24 },
+            opacity: { duration: 0.2 },
+            borderColor: { duration: 0.2 },
+            rotate: { duration: 18, ease: 'linear', repeat: Infinity },
           }}
-          transition={{ type: 'spring', stiffness: 380, damping: 24 }}
-          style={{ scaleX: stretchX }}
         />
+        {/* cardinal ticks */}
+        <motion.span
+          className="absolute left-1/2 top-1/2 h-10 w-10"
+          style={{ translateX: '-50%', translateY: '-50%' }}
+          animate={{ scale: cfg.scale }}
+          transition={{ type: 'spring', stiffness: 320, damping: 24 }}
+        >
+          {['top-0 left-1/2 -translate-x-1/2', 'bottom-0 left-1/2 -translate-x-1/2', 'left-0 top-1/2 -translate-y-1/2', 'right-0 top-1/2 -translate-y-1/2'].map((pos) => (
+            <span key={pos} className={`absolute ${pos} h-1 w-1 rounded-full bg-white/90`} />
+          ))}
+        </motion.span>
       </motion.div>
     </>
   )

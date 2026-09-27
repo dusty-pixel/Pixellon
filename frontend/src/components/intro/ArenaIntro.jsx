@@ -1,138 +1,124 @@
-import { useEffect, useState } from 'react'
+import { Component, Suspense, lazy, useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { PixellonIcon } from '../PixellonLogo'
-import MagneticButton from '../motion/MagneticButton'
 import { DURATION, EASE } from '../../motion/tokens'
+import { usePointer } from '../../motion/MotionProvider'
 import { sound } from '../../motion/sound'
+
+const GalaxyFall = lazy(() => import('../webgl/GalaxyFall'))
 
 export const ARENA_KEY = 'pixellon_arena_entered'
 
-const BOOT_LINES = ['LOADING WORLDS', 'LOADING PLAYERS', 'SYNCING NETWORK', 'PREPARING ARENA']
+const BOOT_LINES = ['CHARTING GALAXY', 'LOCKING VAULT COORDS', 'DESCENDING']
+
+/** If WebGL fails, land directly instead of trapping the user. */
+class FallBoundary extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { failed: false }
+  }
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+  componentDidCatch() {
+    this.props.onEnter()
+  }
+  render() {
+    if (this.state.failed) return null
+    return this.props.children
+  }
+}
 
 /**
- * Game-startup intro. Fast by design: boots in ~1.4s, ENTER ARENA
- * appears as soon as ready. Shown once per session.
+ * Galaxy-fall entry: brief boot readout over a plunging star tunnel,
+ * then straight onto the landing page. ~2.6s, skippable, once per session.
  */
 export default function ArenaIntro({ onEnter }) {
-  const [progress, setProgress] = useState(0)
+  const { reduced } = usePointer()
   const [lines, setLines] = useState(0)
-  const [glitched, setGlitched] = useState(false)
-  const ready = progress >= 100
+  const [overlayGone, setOverlayGone] = useState(false)
 
   useEffect(() => {
-    const t = setInterval(() => {
-      setProgress((p) => {
-        if (p >= 100) {
-          clearInterval(t)
-          return 100
-        }
-        return Math.min(100, p + 4 + Math.random() * 9)
-      })
-    }, 70)
-    return () => clearInterval(t)
-  }, [])
-
-  useEffect(() => {
-    if (progress > 18 * (lines + 1) && lines < BOOT_LINES.length) {
-      const t = setTimeout(() => setLines((l) => l + 1), 120)
+    if (reduced) {
+      const t = setTimeout(onEnter, 500)
       return () => clearTimeout(t)
     }
-    if (progress >= 55 && !glitched) {
-      // brief CRT glitch as the sign powers on
-      setGlitched(true)
-    }
-  }, [progress, lines, glitched])
+    sound.play('portal')
+    const timers = [
+      setTimeout(() => setLines(1), 250),
+      setTimeout(() => setLines(2), 500),
+      setTimeout(() => setLines(3), 750),
+      setTimeout(() => setOverlayGone(true), 1500),
+    ]
+    return () => timers.forEach(clearTimeout)
+  }, [reduced, onEnter])
 
   const enter = () => {
-    sound.play('portal')
     sessionStorage.setItem(ARENA_KEY, '1')
     onEnter()
   }
 
+  // GalaxyFall calls this at the end of the dive.
+  const landed = () => enter()
+
   return (
     <motion.div
-      className="arena-intro fixed inset-0 z-[200] flex items-center justify-center bg-[#070B12]"
-      exit={{ opacity: 0, scale: 1.12, filter: 'brightness(2.2)' }}
-      transition={{ duration: DURATION.cinematic, ease: EASE.inOut }}
+      className="fixed inset-0 z-[200] bg-[#05070b]"
+      exit={{ opacity: 0, scale: 1.06 }}
+      transition={{ duration: 0.35, ease: EASE.inOut }}
       role="dialog"
-      aria-label="Entering the Pixellon arena"
+      aria-label="Entering the Pixellon galaxy"
+      onClick={enter}
     >
-      {/* scanlines + noise + vignette */}
-      <div aria-hidden className="scanlines pointer-events-none absolute inset-0" />
-      <div aria-hidden className="crt-noise pointer-events-none absolute inset-0" style={{ opacity: 0.09 }} />
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(0,0,0,0.55))]" />
+      {!reduced && (
+        <FallBoundary onEnter={enter}>
+          <Suspense fallback={null}>
+            <GalaxyFall onLanded={landed} />
+          </Suspense>
+        </FallBoundary>
+      )}
 
-      <div className={`relative w-full max-w-md px-8 text-center ${glitched && !ready ? 'glitch-burst' : ''}`}>
-        <p className="mb-4 font-pixel text-xs tracking-[0.5em] text-brand-muted">PIXELLON SYSTEM // BOOTING…</p>
-        <motion.div
-          initial={{ scale: 0.6, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: DURATION.slow, ease: EASE.out }}
-          className="neon-sign mx-auto mb-5 flex h-16 w-16 items-center justify-center bg-brand-primary/10"
-        >
-          <PixellonIcon size={30} />
-        </motion.div>
-
-        <h1 className="neon-sign-text font-display text-4xl font-extrabold tracking-[0.28em] text-white sm:text-5xl">
-          {'PIXELLON'.split('').map((ch, i) => (
-            <motion.span
-              key={i}
-              className="inline-block"
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 + i * 0.05, duration: DURATION.normal, ease: EASE.out }}
-            >
-              {ch}
-            </motion.span>
-          ))}
-        </h1>
-        <p className="mt-3 font-display text-sm font-bold tracking-[0.35em] text-brand-accent">
-          PLAY. SHARE. BELONG.
-        </p>
-
-        <div className="mx-auto mt-7 min-h-20 text-left font-mono text-xs">
-          {BOOT_LINES.slice(0, lines).map((line, i) => (
-            <motion.p
-              key={line}
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-2 py-0.5 text-brand-muted"
-            >
-              <span className="text-emerald-400">▸</span> {line}
-              {i === lines - 1 && !ready && <span className="blink text-brand-accent">▌</span>}
-            </motion.p>
-          ))}
-          {ready && (
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-2 py-0.5 font-bold text-emerald-400">
-              <span>▸</span> WORLD ONLINE
-            </motion.p>
-          )}
-        </div>
-
-        <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-surface-800">
+      {/* boot readout — clears mid-fall for an unobstructed dive */}
+      <AnimatePresence>
+        {!overlayGone && (
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-brand-primary via-brand-accent to-brand-accent2"
-            animate={{ width: `${Math.floor(progress)}%` }}
-            transition={{ ease: 'easeOut', duration: 0.15 }}
-          />
-        </div>
-        <p className="mt-2 font-mono text-[11px] text-brand-muted">{Math.floor(progress)}%</p>
-
-        <div className="mt-6 min-h-12">
-          <AnimatePresence>
-            {ready && (
-              <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                <MagneticButton
-                  onClick={enter}
-                  className="rounded-lg bg-brand-primary px-8 py-3 font-display text-sm font-bold tracking-[0.2em] text-white shadow-[0_0_28px_rgba(2,132,199,0.5)]"
-                >
-                  ENTER ARENA →
-                </MagneticButton>
+            className="pointer-events-none absolute inset-0 flex items-center justify-center"
+            exit={{ opacity: 0 }}
+            transition={{ duration: DURATION.normal }}
+          >
+            <div className="scanlines pointer-events-none absolute inset-0" />
+            <div className="relative px-8 text-center">
+              <motion.div
+                initial={{ scale: 0.7, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: DURATION.slow, ease: EASE.out }}
+                className="neon-sign mx-auto mb-5 flex h-14 w-14 items-center justify-center bg-brand-primary/10"
+              >
+                <PixellonIcon size={26} />
               </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
+              <p className="neon-sign-text font-display text-2xl font-extrabold tracking-[0.3em] text-white sm:text-3xl">
+                PIXELLON
+              </p>
+              <div className="mx-auto mt-5 min-h-16 text-left font-pixel text-sm tracking-[0.2em]">
+                {BOOT_LINES.slice(0, lines).map((line) => (
+                  <motion.p
+                    key={line}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="py-0.5 text-brand-accent"
+                  >
+                    ▸ {line}
+                  </motion.p>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <p className="absolute bottom-6 left-1/2 -translate-x-1/2 font-pixel text-xs tracking-[0.35em] text-brand-muted">
+        CLICK TO SKIP
+      </p>
     </motion.div>
   )
 }
