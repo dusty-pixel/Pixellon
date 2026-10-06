@@ -55,12 +55,6 @@ export function BrandPillarsBar({ className = '' }) {
 export function PixelPatternBg({ className = '' }) {
   return (
     <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}>
-      {/* Pixel floating blocks */}
-      <div className="absolute top-8 left-12 h-3 w-3 bg-brand-primary/40 animate-float" />
-      <div className="absolute top-20 right-16 h-4 w-4 bg-brand-accent/30 animate-float" style={{ animationDelay: '1s' }} />
-      <div className="absolute bottom-16 left-1/4 h-2.5 w-2.5 bg-brand-accent2/30 animate-float" style={{ animationDelay: '2s' }} />
-      <div className="absolute bottom-10 right-1/3 h-3 w-3 bg-brand-accent3/20 animate-float" style={{ animationDelay: '1.5s' }} />
-      
       {/* Subtle pixel dots matching website background pattern */}
       <div className="absolute inset-0 opacity-40 [background-image:var(--theme-bg-pattern)] [background-size:30px_30px]" />
     </div>

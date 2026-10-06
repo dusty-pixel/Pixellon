@@ -1,6 +1,56 @@
 import express from 'express'
+import { getTrendingSpotlight, getSpotlightList } from '../services/trendingService.js'
 
 const router = express.Router()
+
+// GET /api/vault/trending-spotlight?gameId=...&force=true
+router.get('/trending-spotlight', async (req, res) => {
+  try {
+    const { gameId, force } = req.query
+    const spotlight = await getTrendingSpotlight(gameId, force === 'true')
+    return res.json(spotlight)
+  } catch (error) {
+    console.error('[Vault] Trending spotlight error:', error)
+    return res.status(500).json({ error: 'Failed to retrieve trending spotlight' })
+  }
+})
+
+// GET /api/vault/spotlight-list
+router.get('/spotlight-list', async (req, res) => {
+  try {
+    const list = await getSpotlightList()
+    return res.json(list)
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to retrieve spotlight list' })
+  }
+})
+
+// GET /api/vault/upcoming-steam
+router.get('/upcoming-steam', async (req, res) => {
+  try {
+    const response = await fetch('https://store.steampowered.com/api/featuredcategories')
+    const data = await response.json()
+    const comingSoon = data?.coming_soon?.items || []
+    
+    // Map to a nice format
+    const mapped = comingSoon.map(game => ({
+      id: game.id,
+      title: game.name,
+      genre: 'Upcoming',
+      image: game.header_image || game.large_capsule_image,
+      heroImage: game.large_capsule_image,
+      date: 'Coming Soon',
+      developer: 'Steam Developer',
+      platform: ['PC'],
+      price: game.final_price ? (game.final_price / 100).toFixed(2) : 'TBA'
+    }))
+    
+    return res.json(mapped)
+  } catch (error) {
+    console.error('Failed to fetch upcoming steam games', error)
+    return res.status(500).json({ error: 'Failed to fetch upcoming games' })
+  }
+})
 
 /**
  * Vault live-stats cache. Upstream APIs (Steam) are rate-limited and

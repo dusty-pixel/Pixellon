@@ -7,6 +7,8 @@
   --font-heading: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
   --font-pixel: 'DotGothic16', 'JetBrains Mono', ui-monospace, monospace;
+  --font-tlou: 'Bebas Neue', 'Oswald', sans-serif;
+  --font-cinematic: 'Oswald', 'Inter', sans-serif;
 
   /* Strict Brand Kit Color Palette - Dynamic CSS variables */
   --color-brand-primary: var(--theme-primary, #0284C7);
@@ -293,7 +295,7 @@ html.light footer {
 }
 
 @utility animate-float {
-  animation: float 4s ease-in-out infinite;
+  animation: none;
 }
 
 /* ── Canonical 8px Radius Button System ────────────────────────── */
@@ -544,14 +546,12 @@ html.light .cursor-light {
   mix-blend-mode: multiply;
 }
 
-/* Custom cursor takes over the native pointer on fine-pointer devices */
-@media (hover: hover) and (pointer: fine) {
-  body.has-custom-cursor,
-  body.has-custom-cursor a,
-  body.has-custom-cursor button,
-  body.has-custom-cursor [role="button"] {
-    cursor: none;
-  }
+/* Standard cursor behaviour */
+body, a, button, [role="button"] {
+  cursor: auto;
+}
+a, button, [role="button"] {
+  cursor: pointer;
 }
 
 /* Reticle orbit ring */
@@ -725,7 +725,176 @@ html.light .cursor-light {
   .led-ticker-text,
   .neon-sign,
   .glitch-burst,
-  .node-pulse {
+  .node-pulse,
+  .tlou-spore {
     animation: none;
   }
 }
+
+/* ── The Last of Us Cinematic Aesthetic ───────────────────────────── */
+.font-tlou {
+  font-family: 'Bebas Neue', 'Oswald', sans-serif;
+}
+
+.font-cinematic {
+  font-family: 'Oswald', 'Inter', sans-serif;
+}
+
+.tlou-weathered-title {
+  font-family: 'Bebas Neue', 'Oswald', sans-serif;
+  letter-spacing: 0.04em;
+  line-height: 0.9;
+  color: #F3F4F6;
+  text-shadow: none;
+  filter: none;
+}
+
+.tlou-subtitle-stencil {
+  font-family: 'Oswald', 'Bebas Neue', sans-serif;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #D1D5DB;
+  text-shadow: none;
+}
+
+.tlou-btn-crimson {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #A82025 0%, #881418 100%);
+  color: #FFFFFF;
+  font-family: 'Oswald', 'Bebas Neue', sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  box-shadow: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+}
+
+.tlou-btn-crimson:hover {
+  background: linear-gradient(135deg, #BD272D 0%, #9E191E 100%);
+  box-shadow: none;
+  transform: translateY(-1px);
+}
+
+.tlou-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 19, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #E5E7EB;
+  font-family: 'Oswald', 'Bebas Neue', sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tlou-btn-ghost:hover {
+  background: rgba(30, 45, 38, 0.75);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.tlou-cinematic-frame {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0.85rem;
+  box-shadow: none;
+}
+
+.tlou-vignette-overlay {
+  background: linear-gradient(90deg, rgba(6, 10, 8, 0.85) 0%, rgba(6, 10, 8, 0.5) 45%, rgba(6, 10, 8, 0.15) 75%, rgba(6, 10, 8, 0.65) 100%),
+              linear-gradient(180deg, rgba(6, 10, 8, 0.6) 0%, transparent 25%, transparent 75%, rgba(6, 10, 8, 0.7) 100%);
+}
+
+.tlou-ambient-green-glow {
+  background: radial-gradient(circle at 65% 30%, rgba(34, 197, 94, 0.04) 0%, transparent 55%),
+              radial-gradient(circle at 20% 70%, rgba(20, 83, 45, 0.06) 0%, transparent 60%);
+}
+
+.tlou-award-item {
+  transition: all 0.2s ease;
+}
+.tlou-award-item:hover {
+  transform: translateX(4px);
+  color: #FFFFFF;
+}
+
+@keyframes tlou-spore-drift {
+  0% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translateY(-35px) translateX(15px);
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateY(-70px) translateX(-8px);
+    opacity: 0.05;
+  }
+}
+
+.tlou-spore {
+  animation: tlou-spore-drift 9s ease-in-out infinite;
+}
+
+/* ── Editorial Dispatch Layout Utilities (Russian Expedition Template) ── */
+.vertical-rl {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.editorial-ghost-text {
+  font-size: clamp(3.5rem, 14vw, 12rem);
+  line-height: 0.82;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.13);
+  text-shadow: 0 0 80px rgba(255, 255, 255, 0.06);
+  user-select: none;
+  pointer-events: none;
+}
+
+.editorial-step-line {
+  width: 1px;
+  height: 52px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.08));
+}
+
+@keyframes editorialProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-editorial-progress {
+  animation: editorialProgress 10s linear forwards;
+}
+
+@keyframes editorialFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-editorial-fade {
+  animation: editorialFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+

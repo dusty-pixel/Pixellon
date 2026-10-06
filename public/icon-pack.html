@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pixellon Brand Kit — Official Stingray Pixel Icon Pack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,300..800;1,6..12,300..800&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pixel-blue: #1D4ED8;
+      --signal-blue: #4F7CFF;
+      --deep-ink: #0B1533;
+      --grid-tint: #E8EFFF;
+      --paper: #FFFFFF;
+      --border-color: #0B1533;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      background-color: var(--paper);
+      color: var(--deep-ink);
+      line-height: 1.5;
+      padding: 32px 24px 80px;
+    }
+
+    /* Dot grid background from brand kit */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(#CBD5E1 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container { max-width: 1280px; margin: 0 auto; }
+
+    header {
+      border-bottom: 3px solid var(--deep-ink);
+      padding-bottom: 24px;
+      margin-bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .brand-title {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 38px;
+      letter-spacing: -0.02em;
+      color: var(--deep-ink);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-tag {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 13px;
+      background: var(--pixel-blue);
+      color: var(--paper);
+      padding: 4px 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 3px 3px 0 var(--deep-ink);
+    }
+
+    .stingray-tag {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 13px;
+      background: var(--signal-blue);
+      color: var(--deep-ink);
+      padding: 4px 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      box-shadow: 3px 3px 0 var(--deep-ink);
+    }
+
+    .subtitle { font-size: 15px; color: #475569; margin-top: 6px; }
+
+    /* Category Navigation */
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--deep-ink);
+      padding-bottom: 12px;
+    }
+
+    .category-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 14px;
+      padding: 8px 16px;
+      border: 2px solid var(--deep-ink);
+      background: var(--paper);
+      color: var(--deep-ink);
+      cursor: pointer;
+      box-shadow: 3px 3px 0 var(--deep-ink);
+      transition: all 0.1s ease;
+    }
+
+    .cat-btn:hover { background: var(--grid-tint); }
+
+    .cat-btn.active {
+      background: var(--deep-ink);
+      color: #FFF;
+      box-shadow: 3px 3px 0 var(--signal-blue);
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-input {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border: 2px solid var(--deep-ink);
+      box-shadow: 3px 3px 0 var(--deep-ink);
+      width: 220px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--pixel-blue);
+    }
+
+    /* Treatment Modes */
+    .treatment-modes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .mode-card {
+      border: 2px solid var(--deep-ink);
+      box-shadow: 3px 3px 0 var(--deep-ink);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .mode-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 var(--deep-ink);
+    }
+
+    .mode-card.active { outline: 3px solid var(--signal-blue); }
+
+    .mode-card h4 {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 13px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .mode-card span { font-family: monospace; font-size: 11px; opacity: 0.85; }
+
+    /* Controls Bar */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      background: var(--paper);
+      border: 2px solid var(--deep-ink);
+      box-shadow: 4px 4px 0 var(--deep-ink);
+      padding: 12px 18px;
+      margin-bottom: 28px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .control-label {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #334155;
+    }
+
+    .btn-toggle {
+      font-family: 'Nunito Sans', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 5px 12px;
+      border: 2px solid var(--deep-ink);
+      background: var(--paper);
+      color: var(--deep-ink);
+      cursor: pointer;
+      transition: all 0.1s ease;
+    }
+
+    .btn-toggle:hover { background: var(--grid-tint); }
+
+    .btn-toggle.active {
+      background: var(--pixel-blue);
+      color: var(--paper);
+      box-shadow: 2px 2px 0 var(--deep-ink);
+    }
+
+    .btn-action {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 13px;
+      padding: 6px 14px;
+      background: var(--pixel-blue);
+      color: #FFF;
+      border: 2px solid var(--deep-ink);
+      box-shadow: 3px 3px 0 var(--deep-ink);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.1s ease;
+    }
+
+    .btn-action:hover {
+      background: #1e40af;
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--deep-ink);
+    }
+
+    /* Icon Grid */
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 44px;
+    }
+
+    .icon-card {
+      border: 2px solid var(--deep-ink);
+      box-shadow: 4px 4px 0 var(--deep-ink);
+      padding: 22px 18px 16px;
+      background: var(--paper);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+    }
+
+    .icon-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 7px 7px 0 var(--deep-ink);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 10px;
+      padding: 2px 6px;
+      background: var(--grid-tint);
+      border: 1px solid var(--deep-ink);
+      color: var(--pixel-blue);
+      text-transform: uppercase;
+    }
+
+    .icon-stage {
+      width: 130px;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 16px;
+      border: 1px dashed #CBD5E1;
+      background: rgba(248, 250, 252, 0.6);
+      transition: all 0.2s ease;
+    }
+
+    /* Show grid overlay */
+    .icon-stage.show-grid::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(79, 124, 255, 0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(79, 124, 255, 0.15) 1px, transparent 1px);
+      background-size: 8.125px 8.125px;
+      pointer-events: none;
+    }
+
+    /* Theme treatment overrides on the icon stage */
+    body[data-theme="primary"] .icon-stage { background: #FFFFFF; color: var(--pixel-blue); border-color: #CBD5E1; }
+    body[data-theme="on-dark"] .icon-stage { background: var(--deep-ink); color: var(--signal-blue); border-color: #1e293b; }
+    body[data-theme="knockout"] .icon-stage { background: var(--pixel-blue); color: #FFFFFF; border-color: #1e40af; }
+    body[data-theme="tinted"] .icon-stage { background: var(--grid-tint); color: var(--pixel-blue); border-color: #bfdbfe; }
+    body[data-theme="mono"] .icon-stage { background: #FFFFFF; color: var(--deep-ink); border-color: #94a3b8; }
+
+    .icon-svg {
+      width: 64px;
+      height: 64px;
+      shape-rendering: crispEdges;
+      transition: width 0.15s ease, height 0.15s ease;
+    }
+
+    /* Stepped Kinetic Motion */
+    @keyframes steppedFlap {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.78) scaleX(1.08); }
+    }
+
+    .animate-swim {
+      animation: steppedFlap 1.4s steps(3, end) infinite;
+    }
+
+    .icon-name {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--deep-ink);
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .icon-desc {
+      font-size: 12px;
+      color: #64748B;
+      text-align: center;
+      margin-bottom: 14px;
+      min-height: 34px;
+    }
+
+    .icon-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .copy-btn {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 6px 4px;
+      background: var(--paper);
+      border: 1.5px solid var(--deep-ink);
+      color: var(--deep-ink);
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 2px 2px 0 var(--deep-ink);
+      transition: all 0.1s ease;
+      text-align: center;
+    }
+
+    .copy-btn:hover { background: var(--grid-tint); }
+    .copy-btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--deep-ink); }
+
+    .download-btn {
+      grid-column: span 2;
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      padding: 5px;
+      background: var(--grid-tint);
+      border: 1.5px solid var(--deep-ink);
+      color: var(--pixel-blue);
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 2px 2px 0 var(--deep-ink);
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .download-btn:hover { background: #dbeafe; }
+
+    /* Size scaling classes */
+    body[data-size="16"] .icon-svg { width: 16px; height: 16px; }
+    body[data-size="24"] .icon-svg { width: 24px; height: 24px; }
+    body[data-size="32"] .icon-svg { width: 32px; height: 32px; }
+    body[data-size="48"] .icon-svg { width: 48px; height: 48px; }
+    body[data-size="64"] .icon-svg { width: 64px; height: 64px; }
+    body[data-size="96"] .icon-svg { width: 96px; height: 96px; }
+
+    /* Specs Box */
+    .specs-box {
+      border: 2px solid var(--deep-ink);
+      background: var(--paper);
+      box-shadow: 6px 6px 0 var(--deep-ink);
+      padding: 28px 32px;
+      margin-top: 32px;
+    }
+
+    .specs-box h3 {
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 22px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .code-block {
+      background: var(--deep-ink);
+      color: #E2E8F0;
+      padding: 18px 20px;
+      font-family: monospace;
+      font-size: 13px;
+      border: 1.5px solid var(--signal-blue);
+      box-shadow: 4px 4px 0 var(--deep-ink);
+      overflow-x: auto;
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+
+    .code-block .token-kw { color: #F472B6; }
+    .code-block .token-fn { color: #60A5FA; }
+    .code-block .token-str { color: #34D399; }
+    .code-block .token-cmt { color: #94A3B8; font-style: italic; }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--deep-ink);
+      color: #FFF;
+      padding: 10px 20px;
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 14px;
+      box-shadow: 4px 4px 0 var(--signal-blue);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.2s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body data-theme="primary" data-size="64">
+
+  <div class="container">
+    <header>
+      <div>
+        <h1 class="brand-title">
+          Pixellon
+          <span class="brand-tag">Brand Kit V1.0</span>
+          <span class="stingray-tag">Stingray Production Suite</span>
+        </h1>
+        <p class="subtitle">Complete 20-Glyph Pixel Icon Pack · React Component & SVG Export Library</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-action" onclick="downloadAllSVGs()">
+          ⬇ Download All 20 SVGs
+        </button>
+        <a href="/" style="text-decoration: none;">
+          <button class="btn-toggle active" style="padding: 9px 16px; font-family: 'Pixelify Sans'; font-size: 13px;">
+            ← Pixellon App
+          </button>
+        </a>
+      </div>
+    </header>
+
+    <!-- Category Filters & Search -->
+    <div class="filter-bar">
+      <div class="category-tabs">
+        <button class="cat-btn active" onclick="filterCategory('All')">All Glyphs (20)</button>
+        <button class="cat-btn" onclick="filterCategory('Brand')">Brand & Mascot</button>
+        <button class="cat-btn" onclick="filterCategory('System')">System & UI</button>
+        <button class="cat-btn" onclick="filterCategory('Gaming')">Gaming & Rank</button>
+        <button class="cat-btn" onclick="filterCategory('Community')">Community</button>
+        <button class="cat-btn" onclick="filterCategory('AI & ML')">AI & Developer</button>
+      </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search icons..." oninput="handleSearch()" />
+      </div>
+    </div>
+
+    <!-- Treatment Selector (Directly from PDF Brand Kit) -->
+    <div class="treatment-modes">
+      <div class="mode-card active" onclick="setTheme('primary')" style="background: #FFFFFF; color: #1D4ED8;">
+        <h4>01 PRIMARY</h4>
+        <span>#1D4ED8 · Pixel Blue</span>
+      </div>
+      <div class="mode-card" onclick="setTheme('on-dark')" style="background: #0B1533; color: #4F7CFF; border-color: #4F7CFF;">
+        <h4>02 ON DARK</h4>
+        <span>#4F7CFF on Deep Ink</span>
+      </div>
+      <div class="mode-card" onclick="setTheme('knockout')" style="background: #1D4ED8; color: #FFFFFF; border-color: #0B1533;">
+        <h4>03 KNOCKOUT</h4>
+        <span>#FFFFFF on Pixel Blue</span>
+      </div>
+      <div class="mode-card" onclick="setTheme('tinted')" style="background: #E8EFFF; color: #1D4ED8; border-color: #1D4ED8;">
+        <h4>04 TINTED FILL</h4>
+        <span>#E8EFFF fill / #1D4ED8</span>
+      </div>
+      <div class="mode-card" onclick="setTheme('mono')" style="background: #FFFFFF; color: #0B1533;">
+        <h4>05 MONO INK</h4>
+        <span>#0B1533 · Deep Ink</span>
+      </div>
+    </div>
+
+    <!-- Controls Toolbar -->
+    <div class="toolbar">
+      <div class="control-group">
+        <span class="control-label">Scale:</span>
+        <button class="btn-toggle" onclick="setSize('16')">16px</button>
+        <button class="btn-toggle" onclick="setSize('24')">24px</button>
+        <button class="btn-toggle" onclick="setSize('32')">32px</button>
+        <button class="btn-toggle" onclick="setSize('48')">48px</button>
+        <button class="btn-toggle active" onclick="setSize('64')">64px</button>
+        <button class="btn-toggle" onclick="setSize('96')">96px</button>
+      </div>
+
+      <div class="control-group">
+        <button class="btn-toggle active" id="toggleGridBtn" onclick="toggleGrid()">Grid Lines: ON</button>
+        <button class="btn-toggle" id="toggleMotionBtn" onclick="toggleMotion()">Stepped Motion: OFF</button>
+      </div>
+    </div>
+
+    <!-- Icon Grid -->
+    <div class="icon-grid" id="iconGrid"></div>
+
+    <!-- Integration Guide -->
+    <div class="specs-box">
+      <h3>
+        <span style="background: var(--signal-blue); color: var(--deep-ink); padding: 2px 8px; font-size: 14px; font-weight: 700;">REACT USAGE</span>
+        How to Use In Your Application
+      </h3>
+      <p style="font-size: 14px; color: #475569; margin-top: 6px;">
+        All 20 icons are packaged into <code>src/components/icons/StingrayIcons.jsx</code> and static SVGs in <code>public/icons/</code>.
+      </p>
+
+      <div class="code-block">
+<span class="token-cmt">// 1. Import named icons or universal StingrayIcon component:</span>
+<span class="token-kw">import</span> { PRayIcon, StingrayGearIcon, StingrayTrophyIcon, StingrayIcon } <span class="token-kw">from</span> <span class="token-str">'./components/icons/StingrayIcons'</span>;
+
+<span class="token-cmt">// 2. Render directly in any button, navigation bar, or badge:</span>
+&lt;<span class="token-fn">PRayIcon</span> size={<span class="token-str">24</span>} color={<span class="token-str">"#1D4ED8"</span>} /&gt;
+&lt;<span class="token-fn">StingrayGearIcon</span> size={<span class="token-str">20</span>} className={<span class="token-str">"hover:text-blue-500"</span>} /&gt;
+&lt;<span class="token-fn">StingrayIcon</span> name={<span class="token-str">"download"</span>} size={<span class="token-str">16</span>} /&gt;
+      </div>
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast">SVG Copied!</div>
+
+  <script>
+    const ICONS_DATA = [
+      { id: "p-ray", name: "Pixellon P-Ray", cat: "Brand", desc: "Flagship mark fusing 'P' logo inside diamond ray.", path: "M11 1h2v1h2v1h2v1h2v2h2v2h2v2h-1v2h-2v1h-2v1h-2v1h-1v1h-1v1h-1v1h1v2h-1v2h1v3h-2v-3h-1v-2h1v-2h-1v-1h-1v-1h-1v-1h-1v-1h-2v-1h-2v-1h-2v-1H1v-2H0V8h2V6h2V4h2V3h2V2h2V1h1zm-2 4v8h2v-2h3v-1h1V6h-1V5H9zm2 2h2v2h-2V7z" },
+      { id: "stealth-ray", name: "Stealth Diamond Ray", cat: "Brand", desc: "Aggressive 45° wing sweep & stepped whip tail.", path: "M11 1h2v1h2v1h2v1h2v2h2v2h2v2h-1v2h-2v1h-2v1h-2v1h-1v1h-1v1h-1v1h1v2h-1v2h1v3h-2v-3h-1v-2h1v-2h-1v-1h-1v-1h-1v-1h-1v-1h-2v-1h-2v-1h-2v-1H1v-2H0V8h2V6h2V4h2V3h2V2h2V1h1zm-1 5H9v2h1V6zm4 0h1v2h-1V6zm-6 4H6v2h2v-2zm8 0h2v2h-2v-2z" },
+      { id: "manta-ray", name: "Bio-Mecha Manta", cat: "Brand", desc: "Cephalic horns & bioluminescent dot array.", path: "M8 1h2v2H8V1zm6 0h2v2h-2V1zm-4 2h4v2h-4V3zM6 3h2v2H6V3zm10 0h2v2h-2V3zM4 5h2v2H4V5zm14 0h2v2h-2V5zM2 7h2v2H2V7zm18 0h2v2h-2V7zM0 9h2v2H0V9zm22 0h2v2h-2V9zM0 11h2v2h2v1h2v1h2v1h2v1h1v1h-1v2h-1v2h2v1h2v-2h-1v-2h1v-2h1v-1h2v-1h2v-1h2v-1h2v-2h2v-2h-2v2h-2v2h-2v1h-2v1h-2v1h-2v-3h-2v3h-2v-1H8v-1H6v-1H4v-2H2v-2H0v2zm8-2h2v2H8V9zm6 0h2v2h-2V9zm-5 4h2v2H9v-2zm4 0h2v2h-2v-2z" },
+      { id: "gear", name: "Stingray Gear", cat: "System", desc: "Mechanical cog with 45° ray wing teeth for settings.", path: "M9 1h6v3h-1v1h2v-1h3v4h-1v2h2v2h-2v2h1v4h-3v-1h-2v1h1v3H9v-3h1v-1H8v1H5v-4h1v-2H4v-2h2V9H5V5h3v1h2V5H9V1zm0 7v8h6V8H9zm2 2h2v4h-2v-4z" },
+      { id: "trophy", name: "Stingray Trophy", cat: "Gaming", desc: "Championship cup with manta handles & rank star.", path: "M4 3h16v2h2v4h-1v3h-2v2h-2v2h-2v2h3v2H6v-2h3v-2H7v-2H5v-2H3V9H2V5h2V3zm1 2v3h1V5H5zm13 0v3h1V5h-1zm-8 1h4v2h2v2h-2v2h-4v-2H8V8h2V6zm1 2v2h2V8h-2z" },
+      { id: "download", name: "Download Glider", cat: "System", desc: "Deep-dive ray glider with descending arrow.", path: "M11 2h2v8h3l-4 5-4-5h3V2zM1 12h2v2h2v1h2v1h2v1h6v-1h2v-1h2v-1h2v-2h2v2h-1v2h-2v2h-2v1h-2v1h-1v1h1v2h-1v2h-2v-2h1v-2h-1v-1h-2v-1H9v-1H7v-2H5v-2H3v-2H1v-2z" },
+      { id: "upload", name: "Upload Glider", cat: "System", desc: "Ascending surface glider with upload arrow.", path: "M12 2l4 5h-3v8h-2V7H8l4-5zm-9 14h2v2h2v1h2v1h2v1h6v-1h2v-1h2v-1h2v-2h2v2h-1v2h-2v2h-2v1h-2v1h-6v-1H7v-1H5v-2H3v-2H1v-2h2v2z" },
+      { id: "chat", name: "Stingray Chat", cat: "Community", desc: "Conversation balloon with sting barb pointer.", path: "M3 3h18v14H7v2H5v2H3v-2h2v-2H3V3zm3 6h2v2H6V9zm5 0h2v2h-2V9zm5 0h2v2h-2V9z" },
+      { id: "verified", name: "Stingray Verified", cat: "Community", desc: "Octagonal stepped authenticity seal.", path: "M8 2h8v2h3v3h2v8h-2v3h-3v2H8v-2H5v-3H3V7h2V4h3V2zm3 5h2v2h2v2h2v2h-2v2h-2v2h-2v-2H9v-2H7v-2h2V9h2V7zm1 4h-1v1h1v1h1v-1h-1v-1z" },
+      { id: "gamepad", name: "Stingray Gamepad", cat: "Gaming", desc: "Manta-wing controller grips with D-pad & buttons.", path: "M4 4h16v2h2v5h-1v3h-2v4h-3v-2h-1v-2H9v2H8v2H5v-4H3v-3H2V6h2V4zm4 4H6v2h2v2h2v-2H8V8zm8 0h2v2h-2V8zm-2 2h2v2h-2v-2zm4 0h2v2h-2v-2zm-2 2h2v2h-2v-2zm-5-3h2v1h-2V7z" },
+      { id: "shield", name: "Stingray Shield", cat: "System", desc: "Protective mantle aegis with reinforced spine.", path: "M1 2h22v5h-1v3h-2v3h-2v3h-2v2h-2v2h-2v2h-2v-2H8v-2H6v-2H4v-3H2v-3H1V2zm10 3v13h2V5h-2zm-5 2v3h2V7H6zm10 0h2v3h-2V7z" },
+      { id: "neural-ai", name: "Aquatic AI Neural Spine", cat: "AI & ML", desc: "Central neural bus channel branching across wings.", path: "M11 1h2v3h-2V1zm-4 3h2v3H7V4zm8 0h2v3h-2V4zm-7 4h10v2H6V8zm5 3h2v10h-2V11zm-8 1h3v2H3v-2zm15 0h3v2h-3v-2zm-6 4h4v2h-4v-2zm-6 0h4v2H7v-2zm3 4h4v2h-4v-2z" },
+      { id: "sonar", name: "Stingray Sonar (Radar)", cat: "System", desc: "Echolocation pulse arcs for search & scanning.", path: "M9 1h6v2H9V1zm-4 3h2v2H5V4zm12 0h2v2h-2V4zM2 7h2v3H2V7zm18 0h2v3h-2V7zm-9 6h2v1h2v1h2v1h-1v1h-1v1h-1v2h-1v3h-2v-3h-1v-2H8v-1H7v-1H6v-1h2v-1h2v-1h1zm-1-4h4v2h-4V9z" },
+      { id: "terminal", name: "Abyssal Terminal", cat: "AI & ML", desc: "Undersea code terminal with stingray crest.", path: "M2 3h20v18H2V3zm2 2v14h16V5H4zm3 3h3v1h1v1h-1v1H7v2h2v-1h1v-1h1V9h-1V8H7V8zm6 6h5v2h-5v-2zM9 1h6v2H9V1z" },
+      { id: "bolt", name: "Electric Ray Bolt", cat: "System", desc: "Bio-electric ray discharging high voltage.", path: "M11 0h4v4h4v3h-3v3h5v2h-2v2h-2v2h-3v-1h-1v-1h-1v-1h-2v4h-2v-4H8v-2H6v-2H4v-2H2v-1h3V9h4V5h2V0zm0 7h-2v2h2V7zm2 4h2v2h-2v-2z" },
+      { id: "star", name: "Bioluminescent Star", cat: "Community", desc: "4-point glow star with barb facets for favorites.", path: "M11 1h2v5h2v2h2v2h5v2h-5v2h-2v2h-2v5h-2v-5H9v-2H7v-2H2v-2h5V9h2V7h2V1zm0 8H9v2h2v2h2v-2h2V9h-2V7h-2v2z" },
+      { id: "user", name: "Stingray Avatar User", cat: "Community", desc: "Pixel avatar profile with stingray collar.", path: "M9 2h6v2h2v4h-2v2H9V8H7V4h2V2zm-5 9h16v2h2v7h-1v2H3v-2H2v-7h2v-2zm3 4v3h10v-3H7z" },
+      { id: "search", name: "Stingray Search", cat: "System", desc: "Magnifying lens with stingray barb grip.", path: "M5 2h10v2h2v2h2v6h-2v2h-2v2H5v-2H3v-2H1V6h2V4h2V2zm2 4v4h6V6H7zm8 9h2v2h-2v-2zm2 2h2v2h-2v-2zm2 2h3v3h-3v-3z" },
+      { id: "folder", name: "Stingray Folder", cat: "System", desc: "Repository project folder with wing tab.", path: "M2 3h7v2h11v2h2v13H2V3zm2 4v11h16V7h-7V5H4v2z" },
+      { id: "cube", name: "Hydrofoil Voxel", cat: "AI & ML", desc: "Modular 3D data block with hydrofoil wings.", path: "M11 2h2v2h4v2h3v2h2v4h-2v2h-3v2h-4v2h-2v2h-2v-2H7v-2H4v-2H2v-4h2V8h3V6h4V4h2V2zm-3 6v4h8V8H8zm2 2h4v1h-4v-1z" }
+    ];
+
+    let currentCategory = 'All';
+    let searchQuery = '';
+
+    function renderIcons() {
+      const grid = document.getElementById('iconGrid');
+      grid.innerHTML = '';
+
+      const filtered = ICONS_DATA.filter(icon => {
+        const matchesCat = currentCategory === 'All' || icon.cat === currentCategory;
+        const matchesSearch = icon.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                              icon.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                              icon.id.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 48px; font-family: 'Pixelify Sans'; font-size: 18px; color: #94A3B8;">No icons found matching "${searchQuery}"</div>`;
+        return;
+      }
+
+      filtered.forEach(icon => {
+        const card = document.createElement('div');
+        card.className = 'icon-card';
+        card.innerHTML = `
+          <span class="card-badge">${icon.cat}</span>
+          <div class="icon-stage show-grid">
+            <svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="${icon.path}" />
+            </svg>
+          </div>
+          <div class="icon-name">${icon.name}</div>
+          <div class="icon-desc">${icon.desc}</div>
+          <div class="icon-actions">
+            <button class="copy-btn" onclick="copySVG('${icon.id}')">Copy SVG</button>
+            <button class="copy-btn" onclick="copyJSX('${icon.id}')">Copy JSX</button>
+            <a href="/icons/${icon.id}.svg" download="${icon.id}.svg" class="download-btn">⬇ Download .SVG</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === 'All' && btn.innerText.includes('All')));
+      });
+      renderIcons();
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('searchInput').value;
+      renderIcons();
+    }
+
+    function setTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      document.querySelectorAll('.mode-card').forEach(card => card.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+
+    function setSize(size) {
+      document.body.setAttribute('data-size', size);
+      document.querySelectorAll('.toolbar .btn-toggle').forEach(btn => {
+        if (btn.innerText.includes('px')) btn.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+    }
+
+    let gridOn = true;
+    function toggleGrid() {
+      gridOn = !gridOn;
+      const stages = document.querySelectorAll('.icon-stage');
+      stages.forEach(s => s.classList.toggle('show-grid', gridOn));
+      const btn = document.getElementById('toggleGridBtn');
+      btn.innerText = gridOn ? 'Grid Lines: ON' : 'Grid Lines: OFF';
+      btn.classList.toggle('active', gridOn);
+    }
+
+    let motionOn = false;
+    function toggleMotion() {
+      motionOn = !motionOn;
+      const svgs = document.querySelectorAll('.icon-svg');
+      svgs.forEach(s => s.classList.toggle('animate-swim', motionOn));
+      const btn = document.getElementById('toggleMotionBtn');
+      btn.innerText = motionOn ? 'Stepped Motion: ON' : 'Stepped Motion: OFF';
+      btn.classList.toggle('active', motionOn);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function copySVG(id) {
+      const icon = ICONS_DATA.find(i => i.id === id);
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" shape-rendering="crispEdges">\n  <path d="${icon.path}" />\n</svg>`;
+      navigator.clipboard.writeText(svg).then(() => showToast(`Copied ${icon.name} SVG!`));
+    }
+
+    function copyJSX(id) {
+      const icon = ICONS_DATA.find(i => i.id === id);
+      const jsx = `<StingrayIcon name="${icon.id}" size={24} />`;
+      navigator.clipboard.writeText(jsx).then(() => showToast(`Copied JSX Component!`));
+    }
+
+    function downloadAllSVGs() {
+      ICONS_DATA.forEach((icon, i) => {
+        setTimeout(() => {
+          const a = document.createElement('a');
+          a.href = `/icons/${icon.id}.svg`;
+          a.download = `${icon.id}.svg`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }, i * 150);
+      });
+      showToast('Downloading all 20 SVG icons...');
+    }
+
+    // Initial render
+    renderIcons();
+  </script>
+</body>
+</html>

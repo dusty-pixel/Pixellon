@@ -26,6 +26,7 @@ const mapGameData = (game) => {
  * Fetch generic list of games with specific params
  */
 const fetchGames = async (params = '') => {
+  if (!API_KEY) return [];
  try {
  const res = await fetch(`${BASE_URL}/games?key=${API_KEY}&${params}`, { signal: AbortSignal.timeout(8000) });
  if (!res.ok) throw new Error('Failed to fetch games');
@@ -189,17 +190,59 @@ export const getFreeGames = async (platform = 'all', sortBy = 'release-date', ca
 };
 
 export const getGamingNews = async () => {
- try {
- // Using rss2json to convert IGN's RSS feed to JSON
- const rssUrl = encodeURIComponent('https://feeds.feedburner.com/ign/news');
- const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}&api_key=`);
- if (!res.ok) throw new Error('Failed to fetch news');
- const data = await res.json();
- return data.items || [];
- } catch (error) {
- console.error('Error fetching news:', error);
- return [];
- }
+  const feeds = [
+    'https://feeds.feedburner.com/ign/news',
+    'https://www.pcgamer.com/rss',
+    'https://www.gamespot.com/feeds/mashup/'
+  ];
+
+  try {
+    const results = await Promise.allSettled(
+      feeds.map(async (url) => {
+        const rssUrl = encodeURIComponent(url);
+        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}&api_key=`, {
+          signal: AbortSignal.timeout(6000)
+        });
+        if (!res.ok) throw new Error(`Feed fetch failed: ${url}`);
+        const data = await res.json();
+        return data.items || [];
+      })
+    );
+
+    const allArticles = [];
+    const seenTitles = new Set();
+    const normalize = (t) => (t || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    const fallbackImgs = [
+      'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80',
+      'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/capsule_616x353.jpg',
+      'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/capsule_616x353.jpg',
+      'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1145360/capsule_616x353.jpg',
+      'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2420660/capsule_616x353.jpg'
+    ];
+
+    let fbIdx = 0;
+    for (const r of results) {
+      if (r.status === 'fulfilled' && Array.isArray(r.value)) {
+        for (const item of r.value) {
+          const norm = normalize(item.title);
+          if (norm && !seenTitles.has(norm)) {
+            seenTitles.add(norm);
+            if (!item.enclosure?.link && !item.thumbnail) {
+              item.thumbnail = fallbackImgs[fbIdx % fallbackImgs.length];
+              fbIdx++;
+            }
+            allArticles.push(item);
+          }
+        }
+      }
+    }
+
+    return allArticles;
+  } catch (error) {
+    console.error('Error fetching gaming news:', error);
+    return [];
+  }
 };
 
 export const getTopStreams = async (gameName = '') => {

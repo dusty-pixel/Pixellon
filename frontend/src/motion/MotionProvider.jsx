@@ -69,9 +69,6 @@ export function MotionProvider({ children }) {
       rawY.set(clientY)
       rawNX.set(clientX / window.innerWidth - 0.5)
       rawNY.set(clientY / window.innerHeight - 0.5)
-      const root = document.documentElement
-      root.style.setProperty('--mouse-x', `${clientX}px`)
-      root.style.setProperty('--mouse-y', `${clientY}px`)
     }
 
     const onMove = (e) => {

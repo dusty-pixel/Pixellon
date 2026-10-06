@@ -35,19 +35,19 @@ function GameCardInner({
     return (
       <article
         onClick={onClick}
-        className="group flex flex-col h-full overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface transition-all duration-300 hover:border-brand-primary hover:shadow-[0_0_20px_rgba(2,132,199,0.25)] hover:-translate-y-1 cursor-pointer shadow-sm"
+        className="group flex flex-col h-full overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface transition-colors duration-200 hover:border-brand-primary cursor-pointer shadow-sm"
       >
-        <div className="relative aspect-[16/9] w-full overflow-hidden">
+        <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#070B12]">
           <img
             src={image}
             alt={title}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="h-full w-full object-cover object-center"
             loading="lazy"
           />
 
           {/* Tag */}
           {tag && (
-            <div className="absolute left-3 top-3">
+            <div className="absolute left-3 top-3 z-20">
               <span className={`inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-mono font-semibold backdrop-blur-md border ${TAG_COLORS[tagColor] || TAG_COLORS.blue}`}>
                 {tag}
               </span>
@@ -56,7 +56,7 @@ function GameCardInner({
 
           {/* Rating */}
           {rating && (
-            <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg border border-surface-700 bg-brand-surface/90 shadow-md backdrop-blur-sm">
+            <div className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-lg border border-surface-700 bg-brand-surface/90 shadow-md backdrop-blur-sm">
               <span className="text-xs font-bold font-mono text-brand-accent">{rating}</span>
             </div>
           )}
@@ -86,13 +86,13 @@ function GameCardInner({
     return (
       <article
         onClick={onClick}
-        className="group flex gap-4 rounded-xl border border-surface-700 bg-brand-surface p-3 transition-all duration-200 hover:border-brand-primary/50 hover:shadow-md cursor-pointer shadow-sm"
+        className="group flex gap-4 rounded-xl border border-surface-700 bg-brand-surface p-3 transition-colors duration-150 hover:border-brand-primary/50 cursor-pointer shadow-sm"
       >
         <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg">
           <img
             src={image}
             alt={title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover"
             loading="lazy"
           />
           {rating && (
@@ -122,18 +122,18 @@ function GameCardInner({
   return (
     <article
       onClick={onClick}
-      className="group flex flex-col h-full overflow-hidden rounded-xl border border-surface-700 bg-brand-surface transition-all duration-200 hover:border-brand-primary hover:shadow-[0_0_16px_rgba(2,132,199,0.2)] hover:-translate-y-1 cursor-pointer shadow-sm"
+      className="group flex flex-col h-full overflow-hidden rounded-xl border border-surface-700 bg-brand-surface transition-colors duration-150 hover:border-brand-primary cursor-pointer shadow-sm"
     >
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <div className="relative aspect-[16/10] overflow-hidden bg-[#070B12]">
         <img
           src={image}
           alt={title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="h-full w-full object-cover object-center"
           loading="lazy"
         />
 
         {tag && (
-          <div className="absolute left-3 top-3">
+          <div className="absolute left-3 top-3 z-20">
             <span className={`inline-flex items-center rounded px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider border ${TAG_COLORS[tagColor] || TAG_COLORS.blue}`}>
               {tag}
             </span>
@@ -141,7 +141,7 @@ function GameCardInner({
         )}
 
         {rating && (
-          <div className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-lg border border-surface-700 bg-brand-surface/90 shadow-sm backdrop-blur-sm">
+          <div className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-lg border border-surface-700 bg-brand-surface/90 shadow-sm backdrop-blur-sm">
             <span className="text-xs font-mono font-bold text-brand-accent">{rating}</span>
           </div>
         )}
@@ -183,10 +183,8 @@ function GameCardInner({
 export default function GameCard(props) {
   const compact = props.variant === 'compact'
   return (
-    <div data-cursor="game" className={compact ? '' : 'h-full'}>
-      <ParallaxCard className={compact ? '' : 'h-full'} glow={!compact}>
-        <GameCardInner {...props} />
-      </ParallaxCard>
+    <div className={compact ? '' : 'h-full'}>
+      <GameCardInner {...props} />
     </div>
   )
 }

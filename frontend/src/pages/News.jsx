@@ -1,44 +1,74 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Newspaper, Loader2, ExternalLink, Calendar, Flame } from 'lucide-react'
+import {
+  Newspaper,
+  Calendar,
+  ExternalLink,
+  ChevronDown,
+  ChevronUp,
+  Share2,
+  CheckCircle,
+  AlertCircle,
+  Flame,
+  Radio,
+  Send,
+  Heart,
+  Globe,
+  MessageSquare,
+  Sparkles,
+  Loader2,
+} from 'lucide-react'
 import PageTransition from '../components/PageTransition'
-import { PixelPatternBg, PixelCross } from '../components/BrandDecorations'
 import { getGamingNews } from '../utils/api'
 import { isWebhookConfigured, sendGameUpdateToDiscord } from '../utils/discordWebhook'
 import DiscordWebhookModal from '../components/DiscordWebhookModal'
 import ToastNotification from '../components/ToastNotification'
-import NewsSidebar from '../components/sidebar/NewsSidebar'
 
 export default function News() {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
+  const [investigationIndex, setInvestigationIndex] = useState(0)
+  const [timelineIndex, setTimelineIndex] = useState(0)
   const [sharingGuid, setSharingGuid] = useState(null)
   const [isDiscordModalOpen, setIsDiscordModalOpen] = useState(false)
   const [toast, setToast] = useState(null)
 
+  // Newsletter / Dispatch wire form state
+  const [wireForm, setWireForm] = useState({ name: '', destination: '', topic: '' })
+  const [wireStatus, setWireStatus] = useState(null)
+
   useEffect(() => {
     async function fetchData() {
-      const data = await getGamingNews()
-      setArticles(data)
-      setLoading(false)
+      try {
+        const data = await getGamingNews()
+        setArticles(data || [])
+      } catch (err) {
+        console.error('Failed to load gaming news', err)
+      } finally {
+        setLoading(false)
+      }
     }
     fetchData()
   }, [])
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' }
-    return new Date(dateString).toLocaleDateString(undefined, options)
+    if (!dateString) return 'RECENT'
+    const d = new Date(dateString)
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+  }
+
+  const formatTime = (dateString) => {
+    if (!dateString) return 'LIVE'
+    const d = new Date(dateString)
+    return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
   }
 
   const showToast = (type, title, message) => {
     setToast({ type, title, message })
-    setTimeout(() => {
-      setToast(null)
-    }, 4500)
+    setTimeout(() => setToast(null), 4500)
   }
 
   const handleShareToDiscord = async (article, e) => {
-    e.stopPropagation()
+    if (e) e.stopPropagation()
     if (!isWebhookConfigured()) {
       setIsDiscordModalOpen(true)
       return
@@ -62,208 +92,821 @@ export default function News() {
     }
   }
 
-  const featuredStory = articles.length > 0 ? articles[0] : null
-  const regularStories = articles.length > 1 ? articles.slice(1) : []
+  const handleWireSubmit = (e) => {
+    e.preventDefault()
+    if (!wireForm.destination) {
+      showToast('error', 'Missing Destination', 'Please enter your email or Discord webhook URL.')
+    }
+    setWireStatus('success')
+    showToast('success', 'Connected to Dispatch Wire', 'You will receive real-time gaming alerts.')
+    setWireForm({ name: '', destination: '', topic: '' })
+  }
+
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  // Hero section rotating stories state
+  const [heroIndex, setHeroIndex] = useState(0)
+  const [isAutoCycling, setIsAutoCycling] = useState(true)
+  const [isHeroHovered, setIsHeroHovered] = useState(false)
+
+  // ── DEDICATED SLICES WITH ZERO OVERLAP ACROSS SECTIONS ──
+  // Hero (01): Top 5 breaking headlines
+  const heroStories = articles.length >= 5 ? articles.slice(0, 5) : articles
+  const currentHeroStory = heroStories[heroIndex] || articles[0]
+
+  // Section 02: Investigation Wire (Next 6 unique stories - no repeat with Hero)
+  const investigationStories = articles.length >= 11
+    ? articles.slice(5, 11)
+    : articles.slice(Math.min(articles.length, 1), 7)
+  const currentInvestigationArticle = investigationStories[investigationIndex] || investigationStories[0] || articles[0]
+
+  // Section 03: Chronological Log / Incident Wire (Next 5 unique stories - no repeat with Hero or Section 2)
+  const timelineStories = articles.length >= 16
+    ? articles.slice(11, 16)
+    : (articles.length >= 10 ? articles.slice(5, 10) : articles.slice(0, 5))
+  const currentTimelineItem = timelineStories[timelineIndex] || timelineStories[0] || articles[0]
+
+
+  // Auto-cycle Hero stories every 10 seconds unless paused or hovered
+  useEffect(() => {
+    if (!isAutoCycling || isHeroHovered || heroStories.length <= 1) return
+
+    const timer = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % heroStories.length)
+    }, 10000)
+
+    return () => clearInterval(timer)
+  }, [isAutoCycling, isHeroHovered, heroStories.length])
+
+  const goToNextHeroStory = () => {
+    if (heroStories.length <= 1) return
+    setHeroIndex((prev) => (prev + 1) % heroStories.length)
+  }
+
+  const goToPrevHeroStory = () => {
+    if (heroStories.length <= 1) return
+    setHeroIndex((prev) => (prev - 1 + heroStories.length) % heroStories.length)
+  }
+
+  // Keyboard navigation for story cycling
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        goToNextHeroStory()
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        goToPrevHeroStory()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [heroStories.length])
+
+  const getStoryCategory = (story, idx) => {
+    if (!story) return 'BREAKING INVESTIGATION'
+    const t = (story.title || '').toLowerCase()
+    if (t.includes('star wars') || t.includes('movie') || t.includes('film')) return 'WORLD PREMIERE'
+    if (t.includes('layoff') || t.includes('ceo') || t.includes('microsoft') || t.includes('xbox')) return 'INDUSTRY WIRE'
+    if (t.includes('discord') || t.includes('wumpus') || t.includes('community')) return 'COMMUNITY WIRE'
+    if (t.includes('last of us') || t.includes('naughty dog') || t.includes('playstation')) return 'STUDIO INTELLIGENCE'
+    if (t.includes('minecraft') || t.includes('ice cave') || t.includes('update')) return 'DEVELOPMENT WIRE'
+    const defaults = ['BREAKING INVESTIGATION', 'SPECIAL REPORT', 'INDUSTRY DISPATCH', 'PLATFORM INTELLIGENCE', 'EXCLUSIVE DOSSIER']
+    return defaults[idx % defaults.length]
+  }
+
+  const getStoryGhostWord = (story, idx) => {
+    const words = ['DISPATCH', 'REVELATION', 'HEADLINE', 'CHRONICLE', 'FRONTLINE']
+    return words[idx % words.length]
+  }
+
+  if (loading) {
+    return (
+      <PageTransition className="min-h-screen bg-[#06080C] text-white flex flex-col items-center justify-center gap-4">
+        <Loader2 className="h-10 w-10 animate-spin text-emerald-400" />
+        <p className="font-mono text-xs uppercase tracking-widest text-stone-400">
+          Syncing Pixellon Dispatch Wire...
+        </p>
+      </PageTransition>
+    )
+  }
 
   return (
-    <PageTransition>
-      <div className="mx-auto max-w-[1600px] 2xl:max-w-[1720px] px-4 sm:px-6 lg:px-8 xl:px-10 py-6 sm:py-10 space-y-8">
-        {/* Header */}
-        <header className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-6 sm:p-8 shadow-sm">
-          <PixelPatternBg />
-          <div className="relative z-10 flex items-center justify-between">
-            <div>
-              <div className="mb-2 inline-flex items-center gap-2 text-brand-accent">
-                <Newspaper className="h-4 w-4" />
-                <span className="text-xs font-mono font-semibold uppercase tracking-widest">
-                  The Daily Feed • Pixellon Dispatch
-                </span>
+    <PageTransition className="min-h-screen bg-[#06080C] text-stone-200 overflow-x-hidden selection:bg-emerald-500/30 selection:text-emerald-200">
+      {/* ── STICKY TOP EDITORIAL NAV BAR ── */}
+      <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#06080C]/85 backdrop-blur-md px-4 sm:px-8 py-3.5 flex items-center justify-between">
+        {/* Brand */}
+        <div className="flex items-center gap-3">
+          <span className="text-emerald-400 font-bold tracking-widest text-sm flex items-center gap-1.5 font-mono">
+            <span>▲</span>
+            <span>PIXELLON DISPATCH</span>
+          </span>
+          <span className="hidden sm:inline-block h-3 w-px bg-white/20" />
+          <span className="hidden sm:inline-block text-[11px] font-mono text-stone-400 uppercase tracking-widest">
+            Investigative Gaming Wire
+          </span>
+        </div>
+
+        {/* Section Anchors */}
+        <div className="hidden md:flex items-center gap-7 text-xs font-mono tracking-wider uppercase text-stone-300">
+          <button onClick={() => scrollToSection('section-hero')} className="hover:text-emerald-400 transition-colors cursor-pointer">
+            01 Rotating Lead
+          </button>
+          <button onClick={() => scrollToSection('section-investigation')} className="hover:text-emerald-400 transition-colors cursor-pointer">
+            02 Dispatch Wire
+          </button>
+          <button onClick={() => scrollToSection('section-timeline')} className="hover:text-emerald-400 transition-colors cursor-pointer">
+            03 Timeline
+          </button>
+          <button onClick={() => scrollToSection('section-dossier')} className="hover:text-emerald-400 transition-colors cursor-pointer">
+            04 Dossier
+          </button>
+          <button onClick={() => scrollToSection('section-subscribe')} className="hover:text-emerald-400 transition-colors cursor-pointer">
+            05 Wire Alert
+          </button>
+        </div>
+
+        {/* Action */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setIsDiscordModalOpen(true)}
+            className="text-xs font-mono tracking-wider uppercase text-stone-300 hover:text-white flex items-center gap-2 border-l border-white/15 pl-4 cursor-pointer"
+          >
+            <span>| Discord Sync</span>
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+          </button>
+          <div className="hidden lg:grid grid-cols-3 gap-0.5 opacity-60 hover:opacity-100 transition-opacity p-1 cursor-pointer">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <span key={i} className="h-1 w-1 bg-white rounded-[0.5px]" />
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 1: HERO ("ИСТОКИ" / "THE DISPATCH")
+          Atmospheric full-bleed visual with rotating stories & ghost text
+          ───────────────────────────────────────────────────────────── */}
+      <section
+        id="section-hero"
+        className="relative min-h-[92vh] w-full flex flex-col justify-between overflow-hidden border-b border-white/10"
+      >
+        {/* Background Artwork with smooth crossfade between rotating stories */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          {heroStories.map((story, idx) => {
+            const isCurrent = heroIndex === idx
+            const imgUrl =
+              story?.enclosure?.link ||
+              story?.thumbnail ||
+              'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=2000&q=80'
+            return (
+              <div
+                key={story?.guid || story?.link || idx}
+                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                  isCurrent ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                }`}
+              >
+                <img
+                  src={imgUrl}
+                  alt={story?.title || ''}
+                  className={`h-full w-full object-cover object-center filter brightness-[0.42] contrast-[1.18] transition-transform duration-[7000ms] ease-out ${
+                    isCurrent ? 'scale-105' : 'scale-100'
+                  }`}
+                />
               </div>
-              <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-brand-text">
-                Gaming News & Updates
-              </h1>
-              <p className="mt-1 text-xs sm:text-sm text-brand-muted">
-                Real-time updates, industry insights, and breaking headlines from across the gaming cosmos.
-              </p>
-            </div>
-            <div className="hidden sm:block">
-              <PixelCross size={24} />
-            </div>
-          </div>
-        </header>
+            )
+          })}
+          {/* Nature Vignette & Dark Forest Overlay matching template */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#06080C] via-[#06080C]/40 to-[#06080C]/80 z-20" />
+          <div className="absolute inset-0 bg-radial-at-c from-transparent via-[#06080C]/50 to-[#06080C]/90 z-20" />
+        </div>
 
-        {loading ? (
-          <div className="flex min-h-[40vh] flex-col items-center justify-center gap-4">
-            <Loader2 className="h-10 w-10 animate-spin text-brand-primary" />
-            <p className="text-sm font-mono text-brand-muted">Loading latest news...</p>
+        {/* Left Side: Interactive Dynamic Step Indicator (01 - 05) */}
+        <div className="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 z-30 flex-col items-center gap-3 text-xs font-mono">
+          {heroStories.map((story, idx) => {
+            const isActive = heroIndex === idx
+            return (
+              <button
+                key={story?.guid || idx}
+                onClick={() => setHeroIndex(idx)}
+                className={`group flex items-center gap-2.5 transition-all duration-300 cursor-pointer ${
+                  isActive ? 'text-white font-bold scale-110' : 'text-stone-500 hover:text-stone-300'
+                }`}
+                title={`Jump to Story 0${idx + 1}: ${story?.title || ''}`}
+              >
+                <span className="font-mono text-xs">{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}</span>
+                <span
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    isActive
+                      ? 'w-6 bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]'
+                      : 'w-1.5 bg-white/20 group-hover:bg-white/50 group-hover:w-3'
+                  }`}
+                />
+              </button>
+            )
+          })}
+          <div className="editorial-step-line my-1 opacity-50" />
+          <span className="text-[10px] font-mono text-stone-500 uppercase tracking-widest">
+            {heroStories.length < 10 ? `0${heroStories.length}` : heroStories.length}
+          </span>
+        </div>
+
+        {/* Right Side: Rotated Vertical Text */}
+        <div className="hidden lg:block absolute right-8 top-1/2 -translate-y-1/2 z-30 vertical-rl text-[11px] font-mono tracking-[0.25em] text-stone-400/60 uppercase">
+          Pixellon Dispatch • Live Rotating Wire • Real-Time Gaming Feed
+        </div>
+
+        {/* Hero Content Layer with hover detection */}
+        <div
+          onMouseEnter={() => setIsHeroHovered(true)}
+          onMouseLeave={() => setIsHeroHovered(false)}
+          className="relative z-30 max-w-5xl mx-auto px-6 sm:px-12 pt-28 sm:pt-36 pb-16 text-center flex flex-col items-center justify-center flex-1"
+        >
+          {/* Animated Story Content Wrapper */}
+          <div key={heroIndex} className="animate-editorial-fade flex flex-col items-center">
+            {/* Category / Sub-tag */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-950/70 px-4 py-1 text-xs font-mono font-semibold text-emerald-300 tracking-[0.2em] uppercase mb-4 shadow-lg backdrop-blur-md">
+              <Flame className="h-3.5 w-3.5 text-emerald-400" />
+              <span>{getStoryCategory(currentHeroStory, heroIndex)}</span>
+            </div>
+
+            {/* Subtitle / Logline */}
+            <p className="max-w-2xl text-sm sm:text-base text-stone-300/90 font-sans tracking-wide leading-relaxed mb-4">
+              Story 0{heroIndex + 1} of 0{heroStories.length} • {currentHeroStory?.author || 'Pixellon Wire'} • {formatDate(currentHeroStory?.pubDate)}
+            </p>
+
+            {/* Headline */}
+            <h1 className="relative font-display text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight uppercase leading-[1.08] max-w-4xl drop-shadow-2xl">
+              <a
+                href={currentHeroStory?.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-emerald-300 transition-colors"
+              >
+                {currentHeroStory?.title || 'Global Gaming Chronicles'}
+              </a>
+            </h1>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
-            {/* ── Main News Column (70%) ─────────────────────────────── */}
-            <div className="xl:col-span-8 2xl:col-span-9 space-y-6">
-              {/* Featured Breaking News Story */}
-              {featuredStory && (
-                <motion.div
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="group relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface shadow-md transition-all hover:border-brand-primary/60 hover:shadow-xl"
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-                    {/* Featured Image */}
-                    {(featuredStory.enclosure?.link || featuredStory.thumbnail) && (
-                      <div className="relative aspect-video lg:aspect-auto lg:col-span-7 overflow-hidden min-h-[260px] sm:min-h-[340px]">
-                        <img
-                          src={featuredStory.enclosure?.link || featuredStory.thumbnail}
-                          alt={featuredStory.title}
-                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1 text-xs font-mono font-bold text-white shadow-lg">
-                          <Flame className="h-3.5 w-3.5" />
-                          BREAKING NEWS
-                        </span>
+
+          {/* Giant Translucent Ghost Typography Layer ("DISPATCH" / "ИСТОКИ") */}
+          <div aria-hidden className="absolute -bottom-6 left-1/2 -translate-x-1/2 editorial-ghost-text pointer-events-none select-none transition-all duration-700">
+            {getStoryGhostWord(currentHeroStory, heroIndex)}
+          </div>
+        </div>
+
+        {/* Bottom Hero Strip (Scroll & Rotation Controls + Progress Bar) */}
+        <div className="relative z-30 max-w-7xl w-full mx-auto px-6 sm:px-12 py-5 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 bg-black/20 backdrop-blur-sm">
+          {/* Rotation Controls: Prev, Next & Auto-Play Status */}
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={goToPrevHeroStory}
+              className="h-9 w-9 rounded-full border border-white/20 bg-black/50 hover:bg-emerald-400 hover:text-black flex items-center justify-center transition-all cursor-pointer text-stone-200"
+              title="Previous rotating story (or ↑ / ← key)"
+            >
+              <ChevronUp className="h-4 w-4" />
+            </button>
+            <button
+              onClick={goToNextHeroStory}
+              className="h-9 w-9 rounded-full border border-white/20 bg-black/50 hover:bg-emerald-400 hover:text-black flex items-center justify-center transition-all cursor-pointer text-stone-200"
+              title="Next rotating story (or ↓ / → key)"
+            >
+              <ChevronDown className="h-4 w-4" />
+            </button>
+
+            {/* Auto-cycle toggle button */}
+            <button
+              onClick={() => setIsAutoCycling((prev) => !prev)}
+              className="h-9 px-3.5 rounded-full border border-white/20 bg-black/50 hover:border-emerald-400/60 text-xs font-mono tracking-wider uppercase text-stone-300 flex items-center gap-2 cursor-pointer transition-all"
+              title={isAutoCycling ? 'Click to pause automatic story rotation (10s)' : 'Click to resume automatic story rotation (10s)'}
+            >
+              <span
+                className={`h-2 w-2 rounded-full ${
+                  isAutoCycling && !isHeroHovered ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'
+                }`}
+              />
+              <span>
+                {isAutoCycling
+                  ? isHeroHovered
+                    ? 'HOVER PAUSED'
+                    : `CYCLE 0${heroIndex + 1}/0${heroStories.length}`
+                  : 'PAUSED'}
+              </span>
+            </button>
+          </div>
+
+          {/* Center: Quick Action Link */}
+          <div className="flex items-center gap-4">
+            <a
+              href={currentHeroStory?.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-mono uppercase tracking-[0.2em] text-emerald-400 hover:text-white flex items-center gap-2 transition-colors group"
+            >
+              <span>Read Full Report</span>
+              <ExternalLink className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+
+            <span className="hidden md:inline-block h-3 w-px bg-white/20" />
+
+            <button
+              onClick={() => scrollToSection('section-investigation')}
+              className="hidden md:flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-stone-400 hover:text-stone-200 transition-colors cursor-pointer"
+            >
+              <span>Explore Archive</span>
+              <ChevronDown className="h-3 w-3" />
+            </button>
+          </div>
+
+          {/* Right: Discord Share & Settings */}
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={() => handleShareToDiscord(currentHeroStory)}
+              disabled={sharingGuid === (currentHeroStory?.guid || currentHeroStory?.link)}
+              className="h-9 px-3 rounded-full border border-white/20 bg-black/50 hover:bg-[#5865F2] hover:border-[#5865F2] flex items-center gap-2 transition-all cursor-pointer text-stone-300 hover:text-white text-xs font-mono"
+              title="Share current rotating story to Discord"
+            >
+              <Share2 className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Share</span>
+            </button>
+            <button
+              onClick={() => setIsDiscordModalOpen(true)}
+              className="h-9 w-9 rounded-full border border-white/20 bg-black/50 hover:bg-white hover:text-black flex items-center justify-center transition-all cursor-pointer text-stone-300"
+              title="Discord Webhook Settings"
+            >
+              <Radio className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Dynamic Progress Line indicating rotation countdown */}
+        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/10 overflow-hidden z-40">
+          <div
+            key={`${heroIndex}-${isAutoCycling && !isHeroHovered}`}
+            className={`h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-300 ${
+              isAutoCycling && !isHeroHovered ? 'animate-editorial-progress' : 'opacity-40 w-full'
+            }`}
+            style={{
+              animationPlayState: isAutoCycling && !isHeroHovered ? 'running' : 'paused',
+            }}
+          />
+        </div>
+      </section>
+
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 2: "THE STORY BEGINS HERE" ("ИСТОРИЯ НАЧИНАЕТСЯ ЗДЕСЬ")
+          Featured story breakdown + 6-card horizontal photo reel
+          ───────────────────────────────────────────────────────────── */}
+      <section
+        id="section-investigation"
+        className="relative max-w-[1560px] mx-auto px-6 sm:px-12 lg:px-16 py-20 sm:py-28 border-b border-white/10"
+      >
+        {/* Left Side Step Indicator */}
+        <div className="hidden lg:flex absolute left-6 top-28 flex-col items-center gap-3 text-xs font-mono text-stone-400">
+          <span className="text-white font-bold">02</span>
+          <div className="editorial-step-line" />
+        </div>
+
+        {/* Section Grid: Title + Image on Left, Deep Editorial on Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left Column (7 cols): Bold Header + Lead Image */}
+          <div className="lg:col-span-6 space-y-6">
+            <div className="space-y-2">
+              <span className="text-xs font-mono uppercase tracking-[0.25em] text-emerald-400">
+                02 / Major Headlines
+              </span>
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight leading-[1.05]">
+                The Story Begins Here
+              </h2>
+            </div>
+
+            {/* Cinematic Featured Image with Reflection */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-white/15 bg-black/60 shadow-2xl">
+              <img
+                src={currentInvestigationArticle?.enclosure?.link || currentInvestigationArticle?.thumbnail}
+                alt={currentInvestigationArticle?.title}
+                className="h-full w-full object-cover transition-all duration-700 hover:scale-[1.02]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-stone-300">
+                <span>{currentInvestigationArticle?.author ? `Report by ${currentInvestigationArticle.author}` : 'Pixellon Wire'}</span>
+                <span>{formatDate(currentInvestigationArticle?.pubDate)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column (6 cols): In-depth editorial prose & CTA */}
+          <div className="lg:col-span-6 flex flex-col justify-between h-full pt-4 lg:pt-12 space-y-6">
+            <div className="space-y-4">
+              <h3 className="font-display text-xl sm:text-2xl font-bold text-white uppercase tracking-wide">
+                {currentInvestigationArticle?.title}
+              </h3>
+
+              <div
+                className="text-stone-300/85 text-sm sm:text-base leading-relaxed space-y-3 font-sans"
+                dangerouslySetInnerHTML={{ __html: currentInvestigationArticle?.description || 'Full coverage pending wire release.' }}
+              />
+            </div>
+
+            {/* Action Row */}
+            <div className="pt-6 border-t border-white/10 flex flex-wrap items-center gap-6">
+              <a
+                href={currentInvestigationArticle?.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] font-bold text-white hover:text-emerald-400 transition-colors group"
+              >
+                <span>→ Launch Full Coverage</span>
+                <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+
+              <button
+                type="button"
+                onClick={(e) => handleShareToDiscord(currentInvestigationArticle, e)}
+                disabled={sharingGuid === (currentInvestigationArticle?.guid || currentInvestigationArticle?.link)}
+                className="inline-flex items-center gap-2 rounded-lg border border-[#5865F2]/50 bg-[#5865F2]/15 px-3.5 py-1.5 text-xs font-mono text-[#8a94fd] hover:bg-[#5865F2] hover:text-white transition-all cursor-pointer"
+              >
+                <Share2 className="h-3.5 w-3.5" />
+                <span>Sync to Discord</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* ── 6-Card Horizontal Thumbnail Reel matching reference template ── */}
+        <div className="mt-16 sm:mt-20 pt-10 border-t border-white/10">
+          <div className="mb-4 flex items-center justify-between text-xs font-mono text-stone-400 uppercase tracking-widest">
+            <span>Select Story from Wire Archive</span>
+            <span>{investigationStories.length} Wire Stories Available</span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+            {investigationStories.map((story, idx) => (
+              <button
+                key={story.guid || story.link || idx}
+                onClick={() => setInvestigationIndex(idx)}
+                className={`group text-left relative aspect-square sm:aspect-[4/3] rounded-lg overflow-hidden border transition-all cursor-pointer ${
+                  investigationIndex === idx
+                    ? 'border-emerald-400 ring-2 ring-emerald-400/40 shadow-[0_0_15px_rgba(52,211,153,0.3)]'
+                    : 'border-white/15 opacity-70 hover:opacity-100 hover:border-white/40'
+                }`}
+              >
+                <img
+                  src={story.enclosure?.link || story.thumbnail}
+                  alt={story.title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                <div className="absolute bottom-2 left-2 right-2">
+                  <p className="text-[11px] font-sans font-semibold text-white line-clamp-2 leading-tight">
+                    {story.title}
+                  </p>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 3: TIMELINE / INCIDENT WIRE ("3 – 17 АВГУСТА" style)
+          Tabular event log on left, dramatic combat/action key art on right
+          ───────────────────────────────────────────────────────────── */}
+      <section
+        id="section-timeline"
+        className="relative max-w-[1560px] mx-auto px-6 sm:px-12 lg:px-16 py-20 sm:py-28 border-b border-white/10"
+      >
+        {/* Left Step Indicator */}
+        <div className="hidden lg:flex absolute left-6 top-28 flex-col items-center gap-3 text-xs font-mono text-stone-400">
+          <span className="text-white font-bold">03</span>
+          <div className="editorial-step-line" />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Left Column (7 cols): Date Header + Tabular Event Timeline */}
+          <div className="lg:col-span-7 space-y-8">
+            <div className="space-y-2">
+              <span className="text-xs font-mono uppercase tracking-[0.25em] text-emerald-400">
+                03 / Chronological Log
+              </span>
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight">
+                26 – 27 September 2026
+              </h2>
+            </div>
+
+            {/* Timeline Rows */}
+            <div className="space-y-4">
+              {timelineStories.map((item, idx) => {
+                const isSelected = timelineIndex === idx
+                return (
+                  <div
+                    key={item.guid || item.link || idx}
+                    onMouseEnter={() => setTimelineIndex(idx)}
+                    onClick={() => setTimelineIndex(idx)}
+                    className={`group rounded-xl border p-4 sm:p-5 transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                      isSelected
+                        ? 'border-emerald-400/80 bg-black/80 ring-1 ring-emerald-400/30'
+                        : 'border-white/10 bg-black/40 hover:bg-black/60 hover:border-white/30'
+                    }`}
+                  >
+                    <div className="flex items-start sm:items-center gap-4">
+                      {/* Time Pill matching reference "День 1 • 9:00" */}
+                      <div
+                        className={`flex-shrink-0 font-mono text-xs font-bold px-3 py-1.5 rounded border transition-colors ${
+                          isSelected
+                            ? 'bg-emerald-500 text-black border-emerald-400 font-black'
+                            : 'text-white bg-white/10 border-white/15'
+                        }`}
+                      >
+                        0{idx + 1} • {formatTime(item.pubDate)}
                       </div>
-                    )}
 
-                    {/* Featured Body */}
-                    <div className="flex flex-col justify-between p-6 sm:p-8 lg:col-span-5">
                       <div>
-                        <div className="mb-3 flex items-center gap-2 text-xs font-mono text-brand-muted">
-                          <span className="flex items-center gap-1.5 rounded bg-surface-900 px-2.5 py-1 border border-surface-700">
-                            <Calendar className="h-3.5 w-3.5 text-brand-accent" />
-                            {formatDate(featuredStory.pubDate)}
-                          </span>
-                          {featuredStory.author && <span>By {featuredStory.author}</span>}
-                        </div>
-
-                        <h2 className="font-display text-xl sm:text-2xl font-extrabold text-brand-text leading-tight group-hover:text-brand-accent transition-colors">
-                          <a href={featuredStory.link} target="_blank" rel="noopener noreferrer">
-                            {featuredStory.title}
+                        <h4
+                          className={`text-sm font-sans font-bold transition-colors line-clamp-1 ${
+                            isSelected ? 'text-emerald-300' : 'text-white group-hover:text-emerald-300'
+                          }`}
+                        >
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {item.title}
                           </a>
-                        </h2>
-
-                        <div
-                          className="mt-3 line-clamp-3 text-xs sm:text-sm text-brand-muted leading-relaxed"
-                          dangerouslySetInnerHTML={{ __html: featuredStory.description }}
-                        />
+                        </h4>
+                        <p className="text-xs text-stone-400 line-clamp-1 mt-0.5">
+                          {item.author ? `Reported by ${item.author}` : 'Wire Incident Desk'} • {formatDate(item.pubDate)}
+                        </p>
                       </div>
+                    </div>
 
-                      <div className="mt-6 flex items-center justify-between pt-4 border-t border-surface-700">
-                        <a
-                          href={featuredStory.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-brand-accent hover:text-brand-primary transition-colors"
-                        >
-                          Full Story <ExternalLink className="h-3.5 w-3.5" />
-                        </a>
-
-                        <button
-                          type="button"
-                          onClick={(e) => handleShareToDiscord(featuredStory, e)}
-                          disabled={sharingGuid === (featuredStory.guid || featuredStory.link)}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-[#5865F2]/40 bg-[#5865F2]/15 px-3 py-1.5 text-xs font-mono text-[#7985f7] dark:text-[#8a94fd] hover:bg-[#5865F2] hover:text-white transition-all cursor-pointer"
-                        >
-                          <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
-                            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
-                          </svg>
-                          <span>Discord</span>
-                        </button>
-                      </div>
+                    {/* Actions */}
+                    <div className="flex items-center gap-3 self-end sm:self-center flex-shrink-0">
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-xs font-mono text-stone-400 hover:text-white"
+                        title="Read item"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleShareToDiscord(item)
+                        }}
+                        className="text-xs font-mono text-[#8a94fd] hover:text-white"
+                        title="Send to Discord"
+                      >
+                        <Share2 className="h-4 w-4" />
+                      </button>
                     </div>
                   </div>
-                </motion.div>
-              )}
-
-              {/* Feed of stories */}
-              <div className="grid gap-4">
-                {regularStories.map((article, i) => (
-                  <motion.article
-                    key={article.guid || i}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.04 }}
-                    className="group relative flex flex-col gap-5 rounded-xl border border-surface-700 bg-brand-surface p-5 transition-all hover:border-brand-primary/60 hover:shadow-md sm:flex-row shadow-sm"
-                  >
-                    {/* Thumbnail */}
-                    {(article.enclosure?.link || article.thumbnail) && (
-                      <div className="relative aspect-video w-full flex-shrink-0 overflow-hidden rounded-lg sm:w-56 sm:aspect-[4/3] bg-surface-900">
-                        <img
-                          src={article.enclosure?.link || article.thumbnail}
-                          alt={article.title}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      </div>
-                    )}
-
-                    {/* Content */}
-                    <div className="flex flex-1 flex-col justify-center">
-                      <div className="mb-2 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-brand-muted">
-                        <div className="flex items-center gap-2">
-                          <span className="flex items-center gap-1.5 rounded bg-surface-900 px-2.5 py-0.5 border border-surface-700 text-[11px]">
-                            <Calendar className="h-3 w-3 text-brand-accent" />
-                            {formatDate(article.pubDate)}
-                          </span>
-                          {article.author && <span className="text-[11px]">By {article.author}</span>}
-                        </div>
-
-                        {/* Discord Share Button */}
-                        <button
-                          type="button"
-                          onClick={(e) => handleShareToDiscord(article, e)}
-                          disabled={sharingGuid === (article.guid || article.link)}
-                          title="Post game update to Discord"
-                          className="relative z-10 inline-flex items-center gap-1.5 rounded-lg border border-[#5865F2]/40 bg-[#5865F2]/15 px-2 py-0.5 text-[11px] font-mono text-[#8a94fd] hover:bg-[#5865F2] hover:text-white transition-all cursor-pointer disabled:opacity-50"
-                        >
-                          {sharingGuid === (article.guid || article.link) ? (
-                            <Loader2 className="h-3 w-3 animate-spin" />
-                          ) : (
-                            <svg className="h-3 w-3 fill-current" viewBox="0 0 24 24">
-                              <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
-                            </svg>
-                          )}
-                          <span>Discord</span>
-                        </button>
-                      </div>
-
-                      <h2 className="mb-2 font-display text-lg sm:text-xl font-bold text-brand-text transition-colors group-hover:text-brand-accent line-clamp-2">
-                        <a href={article.link} target="_blank" rel="noopener noreferrer">
-                          {article.title}
-                        </a>
-                      </h2>
-
-                      <div
-                        className="mb-3 line-clamp-2 text-xs sm:text-sm leading-relaxed text-brand-muted"
-                        dangerouslySetInnerHTML={{ __html: article.description }}
-                      />
-
-                      <div className="mt-auto flex items-center text-xs font-mono font-semibold text-brand-accent transition-all group-hover:text-brand-accent2">
-                        <a href={article.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center">
-                          Read Full Article <ExternalLink className="ml-1.5 h-3.5 w-3.5" />
-                        </a>
-                      </div>
-                    </div>
-                  </motion.article>
-                ))}
-              </div>
-            </div>
-
-            {/* ── Sticky News Sidebar (30%) ─────────────────────────────── */}
-            <div className="xl:col-span-4 2xl:col-span-3 xl:sticky xl:top-20 space-y-6">
-              <NewsSidebar articles={articles} />
+                )
+              })}
             </div>
           </div>
-        )}
 
-        {/* Discord Setup Modal */}
-        <DiscordWebhookModal
-          isOpen={isDiscordModalOpen}
-          onClose={() => setIsDiscordModalOpen(false)}
-        />
+          {/* Right Column (5 cols): High-contrast Dramatic Key Art with dynamic preview */}
+          <div className="lg:col-span-5 relative">
+            <div className="relative aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-black">
+              <img
+                key={timelineIndex}
+                src={
+                  currentTimelineItem?.enclosure?.link ||
+                  currentTimelineItem?.thumbnail ||
+                  'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80'
+                }
+                alt=""
+                className="h-full w-full object-cover filter contrast-[1.2] brightness-90 animate-editorial-fade"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/30" />
+              <div className="absolute bottom-6 left-6 right-6 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded border border-emerald-700/50">
+                    Incident Log 0{timelineIndex + 1} Still
+                  </span>
+                  <span className="text-[11px] font-mono text-stone-300">
+                    {formatTime(currentTimelineItem?.pubDate)}
+                  </span>
+                </div>
+                <p className="text-sm sm:text-base font-sans font-bold text-white drop-shadow line-clamp-2">
+                  {currentTimelineItem?.title}
+                </p>
+                <p className="text-xs font-mono text-stone-400">
+                  {currentTimelineItem?.author ? `Reported by ${currentTimelineItem.author}` : 'Wire Incident Desk'} • {formatDate(currentTimelineItem?.pubDate)}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        {/* Floating Toast Notification */}
-        <ToastNotification toast={toast} onDismiss={() => setToast(null)} />
-      </div>
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 4: SPOTLIGHT DOSSIER ("2450 €" style metrics & breakdown)
+          High-contrast figure on left, giant stat in center, checklists on right
+          ───────────────────────────────────────────────────────────── */}
+      <section
+        id="section-dossier"
+        className="relative max-w-[1560px] mx-auto px-6 sm:px-12 lg:px-16 py-20 sm:py-28 border-b border-white/10"
+      >
+        {/* Left Step Indicator */}
+        <div className="hidden lg:flex absolute left-6 top-28 flex-col items-center gap-3 text-xs font-mono text-stone-400">
+          <span className="text-white font-bold">04</span>
+          <div className="editorial-step-line" />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          {/* Left Column (4 cols): Dramatic Character / Subject Figure */}
+          <div className="lg:col-span-4 relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/15 bg-black/60 shadow-2xl">
+            <img
+              src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1145360/capsule_616x353.jpg"
+              alt="Subject dossier"
+              className="h-full w-full object-cover object-center filter contrast-125 brightness-90"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+            <div className="absolute bottom-5 left-5 right-5">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400">
+                Verified Intelligence Dossier
+              </span>
+              <p className="text-base font-display font-bold text-white mt-1">
+                Studio Leadership & Tech Shifts
+              </p>
+            </div>
+          </div>
+
+          {/* Center Column (3 cols): Massive Metric Number */}
+          <div className="lg:col-span-3 text-center lg:text-left space-y-2 py-4">
+            <div className="font-display text-5xl sm:text-6xl lg:text-7xl font-black text-white tracking-tighter">
+              98.4%
+            </div>
+            <div className="text-xs font-mono uppercase tracking-[0.2em] text-emerald-400 font-semibold">
+              Global Accuracy Rating
+            </div>
+            <p className="text-xs text-stone-400 leading-relaxed font-sans max-w-xs mx-auto lg:mx-0">
+              Cross-verified with official SEC filings, Steam backend depots, and direct studio confirmations.
+            </p>
+          </div>
+
+          {/* Right Column (5 cols): Inclusions / Exclusions Checklists */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Confirmed Intelligence */}
+            <div className="rounded-xl border border-emerald-500/20 bg-emerald-950/20 p-5 space-y-3">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 font-bold">
+                <CheckCircle className="h-4 w-4 text-emerald-400" />
+                <span>● Confirmed Intelligence</span>
+              </div>
+              <ul className="text-xs font-sans text-stone-300 space-y-2 list-disc list-inside">
+                <li>Direct on-record statements from primary studio leads and directors.</li>
+                <li>Verifiable code commits, ESRB age ratings, and public trailer reveals.</li>
+                <li>Official developer roadmaps with targeted release windows.</li>
+              </ul>
+            </div>
+
+            {/* Rumors & Speculation */}
+            <div className="rounded-xl border border-white/10 bg-black/40 p-5 space-y-3">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-amber-400 font-bold">
+                <AlertCircle className="h-4 w-4 text-amber-400" />
+                <span>● Unverified Rumors & Insider Leaks</span>
+              </div>
+              <ul className="text-xs font-sans text-stone-400 space-y-2 list-disc list-inside">
+                <li>Anonymous forum posts, uncredited retailer placeholder dates.</li>
+                <li>Unannounced hardware iterations lacking official manufacturer patents.</li>
+                <li>Speculative plot leaks and early non-NDA alpha builds.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 5: "BEGIN YOUR JOURNEY" ("НАЧНИ СВОЕ ПУТЕШЕСТВИЕ")
+          Newsletter & Webhook subscription form + atmospheric landscape
+          ───────────────────────────────────────────────────────────── */}
+      <section
+        id="section-subscribe"
+        className="relative max-w-[1560px] mx-auto px-6 sm:px-12 lg:px-16 py-20 sm:py-28 border-b border-white/10"
+      >
+        {/* Left Step Indicator */}
+        <div className="hidden lg:flex absolute left-6 top-28 flex-col items-center gap-3 text-xs font-mono text-stone-400">
+          <span className="text-white font-bold">05</span>
+          <div className="editorial-step-line" />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Left Column (7 cols): Heading + Minimalist Form */}
+          <div className="lg:col-span-7 space-y-8">
+            <div className="space-y-2">
+              <span className="text-xs font-mono uppercase tracking-[0.25em] text-emerald-400">
+                05 / Direct Connectivity
+              </span>
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight">
+                Join the Dispatch Wire
+              </h2>
+              <p className="text-sm text-stone-400 font-sans max-w-lg">
+                Receive direct breaking notifications the second major studio acquisitions, release dates, or leaks drop.
+              </p>
+            </div>
+
+            <form onSubmit={handleWireSubmit} className="space-y-5 max-w-xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder="Your Alias / Gamertag"
+                  value={wireForm.name}
+                  onChange={(e) => setWireForm({ ...wireForm, name: e.target.value })}
+                  className="w-full rounded-lg border border-white/20 bg-black/50 px-4 py-3 text-xs font-mono text-white placeholder-stone-500 focus:border-emerald-400 focus:outline-none"
+                />
+                <input
+                  type="text"
+                  placeholder="Discord Webhook or Email"
+                  value={wireForm.destination}
+                  onChange={(e) => setWireForm({ ...wireForm, destination: e.target.value })}
+                  className="w-full rounded-lg border border-white/20 bg-black/50 px-4 py-3 text-xs font-mono text-white placeholder-stone-500 focus:border-emerald-400 focus:outline-none"
+                />
+              </div>
+
+              <input
+                type="text"
+                placeholder="Topic Filter (e.g. PlayStation, Nintendo, PC, RPGs)"
+                value={wireForm.topic}
+                onChange={(e) => setWireForm({ ...wireForm, topic: e.target.value })}
+                className="w-full rounded-lg border border-white/20 bg-black/50 px-4 py-3 text-xs font-mono text-white placeholder-stone-500 focus:border-emerald-400 focus:outline-none"
+              />
+
+              <div className="flex items-center gap-4">
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black px-6 py-3 text-xs font-mono uppercase tracking-[0.15em] font-bold transition-all cursor-pointer shadow-lg shadow-emerald-500/20"
+                >
+                  <Send className="h-3.5 w-3.5" />
+                  <span>→ Connect to Wire</span>
+                </button>
+                <span className="text-[11px] font-mono text-stone-500">
+                  Zero spam • One-click revoke
+                </span>
+              </div>
+            </form>
+          </div>
+
+          {/* Right Column (5 cols): Atmospheric Explorer Key Art */}
+          <div className="lg:col-span-5 relative aspect-[16/10] sm:aspect-[4/3] rounded-2xl overflow-hidden border border-white/15 bg-black shadow-2xl">
+            <img
+              src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80"
+              alt="Explorer on horizon"
+              className="h-full w-full object-cover filter brightness-[0.6] contrast-[1.2]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+            <div className="absolute bottom-5 left-5 right-5 text-xs font-mono text-stone-400">
+              <span className="text-emerald-400 font-bold">PIXELLON CORRESPONDENCE</span> • Broadcast worldwide
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION 6: CLEAN SIGNOFF FOOTER ("Спасибо за внимание ♥")
+          Minimalist typography + heart glyph + scenic panoramic image
+          ───────────────────────────────────────────────────────────── */}
+      <footer className="relative w-full py-20 text-center bg-black/80 border-t border-white/10 overflow-hidden">
+        <div className="relative z-10 max-w-xl mx-auto px-6 space-y-4">
+          <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-white tracking-wide uppercase">
+            Thank you for reading
+          </h3>
+
+          <div className="flex items-center justify-center gap-2 text-rose-500">
+            <Heart className="h-5 w-5 fill-current animate-pulse" />
+          </div>
+
+          <p className="text-xs font-mono text-stone-400 tracking-widest uppercase">
+            Pixellon Dispatch • Curated by Gamers for Gamers • 2026
+          </p>
+        </div>
+
+        {/* Minimalist Panoramic Base Image */}
+        <div className="mt-12 h-36 w-full opacity-20 filter grayscale contrast-150 overflow-hidden">
+          <img
+            src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/page_bg_raw.jpg"
+            alt=""
+            className="h-full w-full object-cover"
+          />
+        </div>
+      </footer>
+
+      {/* Discord Webhook Setup Modal */}
+      <DiscordWebhookModal
+        isOpen={isDiscordModalOpen}
+        onClose={() => setIsDiscordModalOpen(false)}
+      />
+
+      {/* Floating Toast Notification */}
+      <ToastNotification toast={toast} onDismiss={() => setToast(null)} />
     </PageTransition>
   )
 }

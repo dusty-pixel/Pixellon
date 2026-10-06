@@ -1,12 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ParallaxBackground from './components/ParallaxBackground'
-import Cursor from './components/motion/Cursor'
-import CursorLight from './components/motion/CursorLight'
-import ArenaIntro, { ARENA_KEY } from './components/intro/ArenaIntro'
 import MascotDirector from './components/mascot/MascotDirector'
 import PixelTicker from './retro/PixelTicker'
 import { TickerProvider } from './retro/TickerProvider'
@@ -33,20 +30,31 @@ function LegacyCodexRedirect() {
 }
 
 function Shell() {
- const [entered, setEntered] = useState(() => sessionStorage.getItem(ARENA_KEY) === '1')
+ const location = useLocation()
+ const isHome = location.pathname === '/'
+ const [scrolledPastHero, setScrolledPastHero] = useState(false)
+
  useEasterEggs()
 
+ useEffect(() => {
+  if (!isHome) {
+   setScrolledPastHero(true)
+   return
+  }
+  const onScroll = () => {
+   setScrolledPastHero(window.scrollY > 480)
+  }
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+  return () => window.removeEventListener('scroll', onScroll)
+ }, [isHome])
+
  return (
- <div className="flex min-h-screen flex-col">
- <CursorLight />
+ <div className="flex min-h-screen flex-col bg-[#070B12]">
  <ParallaxBackground />
  <CRTOverlay />
- <Cursor />
- <AnimatePresence>
- {!entered && <ArenaIntro key="arena-intro" onEnter={() => setEntered(true)} />}
- </AnimatePresence>
- <PixelTicker />
- <Navbar />
+ {!isHome && <PixelTicker />}
+ {(!isHome || scrolledPastHero) && <Navbar />}
  <main className="relative z-10 flex-1">
  <AnimatePresence mode="wait">
  <Routes>
@@ -74,7 +82,7 @@ function Shell() {
  <div className="relative z-10">
  <Footer />
  </div>
- {entered && <MascotDirector />}
+ <MascotDirector />
  </div>
  )
 }

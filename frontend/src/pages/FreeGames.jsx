@@ -423,7 +423,7 @@ export default function FreeGames() {
                       src={featuredGame.hdImage || featuredGame.image || featuredGame.thumbnail}
                       alt={featuredGame.title}
                       loading="eager"
-                      className="h-full w-full object-cover select-none"
+                      className="h-full w-full object-contain select-none drop-shadow-2xl"
                     />
                   </AnimatePresence>
 
@@ -471,7 +471,7 @@ export default function FreeGames() {
                             }`}
                           >
                             <img
-                              src={item.hdImage || item.thumbnail || item.image}
+                              src={item.hdImage || item.image || item.thumbnail}
                               alt={item.title}
                               className="h-full w-full object-cover"
                             />
