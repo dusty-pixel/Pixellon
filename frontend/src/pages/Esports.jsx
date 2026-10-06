@@ -558,287 +558,149 @@ export default function Esports() {
               return (
                 <motion.article
                   key={match.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.04 }}
-                  className={`group relative flex flex-col overflow-hidden rounded-3xl border bg-brand-surface transition-all duration-200 ${
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.04, type: 'spring', stiffness: 100 }}
+                  className={`group relative flex flex-col overflow-hidden rounded-[2rem] border transition-all duration-300 ${
                     isRunning
-                      ? 'border-red-500/50'
-                      : 'border-surface-700 hover:border-brand-primary/70'
-                  }`}
+                      ? 'border-red-500/30 bg-surface-900/40 shadow-[0_8px_32px_rgba(239,68,68,0.1)]'
+                      : 'border-white/5 bg-surface-900/30 hover:bg-surface-900/50 hover:border-white/10 hover:shadow-xl'
+                  } backdrop-blur-2xl`}
                 >
-                  {/* Top Ambient Accent Line */}
-                  <div
-                    className="h-1 w-full"
-                    style={{
-                      backgroundColor: t1Color,
-                    }}
-                  />
+                  {/* Subtle Background Gradient */}
+                  <div className="absolute inset-0 opacity-20 pointer-events-none" style={{
+                    background: `radial-gradient(circle at 50% 0%, ${t1Color}30 0%, transparent 50%), radial-gradient(circle at 50% 100%, ${t2Color}30 0%, transparent 50%)`
+                  }} />
 
-                  {/* League Header */}
-                  <div className="flex items-center gap-3 border-b border-surface-700/70 bg-surface-900/80 backdrop-blur-sm px-5 py-3.5">
-                    {match.league?.image_url ? (
-                      <img
-                        src={match.league.image_url}
-                        alt={match.league.name}
-                        className="h-7 w-7 object-contain drop-shadow"
-                      />
-                    ) : (
-                      <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-surface border border-surface-700">
-                        <Gamepad2 className="h-4 w-4 text-brand-muted" />
+                  {/* League Header - Sleek */}
+                  <div className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/5">
+                    <div className="flex items-center gap-3">
+                      {match.league?.image_url ? (
+                        <img
+                          src={match.league.image_url}
+                          alt={match.league.name}
+                          className="h-8 w-8 object-contain"
+                        />
+                      ) : (
+                        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/5 border border-white/10">
+                          <Gamepad2 className="h-4 w-4 text-brand-muted" />
+                        </div>
+                      )}
+                      <div>
+                        <p className="text-sm font-display font-bold text-white tracking-wide">
+                          {match.league?.name || 'Tournament'}
+                        </p>
+                        <p className="text-[10px] text-white/50 uppercase tracking-widest font-semibold">
+                          {match.serie?.full_name || 'Competitive Fixture'}
+                        </p>
                       </div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <p className="truncate text-xs font-mono font-extrabold text-brand-text tracking-wide">
-                        {match.league?.name || 'Tournament'}
-                      </p>
-                      <p className="truncate text-[10px] font-mono text-brand-muted uppercase tracking-wider">
-                        {match.serie?.full_name || 'Competitive Fixture'}
-                      </p>
                     </div>
-
-                    {/* Game Discipline Badge */}
-                    {match.videogame && (
-                      <span
-                        className={`rounded-full border px-3 py-0.5 text-[10px] font-mono font-bold truncate max-w-[130px] ${gameStyle.border} ${gameStyle.bg} ${gameStyle.text}`}
-                      >
-                        {match.videogame.name}
-                      </span>
-                    )}
-                    {match.source?.startsWith('opendota') && (
-                      <span
-                        className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[9px] font-mono font-bold text-emerald-300 whitespace-nowrap"
-                        title="Live data via OpenDota"
-                      >
-                        ● OPENDOTA
-                      </span>
-                    )}
                   </div>
 
-                  {/* Live Broadcast Stripe */}
+                  {/* Live Status Floating Badge */}
                   {isRunning && (
-                    <div className="flex items-center justify-between border-b border-red-500/20 bg-red-500/10 px-5 py-2 text-[11px] font-mono font-bold text-red-400">
-                      <div className="flex items-center gap-2">
-                        <span className="relative flex h-2.5 w-2.5">
-                          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
-                        </span>
-                        <span className="tracking-wide">
-                          LIVE • {live.currentMap || 'Active Map'}
-                        </span>
-                      </div>
-                      <span className="text-[10px] text-red-300 font-semibold px-2 py-0.5 rounded bg-red-500/20 border border-red-500/30">
-                        {live.roundStatus || 'Live in Arena'}
+                    <div className="absolute top-4 right-6 z-20 flex items-center gap-2 rounded-full bg-red-500/10 border border-red-500/20 px-3 py-1">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
                       </span>
+                      <span className="text-[10px] font-bold tracking-widest text-red-400 uppercase">Live</span>
                     </div>
                   )}
 
-                  {isFinished && (
-                    <div className="flex items-center justify-between border-b border-emerald-500/20 bg-emerald-500/10 px-5 py-2 text-[11px] font-mono font-bold text-emerald-400">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4" />
-                        <span>MATCH COMPLETED</span>
-                      </div>
-                      <span className="text-[10px] text-emerald-300 font-semibold">
-                        {mapScore1 > mapScore2 ? team1?.name : team2?.name} Won
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Matchup Arena Body */}
-                  <div className="flex flex-1 flex-col p-6">
-                    <div className="mb-6 flex flex-1 items-center justify-between gap-4">
+                  {/* Matchup Body */}
+                  <div className="relative z-10 flex flex-1 flex-col p-6 sm:p-8">
+                    <div className="flex items-center justify-between gap-6">
                       {/* Team 1 */}
-                      <div className="flex flex-1 flex-col items-center gap-2.5 text-center">
-                        <TeamLogo
-                          src={team1?.image_url}
-                          name={team1?.name}
-                          acronym={team1?.acronym}
-                          color={t1Color}
-                          size="lg"
-                        />
-                        <div className="flex flex-col items-center">
-                          <span className="text-sm font-display font-extrabold text-brand-text line-clamp-1 tracking-tight">
+                      <div className="flex flex-1 flex-col items-center gap-4">
+                        <div className="relative group-hover:scale-110 transition-transform duration-500">
+                          <TeamLogo
+                            src={team1?.image_url}
+                            name={team1?.name}
+                            acronym={team1?.acronym}
+                            color={t1Color}
+                            size="lg"
+                          />
+                          <div className="absolute inset-0 rounded-full blur-2xl opacity-20 -z-10" style={{ background: t1Color }} />
+                        </div>
+                        <div className="text-center">
+                          <span className="block text-base font-display font-bold text-white tracking-tight">
                             {team1?.name || 'TBD'}
-                          </span>
-                          <span
-                            className="mt-0.5 inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded border"
-                            style={{
-                              borderColor: `${t1Color}40`,
-                              color: t1Color,
-                              backgroundColor: `${t1Color}15`,
-                            }}
-                          >
-                            {team1?.acronym || 'T1'}
                           </span>
                         </div>
                       </div>
 
-                      {/* Scoreboard Center Clash Zone */}
-                      <div className="flex flex-col items-center justify-center px-2">
-                        {isRunning ? (
-                          <div className="flex flex-col items-center">
-                            {/* Large Series Map Score */}
-                            <div className="font-mono text-3xl font-black tracking-widest text-brand-text flex items-center gap-3">
-                              <span
-                                className={
-                                  mapScore1 > mapScore2
-                                    ? 'text-brand-accent drop-shadow-[0_0_12px_rgba(96,165,250,0.6)]'
-                                    : 'text-brand-text'
-                                }
-                              >
+                      {/* Score / VS Center */}
+                      <div className="flex flex-col items-center justify-center">
+                        {isRunning || isFinished ? (
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="flex items-center gap-4 font-display text-4xl sm:text-5xl font-black tracking-tighter">
+                              <span className={mapScore1 > mapScore2 ? 'text-white' : 'text-white/40'}>
                                 {mapScore1}
                               </span>
-                              <span className="text-brand-muted font-light text-2xl">:</span>
-                              <span
-                                className={
-                                  mapScore2 > mapScore1
-                                    ? 'text-brand-accent drop-shadow-[0_0_12px_rgba(96,165,250,0.6)]'
-                                    : 'text-brand-text'
-                                }
-                              >
+                              <span className="text-white/20 font-light">:</span>
+                              <span className={mapScore2 > mapScore1 ? 'text-white' : 'text-white/40'}>
                                 {mapScore2}
                               </span>
                             </div>
-
-                            {/* In-Round Score Pill */}
-                            <div className="mt-2 flex items-center gap-1.5 rounded-full bg-red-500/20 border border-red-500/50 px-3.5 py-1 font-mono text-xs font-black text-red-400 shadow-[0_0_12px_rgba(239,68,68,0.25)]">
-                              <span>{live.team1Rounds ?? 0}</span>
-                              <span className="text-red-300 font-normal">—</span>
-                              <span>{live.team2Rounds ?? 0}</span>
-                            </div>
-                            <span className="mt-1 text-[9px] font-mono uppercase tracking-widest text-brand-muted font-semibold">
-                              Current Round
-                            </span>
-                          </div>
-                        ) : isFinished ? (
-                          <div className="flex flex-col items-center">
-                            <div className="font-mono text-3xl font-black tracking-widest text-brand-text flex items-center gap-3">
-                              <span
-                                className={
-                                  mapScore1 > mapScore2 ? 'text-emerald-400' : 'text-brand-muted'
-                                }
-                              >
-                                {mapScore1}
-                              </span>
-                              <span className="text-brand-muted font-light text-2xl">:</span>
-                              <span
-                                className={
-                                  mapScore2 > mapScore1 ? 'text-emerald-400' : 'text-brand-muted'
-                                }
-                              >
-                                {mapScore2}
-                              </span>
-                            </div>
-                            <span className="mt-2 rounded-full bg-emerald-500/20 border border-emerald-500/40 px-3 py-0.5 text-[10px] font-mono font-bold text-emerald-400">
-                              FINAL SCORE
-                            </span>
+                            {isRunning && (
+                              <div className="rounded-full bg-white/5 border border-white/10 px-4 py-1 text-xs font-mono text-white/70">
+                                {live.team1Rounds ?? 0} - {live.team2Rounds ?? 0}
+                              </div>
+                            )}
                           </div>
                         ) : (
-                          <div className="flex flex-col items-center">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-surface-900 border border-surface-700 shadow-inner">
-                              <span className="font-mono text-xl font-black italic text-brand-accent">
-                                VS
-                              </span>
-                            </div>
-                            <span className="mt-2 text-[10px] font-mono text-brand-muted font-semibold">
-                              Best of {match.number_of_games || 3}
-                            </span>
+                          <div className="text-2xl font-display italic font-black text-white/20">
+                            VS
                           </div>
                         )}
                       </div>
 
                       {/* Team 2 */}
-                      <div className="flex flex-1 flex-col items-center gap-2.5 text-center">
-                        <TeamLogo
-                          src={team2?.image_url}
-                          name={team2?.name}
-                          acronym={team2?.acronym}
-                          color={t2Color}
-                          size="lg"
-                        />
-                        <div className="flex flex-col items-center">
-                          <span className="text-sm font-display font-extrabold text-brand-text line-clamp-1 tracking-tight">
+                      <div className="flex flex-1 flex-col items-center gap-4">
+                        <div className="relative group-hover:scale-110 transition-transform duration-500">
+                          <TeamLogo
+                            src={team2?.image_url}
+                            name={team2?.name}
+                            acronym={team2?.acronym}
+                            color={t2Color}
+                            size="lg"
+                          />
+                          <div className="absolute inset-0 rounded-full blur-2xl opacity-20 -z-10" style={{ background: t2Color }} />
+                        </div>
+                        <div className="text-center">
+                          <span className="block text-base font-display font-bold text-white tracking-tight">
                             {team2?.name || 'TBD'}
                           </span>
-                          <span
-                            className="mt-0.5 inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded border"
-                            style={{
-                              borderColor: `${t2Color}40`,
-                              color: t2Color,
-                              backgroundColor: `${t2Color}15`,
-                            }}
-                          >
-                            {team2?.acronym || 'T2'}
-                          </span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Previous Maps Breakdown Row if available */}
-                    {live.maps && live.maps.length > 0 && isRunning && (
-                      <div className="mb-4 flex flex-wrap items-center justify-center gap-1.5 pt-2 border-t border-surface-700/50">
-                        {live.maps.slice(0, 3).map((m, idx) => (
-                          <span
-                            key={idx}
-                            className={`rounded-md px-2 py-0.5 text-[9px] font-mono font-bold border ${
-                              m.status === 'live'
-                                ? 'bg-red-500/20 border-red-500/40 text-red-300'
-                                : m.status === 'finished'
-                                ? 'bg-surface-900 border-surface-700 text-brand-text'
-                                : 'bg-surface-900/40 border-dashed border-surface-700 text-brand-muted'
-                            }`}
+                    {/* Meta Info & Actions */}
+                    <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-6">
+                      <div className="flex items-center gap-2 text-white/50 text-xs">
+                        <Calendar className="h-4 w-4" />
+                        <span>{formatMatchTime(match.begin_at)}</span>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        {isRunning && (
+                          <button
+                            onClick={() => handleSimulateRound(match.id)}
+                            className="flex items-center justify-center gap-1.5 rounded-full bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 px-3 py-2 text-xs font-bold text-red-400 transition-colors"
                           >
-                            {m.name}: {m.status === 'pending' ? 'TBD' : `${m.score1}-${m.score2}`}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Match Meta Footer */}
-                    <div className="mt-auto flex flex-col gap-2 rounded-2xl bg-surface-900/90 p-3.5 text-xs font-mono border border-surface-700/70">
-                      <div className="flex items-center justify-between text-brand-muted">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-3.5 w-3.5 text-brand-accent" />
-                          <span className="font-medium text-brand-text">
-                            {formatMatchTime(match.begin_at)}
-                          </span>
-                        </div>
-                        <span className="text-[10px] text-brand-muted font-bold">
-                          Bo{match.number_of_games || 3}
-                        </span>
-                      </div>
-
-                      {/* Live Play Snippet */}
-                      {isRunning && live.recentEvents && live.recentEvents.length > 0 && (
-                        <div className="flex items-center gap-2 text-[11px] text-brand-text pt-2 border-t border-surface-700/60">
-                          <Flame className="h-3.5 w-3.5 text-orange-400 shrink-0 animate-bounce" />
-                          <span className="truncate text-brand-text/90 font-medium">
-                            {live.recentEvents[0]}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Action Bar */}
-                    <div className="mt-4 flex items-center gap-2.5">
-                      <button
-                        onClick={() => setSelectedMatch(match)}
-                        className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-surface-700 bg-surface-900 hover:bg-brand-primary/20 hover:border-brand-primary/60 py-2.5 text-xs font-mono font-bold text-brand-text hover:text-white transition-all shadow-sm"
-                      >
-                        <span>Match Center & Maps</span>
-                        <ChevronRight className="h-4 w-4 text-brand-accent group-hover:translate-x-0.5 transition-transform" />
-                      </button>
-
-                      {isRunning && (
+                            <Play className="h-3 w-3 fill-current" />
+                            +Round
+                          </button>
+                        )}
                         <button
-                          onClick={() => handleSimulateRound(match.id)}
-                          className="flex items-center justify-center gap-1.5 rounded-xl bg-red-600/20 hover:bg-red-600 border border-red-500/40 px-3.5 py-2.5 text-xs font-mono font-bold text-red-300 hover:text-white transition-all cursor-pointer"
-                          title="Simulate round tick"
+                          onClick={() => setSelectedMatch(match)}
+                          className="flex items-center gap-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 text-xs font-bold text-white transition-colors"
                         >
-                          <Play className="h-3.5 w-3.5 fill-current" />
-                          <span>+Round</span>
+                          Details
+                          <ChevronRight className="h-3.5 w-3.5" />
                         </button>
-                      )}
+                      </div>
                     </div>
                   </div>
                 </motion.article>
