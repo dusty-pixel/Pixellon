@@ -1,0 +1,272 @@
+/**
+ * Mock data layer for Nexus Gaming.
+ * Each dataset is structured to mirror a future API response shape,
+ * making it trivial to swap in real fetch calls later.
+ */
+
+// ── Trending / Featured Games ──────────────────────────────────
+export const trendingGames = [
+  {
+    id: 1,
+    title: 'Elden Ring: Nightreign',
+    genre: 'Action RPG',
+    platform: ['PS5', 'Xbox', 'PC'],
+    rating: 9.4,
+    image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&h=340&fit=crop',
+    excerpt: 'A co-op reimagining that pushes the Soulslike formula into uncharted territory with roguelite loops and intense boss encounters.',
+    tag: 'Trending',
+    tagColor: 'violet',
+  },
+  {
+    id: 2,
+    title: 'Metroid Prime 4: Beyond',
+    genre: 'Action Adventure',
+    platform: ['Switch 2'],
+    rating: 9.1,
+    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=340&fit=crop',
+    excerpt: 'Samus returns with a stunningly atmospheric sci-fi adventure. A masterclass in first-person exploration.',
+    tag: 'Hot',
+    tagColor: 'rose',
+  },
+  {
+    id: 3,
+    title: 'Ghost of Yōtei',
+    genre: 'Open World',
+    platform: ['PS5', 'PC'],
+    rating: 8.9,
+    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=340&fit=crop',
+    excerpt: 'A feudal Japan epic with breathtaking visuals and a hauntingly beautiful open world to conquer.',
+    tag: 'Anticipated',
+    tagColor: 'amber',
+  },
+]
+
+// ── Recent Reviews ─────────────────────────────────────────────
+export const recentReviews = [
+  {
+    id: 101,
+    title: 'Clair Obscur: Expedition 33',
+    genre: 'Turn-Based RPG',
+    platform: ['PS5', 'Xbox', 'PC'],
+    rating: 9.2,
+    verdict: 'Masterpiece',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=340&fit=crop',
+    excerpt: 'A turn-based RPG with cinematic flair that rivals the genre\'s best. The art direction alone is worth the price of admission.',
+    reviewDate: '2026-08-25',
+    pros: ['Stunning art direction', 'Deep combat system', 'Memorable characters'],
+    cons: ['Occasional pacing issues in Act 3'],
+  },
+  {
+    id: 102,
+    title: 'Doom: The Dark Ages',
+    genre: 'FPS',
+    platform: ['PS5', 'Xbox', 'PC'],
+    rating: 9.0,
+    verdict: 'Essential',
+    image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=340&fit=crop',
+    excerpt: 'Medieval mayhem meets the Doom Slayer. Heavier, more deliberate combat that still rips and tears with satisfying precision.',
+    reviewDate: '2026-08-20',
+    pros: ['Visceral combat', 'Incredible soundtrack', 'Epic boss battles'],
+    cons: ['Short campaign'],
+  },
+  {
+    id: 103,
+    title: 'The Outer Worlds 2',
+    genre: 'RPG',
+    platform: ['Xbox', 'PC'],
+    rating: 8.5,
+    verdict: 'Great',
+    image: 'https://images.unsplash.com/photo-1614294149010-950b698f72c0?w=600&h=340&fit=crop',
+    excerpt: 'Obsidian refines the formula with sharper writing, deeper RPG mechanics, and a galaxy worth exploring twice.',
+    reviewDate: '2026-08-18',
+    pros: ['Brilliant writing', 'Player choice matters', 'Gorgeous worlds'],
+    cons: ['Some technical issues at launch'],
+  },
+  {
+    id: 104,
+    title: 'Hollow Knight: Silksong',
+    genre: 'Metroidvania',
+    platform: ['Switch 2', 'PC'],
+    rating: 9.6,
+    verdict: 'Masterpiece',
+    image: 'https://images.unsplash.com/photo-1535223289827-42f1e9919769?w=600&h=340&fit=crop',
+    excerpt: 'Was the wait worth it? Absolutely. Silksong is a towering achievement that transcends its predecessor in every way.',
+    reviewDate: '2026-08-15',
+    pros: ['Flawless level design', 'Incredible music', 'Hundreds of hours of content'],
+    cons: ['Steep difficulty curve for newcomers'],
+  },
+]
+
+// ── Indie Spotlights ───────────────────────────────────────────
+export const indieGames = [
+  {
+    id: 201,
+    title: 'Hades III',
+    genre: 'Roguelike',
+    platform: ['PC', 'PS5'],
+    rating: 9.3,
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&h=340&fit=crop',
+    excerpt: 'Supergiant does it again. A roguelike so polished it makes everything else feel unfinished.',
+    developer: 'Supergiant Games',
+    tag: 'Editor\'s Pick',
+    tagColor: 'emerald',
+  },
+  {
+    id: 202,
+    title: 'Hyper Light Breaker',
+    genre: 'Open World Roguelite',
+    platform: ['PC'],
+    rating: 8.4,
+    image: 'https://images.unsplash.com/photo-1614294149010-950b698f72c0?w=600&h=340&fit=crop',
+    excerpt: 'The Hyper Light universe expands into a stunning 3D open world with co-op and procedural exploration.',
+    developer: 'Heart Machine',
+    tag: 'Innovative',
+    tagColor: 'cyan',
+  },
+  {
+    id: 203,
+    title: 'Neva',
+    genre: 'Action Adventure',
+    platform: ['PS5', 'Switch', 'PC'],
+    rating: 8.8,
+    image: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=600&h=340&fit=crop',
+    excerpt: 'From the creators of GRIS — a painterly adventure about companionship and loss that will leave you breathless.',
+    developer: 'Nomada Studio',
+    tag: 'Artistic',
+    tagColor: 'violet',
+  },
+  {
+    id: 204,
+    title: 'Balatro 2',
+    genre: 'Roguelike Deckbuilder',
+    platform: ['PC', 'Mobile'],
+    rating: 9.0,
+    image: 'https://images.unsplash.com/photo-1511882150382-421056c89033?w=600&h=340&fit=crop',
+    excerpt: 'More jokers, more synergies, more "just one more run" energy. The poker roguelike phenomenon continues.',
+    developer: 'LocalThunk',
+    tag: 'Addictive',
+    tagColor: 'amber',
+  },
+  {
+    id: 205,
+    title: 'Windblown',
+    genre: 'Action Roguelite',
+    platform: ['PC'],
+    rating: 8.2,
+    image: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=600&h=340&fit=crop',
+    excerpt: 'From the Dead Cells team — blistering fast combat with a co-op twist that breathes fresh life into the genre.',
+    developer: 'Motion Twin',
+    tag: 'Fast-Paced',
+    tagColor: 'rose',
+  },
+  {
+    id: 206,
+    title: 'Citizen Sleeper 2',
+    genre: 'Narrative RPG',
+    platform: ['PC', 'Xbox'],
+    rating: 9.1,
+    image: 'https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?w=600&h=340&fit=crop',
+    excerpt: 'A dice-driven narrative RPG set aboard a starship, exploring identity, survival, and what it means to be alive.',
+    developer: 'Jump Over the Age',
+    tag: 'Story Rich',
+    tagColor: 'emerald',
+  },
+]
+
+// ── Upcoming Releases ──────────────────────────────────────────
+export const upcomingReleases = [
+  { id: 301, title: 'GTA VI', date: '2026-10-15', platform: ['PS5', 'Xbox'], genre: 'Open World', status: 'confirmed' },
+  { id: 302, title: 'Death Stranding 3', date: '2026-11-01', platform: ['PS5', 'PC'], genre: 'Action Adventure', status: 'confirmed' },
+  { id: 303, title: 'Fable', date: '2026-09-20', platform: ['Xbox', 'PC'], genre: 'RPG', status: 'confirmed' },
+  { id: 304, title: 'Wolverine', date: '2026-12-05', platform: ['PS5', 'PC'], genre: 'Action', status: 'rumored' },
+  { id: 305, title: 'Onimusha Reboot', date: '2027-01-15', platform: ['PS5', 'Xbox', 'PC'], genre: 'Action', status: 'confirmed' },
+  { id: 306, title: 'Perfect Dark', date: '2026-11-22', platform: ['Xbox', 'PC'], genre: 'FPS', status: 'confirmed' },
+  { id: 307, title: 'Judas', date: '2027-02-10', platform: ['PS5', 'Xbox', 'PC'], genre: 'FPS RPG', status: 'confirmed' },
+  { id: 308, title: 'Monster Hunter Wilds DLC', date: '2026-09-30', platform: ['PS5', 'Xbox', 'PC'], genre: 'Action RPG', status: 'confirmed' },
+  { id: 309, title: 'Star Wars: Eclipse', date: '2027-03-25', platform: ['PS5', 'Xbox', 'PC'], genre: 'Action Adventure', status: 'rumored' },
+  { id: 310, title: 'Pragmata', date: '2027-Q2', platform: ['PS5', 'Xbox', 'PC'], genre: 'Action Adventure', status: 'rumored' },
+]
+
+// ── Gateway: Curated Lists for Non-Gamers ──────────────────────
+export const gatewayCollections = [
+  {
+    id: 'cozy',
+    title: 'Cozy Games to Start With',
+    description: 'No pressure, no stakes — just pure relaxation. These games are warm hugs in digital form.',
+    emoji: '🌿',
+    color: 'emerald',
+    games: [
+      { id: 401, title: 'Stardew Valley', genre: 'Farming Sim', platform: ['Everything'], rating: 9.5, image: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=400&h=240&fit=crop', excerpt: 'Build your dream farm, befriend townsfolk, and discover the magic of country life at your own pace.' },
+      { id: 402, title: 'Animal Crossing: New Horizons', genre: 'Life Sim', platform: ['Switch'], rating: 9.0, image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&h=240&fit=crop', excerpt: 'Create your island paradise. Fish, decorate, and live the slowest, most delightful life possible.' },
+      { id: 403, title: 'A Short Hike', genre: 'Adventure', platform: ['PC', 'Switch'], rating: 8.8, image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=240&fit=crop', excerpt: 'Climb a mountain at your own pace. A tiny, perfect game about the joy of exploration.' },
+    ],
+  },
+  {
+    id: 'story',
+    title: 'Story-Driven Masterpieces',
+    description: 'Games that rival the best films and novels. If you love stories, these will convert you.',
+    emoji: '📖',
+    color: 'violet',
+    games: [
+      { id: 404, title: 'The Last of Us Part I', genre: 'Action Adventure', platform: ['PS5', 'PC'], rating: 9.7, image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400&h=240&fit=crop', excerpt: 'A post-apocalyptic journey of survival and love. One of the most emotionally powerful stories ever told in any medium.' },
+      { id: 405, title: 'Firewatch', genre: 'Walking Sim', platform: ['PC', 'PS4', 'Switch'], rating: 8.6, image: 'https://images.unsplash.com/photo-1504851149312-7a075b496cc7?w=400&h=240&fit=crop', excerpt: 'A mystery set in the Wyoming wilderness. Two hours of voice-acted perfection with a gut-punch ending.' },
+      { id: 406, title: 'What Remains of Edith Finch', genre: 'Narrative', platform: ['PC', 'PS4', 'Switch'], rating: 9.2, image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=400&h=240&fit=crop', excerpt: 'Explore a family\'s cursed history through a series of short, unforgettable vignettes. A masterwork of interactive storytelling.' },
+    ],
+  },
+  {
+    id: 'puzzle',
+    title: 'Brain-Tickling Puzzlers',
+    description: 'For the curious mind. These games reward thinking, not reflexes.',
+    emoji: '🧩',
+    color: 'cyan',
+    games: [
+      { id: 407, title: 'Portal 2', genre: 'Puzzle', platform: ['PC', 'PS3', 'Xbox 360'], rating: 9.8, image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=240&fit=crop', excerpt: 'Witty, brilliant, and endlessly inventive. Solve physics puzzles with a portal gun while a rogue AI tries to kill you.' },
+      { id: 408, title: 'The Witness', genre: 'Puzzle', platform: ['PC', 'PS4'], rating: 8.9, image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=240&fit=crop', excerpt: 'An island filled with hundreds of line puzzles that slowly teach you a new language of logic.' },
+      { id: 409, title: 'Return of the Obra Dinn', genre: 'Mystery Puzzle', platform: ['PC', 'Switch'], rating: 9.4, image: 'https://images.unsplash.com/photo-1534567153574-2b12153a87f0?w=400&h=240&fit=crop', excerpt: 'Investigate a ghost ship by witnessing frozen moments of death. A deduction game like no other.' },
+    ],
+  },
+  {
+    id: 'family',
+    title: 'Play Together',
+    description: 'Games are better with company. These titles are perfect for playing with friends and family.',
+    emoji: '🎮',
+    color: 'amber',
+    games: [
+      { id: 410, title: 'It Takes Two', genre: 'Co-op Adventure', platform: ['PS5', 'Xbox', 'PC'], rating: 9.3, image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=240&fit=crop', excerpt: 'A co-op adventure designed for two. Every level reinvents itself with new mechanics and genuine surprises.' },
+      { id: 411, title: 'Overcooked! 2', genre: 'Party', platform: ['Everything'], rating: 8.7, image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=240&fit=crop', excerpt: 'Chaotic kitchen co-op that will test your friendships. Simple controls, endless laughs.' },
+      { id: 412, title: 'Unravel Two', genre: 'Platformer', platform: ['PS4', 'Xbox', 'PC'], rating: 8.4, image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=240&fit=crop', excerpt: 'Two yarn creatures navigate a beautiful world together. Gentle, gorgeous, and perfect for couch co-op.' },
+    ],
+  },
+]
+
+// ── Gateway: Beginner Guides ───────────────────────────────────
+export const beginnerGuides = [
+  {
+    id: 'g1',
+    title: 'What Controller Should I Buy?',
+    description: 'A no-nonsense guide to picking your first controller for PC, console, or mobile gaming.',
+    icon: '🎮',
+    readTime: '5 min',
+  },
+  {
+    id: 'g2',
+    title: 'Gaming Jargon Decoded',
+    description: 'FPS, RPG, NPC, DLC — we break down every acronym so you never feel lost.',
+    icon: '📚',
+    readTime: '8 min',
+  },
+  {
+    id: 'g3',
+    title: 'PC vs Console: Which Is Right for You?',
+    description: 'Honest pros and cons to help you pick the platform that fits your lifestyle and budget.',
+    icon: '💻',
+    readTime: '6 min',
+  },
+  {
+    id: 'g4',
+    title: 'How to Get Good (Without the Rage)',
+    description: 'Practical tips for improving at games without burning out. Spoiler: it\'s about having fun first.',
+    icon: '🚀',
+    readTime: '4 min',
+  },
+]
