@@ -197,7 +197,7 @@ export default function FreeGames() {
                 <span>Epic Games & Steam Weekly Radar</span>
               </div>
               <h1 className="font-display text-2xl sm:text-3xl font-extrabold text-brand-text">
-                Free Games & Weekly Giveaways
+                Free PC Games & Weekly Giveaways
               </h1>
               <p className="text-xs sm:text-sm text-brand-muted">
                 Claim limited-time weekly 100% OFF giveaways and freshly released free-to-play drops.

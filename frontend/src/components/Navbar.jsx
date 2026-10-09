@@ -1,11 +1,14 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { Sun, Moon, User, LogIn } from 'lucide-react'
 import { PixellonLogo } from './PixellonLogo'
 import DiscordWebhookModal from './DiscordWebhookModal'
 import { isWebhookConfigured } from '../utils/discordWebhook'
 import { useTheme } from '../context/ThemeContext'
 import { useAuth } from '../context/AuthContext'
+import { usePointer } from '../motion/MotionProvider'
+import { DURATION, EASE } from '../motion/tokens'
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -25,6 +28,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const { toggleColorMode, isDark } = useTheme()
   const { user, isAuthenticated } = useAuth()
+  const { reduced } = usePointer()
 
   useEffect(() => {
     // Check initial status
@@ -40,7 +44,11 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`sticky top-0 z-50 w-full border-b border-surface-700 bg-brand-bg/95 backdrop-blur-md transition-all duration-300 ${scrolled ? 'shadow-[0_8px_30px_rgba(0,0,0,0.35)]' : ''}`}>
+      <motion.nav
+        initial={reduced ? false : { y: -16, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: DURATION.normal, ease: EASE.out }}
+        className={`sticky top-0 z-50 w-full border-b border-surface-700 bg-brand-bg/95 backdrop-blur-md transition-all duration-300 ${scrolled ? 'shadow-[0_8px_30px_rgba(0,0,0,0.35)]' : ''}`}>
         <div className={`mx-auto flex w-full items-center justify-between px-4 transition-all duration-300 sm:px-8 lg:px-12 ${scrolled ? 'py-2 max-w-[1400px]' : 'py-3.5'}`}>
           {/* Logo */}
           <Link to="/" data-easter="logo" className="flex items-center group transition-transform duration-200 hover:scale-[1.02]">
@@ -236,7 +244,7 @@ export default function Navbar() {
             </div>
           </div>
         )}
-      </nav>
+      </motion.nav>
 
       {/* Global Discord Webhook Modal */}
       <DiscordWebhookModal

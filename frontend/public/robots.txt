@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /signin
+Disallow: /login
+Disallow: /signup
+Disallow: /profile
+
+Sitemap: https://pixellon.in/sitemap.xml

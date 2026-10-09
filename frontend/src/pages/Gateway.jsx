@@ -4,6 +4,7 @@ import { Loader2 } from 'lucide-react'
 import GameCard from '../components/GameCard'
 import SectionHeader from '../components/SectionHeader'
 import PageTransition from '../components/PageTransition'
+import { SectionReveal, Stagger, StaggerItem } from '../components/motion/Reveal'
 import { PixelPatternBg } from '../components/BrandDecorations'
 import { gatewayCollections, beginnerGuides } from '../data/mockData'
 import { getTrendingGames, getHighlyRatedGames } from '../utils/api'
@@ -45,6 +46,7 @@ export default function Gateway() {
   return (
     <PageTransition className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16">
       {/* ── Hero ──────────────────────────────────────────────── */}
+      <SectionReveal>
       <section id="gateway-hero" className="animate-fade-up relative">
         <div className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-8 sm:p-14 text-center">
           <PixelPatternBg />
@@ -53,9 +55,9 @@ export default function Gateway() {
               🌟 No experience needed • Built for Every Player
             </span>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-brand-text">
-              Welcome to the{' '}
+              Beginner Friendly Games &{' '}
               <span className="text-brand-primary">
-                Starter Zone
+                Starter Guides
               </span>
             </h1>
             <p className="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-brand-muted">
@@ -64,26 +66,27 @@ export default function Gateway() {
           </div>
         </div>
       </section>
+      </SectionReveal>
 
       {/* ── Quick Stats ───────────────────────────────────────── */}
       <section id="gateway-stats">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <Stagger className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {[
             { label: 'Starter Lists', value: '4', icon: '📚' },
             { label: 'Curated Picks', value: '12+', icon: '🎮' },
             { label: 'Quick Guides', value: '4', icon: '📖' },
             { label: 'Vibe Check', value: '100%', icon: '✨' },
           ].map((stat) => (
-            <div
+            <StaggerItem
               key={stat.label}
               className="rounded-xl border border-surface-700 bg-brand-surface px-5 py-6 text-center transition-all hover:border-brand-primary/50"
             >
               <span className="text-2xl">{stat.icon}</span>
               <p className="mt-2 font-display text-2xl font-bold text-brand-text">{stat.value}</p>
               <p className="mt-1 text-xs font-mono text-brand-muted">{stat.label}</p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </section>
 
       {/* ── Dynamic API Suggestions ───────────────────────────── */}
@@ -100,17 +103,18 @@ export default function Gateway() {
             <p className="text-sm font-mono text-brand-muted">Fetching top picks...</p>
           </div>
         ) : apiGames.length > 0 ? (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {apiGames.map((game) => (
+              <StaggerItem key={game.id}>
               <GameCard
-                key={game.id}
                 {...game}
                 tag="TRENDING"
                 tagColor="blue"
                 onClick={() => navigate(`/vault/${game.id}`)}
               />
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         ) : (
           <div className="rounded-xl border border-surface-700 bg-brand-surface p-8 text-center text-brand-muted">
             Could not fetch live suggestions at this time.
@@ -133,15 +137,16 @@ export default function Gateway() {
                 </div>
                 <p className="ml-10 text-sm text-brand-muted">{collection.description}</p>
               </div>
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {collection.games.map((game) => (
+                  <StaggerItem key={game.id}>
                   <GameCard
-                    key={game.id}
                     {...game}
                     tagColor={collection.color}
                   />
+                  </StaggerItem>
                 ))}
-              </div>
+              </Stagger>
             </div>
           </section>
         )
@@ -154,10 +159,10 @@ export default function Gateway() {
           subtitle="No jargon, just straight answers."
           accent="cyan"
         />
-        <div className="grid gap-4 sm:grid-cols-2">
+        <Stagger className="grid gap-4 sm:grid-cols-2">
           {beginnerGuides.map((guide) => (
+            <StaggerItem key={guide.id}>
             <article
-              key={guide.id}
               id={`guide-${guide.id}`}
               className="group flex gap-4 rounded-xl border border-surface-700 bg-brand-surface p-5 transition-all duration-200 hover:border-brand-accent hover:bg-surface-900 cursor-pointer"
             >
@@ -176,8 +181,9 @@ export default function Gateway() {
                 <p className="mt-1.5 text-sm text-brand-muted leading-relaxed">{guide.description}</p>
               </div>
             </article>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </section>
 
       {/* ── Getting Started CTA ───────────────────────────────── */}

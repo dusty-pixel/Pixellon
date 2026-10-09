@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { PixellonLogo } from './PixellonLogo'
 import { BrandPillarsBar, PixelCross } from './BrandDecorations'
+import { SectionReveal } from './motion/Reveal'
 
 export default function Footer() {
   return (
@@ -10,7 +11,7 @@ export default function Footer() {
         <BrandPillarsBar />
       </div>
 
-      <div className="w-full px-6 sm:px-10 lg:px-12 py-12">
+      <SectionReveal className="w-full px-6 sm:px-10 lg:px-12 py-12">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand Column */}
           <div className="space-y-4">
@@ -126,7 +127,7 @@ export default function Footer() {
             All rights reserved.
           </div>
         </div>
-      </div>
+      </SectionReveal>
     </footer>
   )
 }

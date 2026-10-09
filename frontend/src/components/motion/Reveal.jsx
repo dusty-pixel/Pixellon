@@ -89,6 +89,22 @@ export function StaggerItem({ children, className = '' }) {
   )
 }
 
+/** Micro-interaction wrapper — gentle lift on hover, press on tap. */
+export function Pressable({ children, className = '', lift = -3 }) {
+  const { reduced } = usePointer()
+  if (reduced) return <div className={className}>{children}</div>
+  return (
+    <motion.div
+      className={className}
+      whileHover={{ y: lift }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 24 }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 /** Rolling number counter (stats, XP, scores). */
 export function CountUp({ to, className = '', duration = 1.2, decimals = 0, suffix = '' }) {
   const ref = useRef(null)

@@ -18,6 +18,7 @@ import {
   Loader2,
 } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
+import { SectionReveal, Stagger, StaggerItem } from '../components/motion/Reveal'
 import { getGamingNews } from '../utils/api'
 import { isWebhookConfigured, sendGameUpdateToDiscord } from '../utils/discordWebhook'
 import DiscordWebhookModal from '../components/DiscordWebhookModal'
@@ -462,6 +463,7 @@ export default function News() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column (7 cols): Bold Header + Lead Image */}
           <div className="lg:col-span-6 space-y-6">
+            <SectionReveal>
             <div className="space-y-2">
               <span className="text-xs font-mono uppercase tracking-[0.25em] text-emerald-400">
                 02 / Major Headlines
@@ -470,6 +472,7 @@ export default function News() {
                 The Story Begins Here
               </h2>
             </div>
+            </SectionReveal>
 
             {/* Cinematic Featured Image with Reflection */}
             <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-white/15 bg-black/60 shadow-2xl">
@@ -531,10 +534,10 @@ export default function News() {
             <span>{investigationStories.length} Wire Stories Available</span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+          <Stagger className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             {investigationStories.map((story, idx) => (
+              <StaggerItem key={story.guid || story.link || idx}>
               <button
-                key={story.guid || story.link || idx}
                 onClick={() => setInvestigationIndex(idx)}
                 className={`group text-left relative aspect-square sm:aspect-[4/3] rounded-lg overflow-hidden border transition-all cursor-pointer ${
                   investigationIndex === idx
@@ -554,8 +557,9 @@ export default function News() {
                   </p>
                 </div>
               </button>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </div>
       </section>
 
@@ -576,6 +580,7 @@ export default function News() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column (7 cols): Date Header + Tabular Event Timeline */}
           <div className="lg:col-span-7 space-y-8">
+            <SectionReveal>
             <div className="space-y-2">
               <span className="text-xs font-mono uppercase tracking-[0.25em] text-emerald-400">
                 03 / Chronological Log
@@ -584,14 +589,15 @@ export default function News() {
                 26 – 27 September 2026
               </h2>
             </div>
+            </SectionReveal>
 
             {/* Timeline Rows */}
-            <div className="space-y-4">
+            <Stagger className="space-y-4">
               {timelineStories.map((item, idx) => {
                 const isSelected = timelineIndex === idx
                 return (
+                  <StaggerItem key={item.guid || item.link || idx}>
                   <div
-                    key={item.guid || item.link || idx}
                     onMouseEnter={() => setTimelineIndex(idx)}
                     onClick={() => setTimelineIndex(idx)}
                     className={`group rounded-xl border p-4 sm:p-5 transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
@@ -657,9 +663,10 @@ export default function News() {
                       </button>
                     </div>
                   </div>
+                  </StaggerItem>
                 )
               })}
-            </div>
+            </Stagger>
           </div>
 
           {/* Right Column (5 cols): High-contrast Dramatic Key Art with dynamic preview */}
@@ -732,6 +739,7 @@ export default function News() {
 
           {/* Center Column (3 cols): Massive Metric Number */}
           <div className="lg:col-span-3 text-center lg:text-left space-y-2 py-4">
+            <SectionReveal>
             <div className="font-display text-5xl sm:text-6xl lg:text-7xl font-black text-white tracking-tighter">
               98.4%
             </div>
@@ -741,11 +749,13 @@ export default function News() {
             <p className="text-xs text-stone-400 leading-relaxed font-sans max-w-xs mx-auto lg:mx-0">
               Cross-verified with official SEC filings, Steam backend depots, and direct studio confirmations.
             </p>
+            </SectionReveal>
           </div>
 
           {/* Right Column (5 cols): Inclusions / Exclusions Checklists */}
-          <div className="lg:col-span-5 space-y-6">
+          <Stagger className="lg:col-span-5 space-y-6">
             {/* Confirmed Intelligence */}
+            <StaggerItem>
             <div className="rounded-xl border border-emerald-500/20 bg-emerald-950/20 p-5 space-y-3">
               <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 font-bold">
                 <CheckCircle className="h-4 w-4 text-emerald-400" />
@@ -757,8 +767,10 @@ export default function News() {
                 <li>Official developer roadmaps with targeted release windows.</li>
               </ul>
             </div>
+            </StaggerItem>
 
             {/* Rumors & Speculation */}
+            <StaggerItem>
             <div className="rounded-xl border border-white/10 bg-black/40 p-5 space-y-3">
               <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-amber-400 font-bold">
                 <AlertCircle className="h-4 w-4 text-amber-400" />
@@ -770,7 +782,8 @@ export default function News() {
                 <li>Speculative plot leaks and early non-NDA alpha builds.</li>
               </ul>
             </div>
-          </div>
+            </StaggerItem>
+          </Stagger>
         </div>
       </section>
 
@@ -791,6 +804,7 @@ export default function News() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column (7 cols): Heading + Minimalist Form */}
           <div className="lg:col-span-7 space-y-8">
+            <SectionReveal>
             <div className="space-y-2">
               <span className="text-xs font-mono uppercase tracking-[0.25em] text-emerald-400">
                 05 / Direct Connectivity
@@ -802,6 +816,7 @@ export default function News() {
                 Receive direct breaking notifications the second major studio acquisitions, release dates, or leaks drop.
               </p>
             </div>
+            </SectionReveal>
 
             <form onSubmit={handleWireSubmit} className="space-y-5 max-w-xl">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

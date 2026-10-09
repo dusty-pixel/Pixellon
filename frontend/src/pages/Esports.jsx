@@ -360,10 +360,10 @@ export default function Esports() {
                 </span>
               </div>
               <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight text-brand-text">
-                Pro Esports Arena
+                Live Esports Scores & Schedule
               </h1>
               <p className="mt-2 text-sm text-brand-muted max-w-2xl leading-relaxed">
-                Official high-resolution vector team emblems, real-time live scoreboards, map schedule breakdowns, and customizable tournament fixtures.
+                Live esports scores, match schedules and results across CS2, VALORANT, League of Legends, Dota 2 and more — all in one match center.
               </p>
             </div>
 

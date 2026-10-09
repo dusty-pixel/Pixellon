@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Search, BookOpen, Loader2 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import { PixelPatternBg, PixelCross } from '../components/BrandDecorations';
+import { SectionReveal, Stagger, StaggerItem } from '../components/motion/Reveal';
 import { getGamesByGenre, searchGames } from '../utils/api';
 import { searchWikidataGames } from '../utils/wikidata';
 import { trendingGames as mockTrending, recentReviews as mockReviews, indieGames as mockIndie } from '../data/mockData';
@@ -71,10 +72,10 @@ export default function CodexHub() {
   }, [searchQuery]);
 
   const GameGrid = ({ games }) => (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {games.map(game => (
+        <StaggerItem key={game.id}>
         <Link
-          key={game.id}
           to={`/vault/${game.id}`}
           className="group block rounded-xl bg-brand-surface border border-surface-700 hover:border-brand-primary transition-all overflow-hidden shadow-sm hover:-translate-y-1"
         >
@@ -97,13 +98,15 @@ export default function CodexHub() {
             </div>
           </div>
         </Link>
+        </StaggerItem>
       ))}
-    </div>
+    </Stagger>
   );
 
   return (
     <PageTransition className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 min-h-screen space-y-12">
       {/* Header Banner */}
+      <SectionReveal>
       <div className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-8 sm:p-10">
         <PixelPatternBg />
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -114,7 +117,7 @@ export default function CodexHub() {
               </div>
               <div>
                 <h1 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-brand-text">
-                  The Vault
+                  The Vault: Community Game Wiki
                 </h1>
                 <p className="text-xs font-mono text-brand-accent2 uppercase tracking-widest mt-0.5">
                   Universal Gaming Encyclopedia
@@ -143,6 +146,7 @@ export default function CodexHub() {
           </div>
         </div>
       </div>
+      </SectionReveal>
 
       {/* Content */}
       {searchQuery.length > 2 ? (

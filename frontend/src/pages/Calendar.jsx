@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Filter, Calendar as CalendarIcon } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
+import { SectionReveal, Stagger, StaggerItem } from '../components/motion/Reveal'
 import { PixelPatternBg, PixelCross } from '../components/BrandDecorations'
 import { getUpcomingGames } from '../utils/api'
 
@@ -57,6 +58,7 @@ export default function Calendar() {
   return (
     <PageTransition className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
       {/* Header */}
+      <SectionReveal>
       <section id="calendar-header" className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-8 sm:p-10">
         <PixelPatternBg />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -68,10 +70,10 @@ export default function Calendar() {
               </span>
             </div>
             <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-brand-text">
-              Release Calendar
+              Game Release Dates & Calendar
             </h1>
             <p className="mt-1 text-sm text-brand-muted">
-              Never miss a launch. Track major blockbusters and indie debuts down the pipeline.
+              Never miss a launch. Track every confirmed game release date across PS5, Xbox, PC and Switch 2 — blockbusters and indie debuts.
             </p>
           </div>
           <div className="hidden sm:block">
@@ -79,6 +81,7 @@ export default function Calendar() {
           </div>
         </div>
       </section>
+      </SectionReveal>
 
       {/* Platform Filter */}
       <section id="calendar-filters" className="flex flex-wrap items-center justify-center gap-2">
@@ -118,10 +121,10 @@ export default function Calendar() {
               </div>
               
               {/* Games List */}
-              <div className="flex-1 space-y-3.5">
+              <Stagger className="flex-1 space-y-3.5">
                 {releases.map((game) => (
+                  <StaggerItem key={game.id}>
                   <div
-                    key={game.id}
                     className="group relative overflow-hidden rounded-xl border border-surface-700 bg-brand-surface p-4 sm:p-5 transition-all hover:border-brand-primary flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                   >
                     <div>
@@ -143,8 +146,9 @@ export default function Calendar() {
                       {game.date ? new Date(game.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'TBA'}
                     </div>
                   </div>
+                  </StaggerItem>
                 ))}
-              </div>
+              </Stagger>
             </div>
           </div>
         ))}

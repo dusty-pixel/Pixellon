@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Tag, Loader2, ExternalLink } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import { PixelPatternBg, PixelCross } from '../components/BrandDecorations'
+import { SectionReveal, Stagger, StaggerItem } from '../components/motion/Reveal'
 import { formatINR } from '../utils/currency'
 
 export default function Deals() {
@@ -29,6 +30,7 @@ export default function Deals() {
   return (
     <PageTransition className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       {/* Header */}
+      <SectionReveal>
       <section id="deals-header" className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-8 sm:p-10">
         <PixelPatternBg />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -40,7 +42,7 @@ export default function Deals() {
               </span>
             </div>
             <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-brand-text">
-              Real-Time Game Deals
+              PC Game Deals & Discount Tracker
             </h1>
             <p className="mt-1 text-sm text-brand-muted">
               Live PC game sales and maximum savings tracker with automatic INR (₹) price conversions.
@@ -51,6 +53,7 @@ export default function Deals() {
           </div>
         </div>
       </section>
+      </SectionReveal>
 
       {loading && (
         <div className="flex justify-center items-center py-24">
@@ -65,10 +68,10 @@ export default function Deals() {
       )}
 
       {!loading && !error && (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {deals.map((deal) => (
+            <StaggerItem key={deal.dealID}>
             <a
-              key={deal.dealID}
               href={`https://www.cheapshark.com/redirect?dealID=${deal.dealID}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -102,8 +105,9 @@ export default function Deals() {
                 </div>
               </div>
             </a>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       )}
     </PageTransition>
   )

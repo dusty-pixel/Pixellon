@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import PageTransition from '../components/PageTransition'
+import { SectionReveal, Stagger, StaggerItem } from '../components/motion/Reveal'
 import { PixelCross, PixelPatternBg } from '../components/BrandDecorations'
 import { getAllTimeTopGames } from '../utils/api'
 
@@ -32,6 +33,7 @@ export default function Reviews() {
   return (
     <PageTransition className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
       {/* ── Header ────────────────────────────────────────────── */}
+      <SectionReveal>
       <section id="reviews-header" className="animate-fade-up relative">
         <div className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-8 sm:p-10">
           <PixelPatternBg />
@@ -43,20 +45,22 @@ export default function Reviews() {
               </span>
             </div>
             <h1 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-brand-text">
-              Hall of Fame Reviews
+              Honest Game Reviews & Ratings
             </h1>
             <p className="text-sm sm:text-base text-brand-muted max-w-xl">
-              The highest-rated games of all time scored by consensus. Pure masterpieces only.
+              In-depth game reviews with clear verdicts, pros and cons — find out what is actually worth playing.
             </p>
           </div>
         </div>
       </section>
+      </SectionReveal>
 
       {/* ── Review Cards ──────────────────────────────────────── */}
-      <section id="reviews-feed" className="space-y-5">
+      <section id="reviews-feed">
+        <Stagger className="space-y-5">
         {reviews.map((review, index) => (
+          <StaggerItem key={review.id}>
           <article
-            key={review.id}
             id={`review-${review.id}`}
             className="group grid gap-6 overflow-hidden rounded-xl border border-surface-700 bg-brand-surface p-5 transition-all hover:border-brand-primary md:grid-cols-[280px_1fr]"
           >
@@ -107,7 +111,9 @@ export default function Reviews() {
               </div>
             </div>
           </article>
+          </StaggerItem>
         ))}
+        </Stagger>
       </section>
     </PageTransition>
   )

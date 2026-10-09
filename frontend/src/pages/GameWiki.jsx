@@ -7,6 +7,7 @@ import WikiNavbar from '../components/WikiNavbar';
 import Infobox from '../components/Infobox';
 import WikiSidebar from '../components/WikiSidebar';
 import PageTransition from '../components/PageTransition';
+import { SectionReveal } from '../components/motion/Reveal';
 import { getGameDetails, getSteamAppId, getSteamDetails, getIGDBDetails, getTopStreams, getLivePlayers } from '../utils/api';
 import { findWikidataGameId, getWikidataGame } from '../utils/wikidata';
 import { getGameDeals } from '../utils/deals';
@@ -264,6 +265,7 @@ export default function GameWiki() {
   return (
     <PageTransition className="min-h-screen text-brand-text">
       {/* Banner */}
+      <SectionReveal>
       <div className="relative h-64 sm:h-80 w-full overflow-hidden group">
         <img 
           src={wikiData.banner} 
@@ -277,6 +279,7 @@ export default function GameWiki() {
           </h1>
         </div>
       </div>
+      </SectionReveal>
 
       <WikiNavbar gameId={gameId} gameName={wikiData.title} pages={allPages} />
 
@@ -284,6 +287,7 @@ export default function GameWiki() {
         
         {/* Main Content Area */}
         <div className="flex-1 min-w-0">
+          <SectionReveal>
           <div className="bg-brand-surface rounded-xl border border-surface-700 shadow-sm p-6 sm:p-8 relative group/page hover:border-brand-primary/50 transition-colors">
             
             {/* Context Actions */}
@@ -413,6 +417,7 @@ export default function GameWiki() {
             )}
 
           </div>
+          </SectionReveal>
           {wikiData?.deals?.deals?.length ? <DealsPanel deals={wikiData.deals} /> : null}
         </div>
 

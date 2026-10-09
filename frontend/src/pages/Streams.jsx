@@ -198,7 +198,7 @@ export default function Streams() {
                 <span>OFFICIAL GAME STUDIOS • 24/7 NON-STOP THEATER</span>
               </div>
               <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-brand-text tracking-tight">
-                Live Streams & Studio Broadcasts
+                Live Game Streams & Studio Broadcasts
               </h1>
               <p className="mt-1.5 max-w-2xl text-sm text-brand-muted">
                 Official game developer showcases, 24/7 non-stop tournament marathons, and top gaming community creators.

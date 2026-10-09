@@ -91,7 +91,7 @@ export default function SignIn() {
 
               <div className="space-y-3">
                 <h1 className="font-display text-2xl sm:text-3xl font-extrabold text-brand-text leading-tight">
-                  Your Command Center for Modern Gaming
+                  Join Pixellon — Free Games, Deals & Esports
                 </h1>
                 <p className="text-xs sm:text-sm text-brand-muted leading-relaxed">
                   Join thousands of players tracking free game drops, tournament feeds, verified steam cards, and community vault guides.

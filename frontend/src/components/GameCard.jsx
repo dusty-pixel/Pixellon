@@ -15,7 +15,32 @@ const TAG_COLORS = {
  * Reusable game card component used across all pages.
  * Wrapped in ParallaxCard for tactile cursor tilt + specular highlight.
  */
+import { motion } from 'framer-motion'
+import { usePointer } from '../motion/MotionProvider'
 import ParallaxCard from './motion/ParallaxCard'
+
+/** Card shell — gentle lift on hover, press on tap (motion-safe). */
+function CardShell({ children, onClick, className }) {
+  const { reduced } = usePointer()
+  if (reduced) {
+    return (
+      <article onClick={onClick} className={className}>
+        {children}
+      </article>
+    )
+  }
+  return (
+    <motion.article
+      onClick={onClick}
+      className={className}
+      whileHover={{ y: -4 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 380, damping: 26 }}
+    >
+      {children}
+    </motion.article>
+  )
+}
 
 function GameCardInner({
   title,
@@ -33,7 +58,7 @@ function GameCardInner({
 }) {
   if (variant === 'featured') {
     return (
-      <article
+      <CardShell
         onClick={onClick}
         className="group flex flex-col h-full overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface transition-colors duration-200 hover:border-brand-primary cursor-pointer shadow-sm"
       >
@@ -78,13 +103,13 @@ function GameCardInner({
             <p className="mt-2 text-sm leading-relaxed text-brand-muted line-clamp-2">{excerpt}</p>
           )}
         </div>
-      </article>
+      </CardShell>
     )
   }
 
   if (variant === 'compact') {
     return (
-      <article
+      <CardShell
         onClick={onClick}
         className="group flex gap-4 rounded-xl border border-surface-700 bg-brand-surface p-3 transition-colors duration-150 hover:border-brand-primary/50 cursor-pointer shadow-sm"
       >
@@ -114,13 +139,13 @@ function GameCardInner({
             </span>
           )}
         </div>
-      </article>
+      </CardShell>
     )
   }
 
   // Default variant
   return (
-    <article
+    <CardShell
       onClick={onClick}
       className="group flex flex-col h-full overflow-hidden rounded-xl border border-surface-700 bg-brand-surface transition-colors duration-150 hover:border-brand-primary cursor-pointer shadow-sm"
     >
@@ -176,7 +201,7 @@ function GameCardInner({
           ))}
         </div>
       </div>
-    </article>
+    </CardShell>
   )
 }
 

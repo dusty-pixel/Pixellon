@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import GameCard from '../components/GameCard'
 import SectionHeader from '../components/SectionHeader'
 import PageTransition from '../components/PageTransition'
+import { SectionReveal, Stagger, StaggerItem } from '../components/motion/Reveal'
 import { PixelPatternBg } from '../components/BrandDecorations'
 import TlouSpotlightHero from '../components/tlou/TlouSpotlightHero'
 
@@ -138,6 +139,7 @@ export default function Indie() {
 
       <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
         {/* Header */}
+        <SectionReveal>
         <section id="indie-header" className="relative overflow-hidden rounded-2xl border border-surface-700 bg-brand-surface p-8 sm:p-12 text-center">
           <PixelPatternBg />
           <div className="relative z-10 max-w-3xl mx-auto space-y-4">
@@ -145,13 +147,14 @@ export default function Indie() {
               <span>STEAM API SYNC</span>
             </div>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-brand-text">
-              Upcoming Releases
+              Indie Game Spotlights & Upcoming Releases
             </h1>
             <p className="mx-auto max-w-2xl text-base sm:text-lg text-brand-muted leading-relaxed">
               Discover standout releases, innovative mechanics, and highly anticipated titles pulled directly from the Steam database.
             </p>
           </div>
         </section>
+        </SectionReveal>
 
         <section id="indie-grid">
           <SectionHeader
@@ -160,13 +163,13 @@ export default function Indie() {
             accent="accent"
           />
           {otherIndies.length ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {otherIndies.map((game) => (
-                <div key={game.id} className="h-full">
+                <StaggerItem key={game.id} className="h-full">
                   <GameCard {...game} tagColor="accent" />
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           ) : (
             <div className="flex flex-col items-center rounded-2xl border border-dashed border-surface-700 bg-brand-surface p-12 text-center">
               <p className="font-display text-lg font-bold text-brand-text">No upcoming titles right now</p>

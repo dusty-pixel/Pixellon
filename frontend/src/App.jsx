@@ -4,7 +4,9 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ParallaxBackground from './components/ParallaxBackground'
 import MascotDirector from './components/mascot/MascotDirector'
-import PixelTicker from './retro/PixelTicker'
+import FeatureTicker from './components/FeatureTicker'
+import ScrollMeasure from './components/ScrollMeasure'
+import { RouteSEO } from './utils/seo'
 import { TickerProvider } from './retro/TickerProvider'
 import CRTOverlay from './retro/CRTOverlay'
 import { useEasterEggs } from './motion/easterEggs'
@@ -35,8 +37,10 @@ function Shell() {
  <div className="flex min-h-screen flex-col bg-[#070B12]">
  <ParallaxBackground />
  <CRTOverlay />
- <PixelTicker />
  <Navbar />
+ <FeatureTicker />
+ <ScrollMeasure />
+ <RouteSEO />
  <main className="relative z-10 flex-1">
  <AnimatePresence mode="wait">
  <Routes>
