@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
@@ -30,31 +29,14 @@ function LegacyCodexRedirect() {
 }
 
 function Shell() {
- const location = useLocation()
- const isHome = location.pathname === '/'
- const [scrolledPastHero, setScrolledPastHero] = useState(false)
-
  useEasterEggs()
-
- useEffect(() => {
-  if (!isHome) {
-   setScrolledPastHero(true)
-   return
-  }
-  const onScroll = () => {
-   setScrolledPastHero(window.scrollY > 480)
-  }
-  onScroll()
-  window.addEventListener('scroll', onScroll, { passive: true })
-  return () => window.removeEventListener('scroll', onScroll)
- }, [isHome])
 
  return (
  <div className="flex min-h-screen flex-col bg-[#070B12]">
  <ParallaxBackground />
  <CRTOverlay />
- {!isHome && <PixelTicker />}
- {(!isHome || scrolledPastHero) && <Navbar />}
+ <PixelTicker />
+ <Navbar />
  <main className="relative z-10 flex-1">
  <AnimatePresence mode="wait">
  <Routes>

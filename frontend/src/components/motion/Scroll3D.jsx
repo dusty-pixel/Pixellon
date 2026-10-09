@@ -4,7 +4,7 @@
 export function VoxelDivider({ count = 12, className = '' }) {
   return (
     <div aria-hidden className={`flex items-center justify-center gap-4 overflow-hidden py-4 opacity-40 ${className}`}>
-      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-surface-700 to-transparent" />
+      <div className="h-px flex-1 bg-surface-700" />
       <div className="flex items-center gap-3">
         {Array.from({ length: Math.min(count, 6) }).map((_, i) => (
           <span
@@ -13,7 +13,7 @@ export function VoxelDivider({ count = 12, className = '' }) {
           />
         ))}
       </div>
-      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-surface-700 to-transparent" />
+      <div className="h-px flex-1 bg-surface-700" />
     </div>
   )
 }

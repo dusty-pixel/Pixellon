@@ -92,11 +92,11 @@ export default function ArenaIntro({ onEnter }) {
                 initial={{ scale: 0.7, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: DURATION.slow, ease: EASE.out }}
-                className="neon-sign mx-auto mb-5 flex h-14 w-14 items-center justify-center bg-brand-primary/10"
+                className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-xl border border-brand-primary/40 bg-brand-primary/10"
               >
                 <PixellonIcon size={26} />
               </motion.div>
-              <p className="neon-sign-text font-display text-2xl font-extrabold tracking-[0.3em] text-white sm:text-3xl">
+              <p className="font-display text-2xl font-extrabold tracking-[0.3em] text-white sm:text-3xl">
                 PIXELLON
               </p>
               <div className="mx-auto mt-5 min-h-16 text-left font-pixel text-sm tracking-[0.2em]">

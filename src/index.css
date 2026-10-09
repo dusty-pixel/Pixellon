@@ -44,32 +44,25 @@
   }
 }
 
-/* ── Utilities ─────────────────────────────────────────────────── */
+/* ── Utilities (flat, no glow) ─────────────────────────────────── */
 @utility glow-violet {
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15), 0 0 60px rgba(139, 92, 246, 0.05);
+  box-shadow: none;
 }
 
 @utility glow-cyan {
-  box-shadow: 0 0 20px rgba(34, 211, 238, 0.15), 0 0 60px rgba(34, 211, 238, 0.05);
+  box-shadow: none;
 }
 
 @utility gradient-text-violet {
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa, #c4b5fd);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #a78bfa;
 }
 
 @utility gradient-text-cyan {
-  background: linear-gradient(135deg, #22d3ee, #67e8f9, #a5f3fc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #67e8f9;
 }
 
 @utility card-glass {
-  background: rgba(26, 26, 36, 0.6);
-  backdrop-filter: blur(12px);
+  background: rgba(26, 26, 36, 1);
   border: 1px solid rgba(46, 46, 61, 0.5);
 }
 

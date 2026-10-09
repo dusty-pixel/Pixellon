@@ -14,15 +14,14 @@ export default function Gateway() {
     <div className="mx-auto max-w-7xl px-6 py-10 space-y-16">
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section id="gateway-hero" className="animate-fade-up">
-        <div className="relative overflow-hidden rounded-2xl border border-accent-cyan/20 bg-surface-800/30">
-          <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-violet/5" />
+        <div className="relative overflow-hidden rounded-2xl border border-surface-700/40 bg-surface-800/30">
           <div className="relative px-8 py-16 sm:px-12 sm:py-20 text-center">
             <span className="mb-3 inline-flex items-center rounded-full bg-accent-cyan/10 px-4 py-1.5 text-xs font-semibold text-accent-cyan">
               🌟 Designed for Newcomers
             </span>
             <h1 className="mx-auto font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl lg:text-6xl max-w-3xl">
               Welcome to the
-              <span className="gradient-text-cyan"> Gateway</span>
+              <span className="text-accent-cyan"> Gateway</span>
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-text-secondary">
               Never played a game? Not sure where to start? We've curated the perfect collections and guides to ease you into the world of gaming — no experience required.
@@ -57,7 +56,7 @@ export default function Gateway() {
         const colors = COLLECTION_COLORS[collection.color] || COLLECTION_COLORS.violet
         return (
           <section key={collection.id} id={`collection-${collection.id}`}>
-            <div className={`rounded-2xl border ${colors.border} ${colors.bg} p-6 sm:p-8`}>
+            <div className={`rounded-2xl border ${colors.border} bg-surface-800/30 p-6 sm:p-8`}>
               <div className="mb-6">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-2xl">{collection.emoji}</span>

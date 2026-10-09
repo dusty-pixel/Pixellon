@@ -110,7 +110,7 @@ export default function Footer() {
               />
               <button
                 id="newsletter-subscribe"
-                className="rounded-lg bg-brand-primary px-4 py-2 text-sm font-medium text-white transition-all hover:bg-brand-primary/85 shadow-[0_0_12px_rgba(37,99,235,0.3)] active:scale-95 cursor-pointer font-sans"
+                className="rounded-lg bg-brand-primary px-4 py-2 text-sm font-medium text-white transition-all hover:bg-brand-primary/85 active:scale-95 cursor-pointer font-sans"
               >
                 Join
               </button>

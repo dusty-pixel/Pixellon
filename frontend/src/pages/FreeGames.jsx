@@ -423,7 +423,7 @@ export default function FreeGames() {
                       src={featuredGame.hdImage || featuredGame.image || featuredGame.thumbnail}
                       alt={featuredGame.title}
                       loading="eager"
-                      className="h-full w-full object-contain select-none drop-shadow-2xl"
+                      className="h-full w-full object-contain select-none"
                     />
                   </AnimatePresence>
 
@@ -466,7 +466,7 @@ export default function FreeGames() {
                             onClick={() => handleSelectSlide(idx)}
                             className={`group/thumb relative aspect-[16/9] overflow-hidden rounded-lg border transition-all cursor-pointer ${
                               isSelected
-                                ? 'border-amber-500 ring-2 ring-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.3)] scale-[1.03]'
+                                ? 'border-amber-500 ring-2 ring-amber-500/40 scale-[1.03]'
                                 : 'border-surface-700 opacity-60 hover:opacity-100 hover:border-brand-accent'
                             }`}
                           >
@@ -512,7 +512,7 @@ export default function FreeGames() {
                   }}
                   className={`inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-medium transition-all duration-150 cursor-pointer relative ${
                     isActive
-                      ? 'bg-brand-primary text-white font-semibold shadow-[0_2px_10px_rgba(2,132,199,0.35)]'
+                      ? 'bg-brand-primary text-white font-semibold'
                       : 'text-brand-muted hover:text-brand-text hover:bg-surface-700/40'
                   }`}
                 >

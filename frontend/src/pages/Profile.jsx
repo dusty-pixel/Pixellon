@@ -362,7 +362,7 @@ export default function Profile() {
                       className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-xs font-bold transition-all cursor-pointer shadow-md ${
                         isConnectedToUser
                           ? 'bg-brand-primary/20 text-brand-accent border border-brand-primary/40'
-                          : 'bg-brand-primary text-white hover:bg-brand-primary/90 shadow-[0_0_15px_rgba(37,99,235,0.4)]'
+                          : 'bg-brand-primary text-white hover:bg-brand-primary/90'
                       }`}
                     >
                       {isConnectedToUser ? (

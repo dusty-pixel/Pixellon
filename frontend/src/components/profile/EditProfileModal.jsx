@@ -114,7 +114,7 @@ export default function EditProfileModal({ isOpen, onClose, currentProfile, onSa
                       onClick={() => setFormData({ ...formData, avatar: av.url })}
                       className={`relative h-13 w-13 rounded-xl overflow-hidden border-2 transition-all p-1 bg-surface-900 cursor-pointer ${
                         isSelected
-                          ? 'border-brand-primary scale-105 shadow-[0_0_15px_rgba(37,99,235,0.4)]'
+                          ? 'border-brand-primary scale-105'
                           : 'border-surface-700 opacity-70 hover:opacity-100'
                       }`}
                     >
@@ -252,7 +252,7 @@ export default function EditProfileModal({ isOpen, onClose, currentProfile, onSa
               </button>
               <button
                 type="submit"
-                className="rounded-lg bg-brand-primary px-5 py-2 text-xs font-bold text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] hover:bg-brand-primary/90 transition-all cursor-pointer"
+                className="rounded-lg bg-brand-primary px-5 py-2 text-xs font-bold text-white hover:bg-brand-primary/90 transition-all cursor-pointer"
               >
                 Save Profile
               </button>

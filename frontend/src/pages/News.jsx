@@ -177,11 +177,6 @@ export default function News() {
     return defaults[idx % defaults.length]
   }
 
-  const getStoryGhostWord = (story, idx) => {
-    const words = ['DISPATCH', 'REVELATION', 'HEADLINE', 'CHRONICLE', 'FRONTLINE']
-    return words[idx % words.length]
-  }
-
   if (loading) {
     return (
       <PageTransition className="min-h-screen bg-[#06080C] text-white flex flex-col items-center justify-center gap-4">
@@ -280,7 +275,6 @@ export default function News() {
           })}
           {/* Nature Vignette & Dark Forest Overlay matching template */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#06080C] via-[#06080C]/40 to-[#06080C]/80 z-20" />
-          <div className="absolute inset-0 bg-radial-at-c from-transparent via-[#06080C]/50 to-[#06080C]/90 z-20" />
         </div>
 
         {/* Left Side: Interactive Dynamic Step Indicator (01 - 05) */}
@@ -300,7 +294,7 @@ export default function News() {
                 <span
                   className={`h-2 rounded-full transition-all duration-300 ${
                     isActive
-                      ? 'w-6 bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]'
+                      ? 'w-6 bg-emerald-400'
                       : 'w-1.5 bg-white/20 group-hover:bg-white/50 group-hover:w-3'
                   }`}
                 />
@@ -338,7 +332,7 @@ export default function News() {
             </p>
 
             {/* Headline */}
-            <h1 className="relative font-display text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight uppercase leading-[1.08] max-w-4xl drop-shadow-2xl">
+            <h1 className="relative font-display text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight uppercase leading-[1.08] max-w-4xl">
               <a
                 href={currentHeroStory?.link}
                 target="_blank"
@@ -348,11 +342,6 @@ export default function News() {
                 {currentHeroStory?.title || 'Global Gaming Chronicles'}
               </a>
             </h1>
-          </div>
-
-          {/* Giant Translucent Ghost Typography Layer ("DISPATCH" / "ИСТОКИ") */}
-          <div aria-hidden className="absolute -bottom-6 left-1/2 -translate-x-1/2 editorial-ghost-text pointer-events-none select-none transition-all duration-700">
-            {getStoryGhostWord(currentHeroStory, heroIndex)}
           </div>
         </div>
 
@@ -444,7 +433,7 @@ export default function News() {
         <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/10 overflow-hidden z-40">
           <div
             key={`${heroIndex}-${isAutoCycling && !isHeroHovered}`}
-            className={`h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-300 ${
+            className={`h-full bg-emerald-500 ${
               isAutoCycling && !isHeroHovered ? 'animate-editorial-progress' : 'opacity-40 w-full'
             }`}
             style={{
@@ -549,7 +538,7 @@ export default function News() {
                 onClick={() => setInvestigationIndex(idx)}
                 className={`group text-left relative aspect-square sm:aspect-[4/3] rounded-lg overflow-hidden border transition-all cursor-pointer ${
                   investigationIndex === idx
-                    ? 'border-emerald-400 ring-2 ring-emerald-400/40 shadow-[0_0_15px_rgba(52,211,153,0.3)]'
+                    ? 'border-emerald-400 ring-2 ring-emerald-400/40'
                     : 'border-white/15 opacity-70 hover:opacity-100 hover:border-white/40'
                 }`}
               >
@@ -696,7 +685,7 @@ export default function News() {
                     {formatTime(currentTimelineItem?.pubDate)}
                   </span>
                 </div>
-                <p className="text-sm sm:text-base font-sans font-bold text-white drop-shadow line-clamp-2">
+                <p className="text-sm sm:text-base font-sans font-bold text-white line-clamp-2">
                   {currentTimelineItem?.title}
                 </p>
                 <p className="text-xs font-mono text-stone-400">

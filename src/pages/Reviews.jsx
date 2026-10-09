@@ -70,7 +70,7 @@ export default function Reviews() {
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
               />
-              <div className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-xl bg-surface-950/70 backdrop-blur-sm">
+              <div className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-xl bg-surface-950">
                 <span className="text-sm font-bold text-accent-amber">{review.rating}</span>
               </div>
             </div>

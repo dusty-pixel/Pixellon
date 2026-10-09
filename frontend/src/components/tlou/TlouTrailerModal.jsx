@@ -41,7 +41,7 @@ export default function TlouTrailerModal({ isOpen, onClose, trailer, gameTitle }
       aria-label="Game Trailer Player"
     >
       <div
-        className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-stone-700/80 bg-stone-950 shadow-[0_0_50px_rgba(0,0,0,0.9)] flex flex-col"
+        className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-stone-700/80 bg-stone-950 flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* ── Modal Header Bar ────────────────────────────────────────── */}

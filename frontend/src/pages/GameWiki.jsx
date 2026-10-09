@@ -272,7 +272,7 @@ export default function GameWiki() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pb-6 flex justify-between items-end">
-          <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white drop-shadow-lg tracking-tight">
+          <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
             {wikiData.title}
           </h1>
         </div>
@@ -335,7 +335,7 @@ export default function GameWiki() {
                     </button>
                     <button 
                       type="submit" 
-                      className="flex items-center gap-1 rounded-lg bg-brand-primary hover:bg-brand-primary/85 text-white px-3.5 py-1.5 text-xs font-mono font-bold shadow-[0_0_12px_rgba(37,99,235,0.3)] transition-colors cursor-pointer"
+                      className="flex items-center gap-1 rounded-lg bg-brand-primary hover:bg-brand-primary/85 text-white px-3.5 py-1.5 text-xs font-mono font-bold transition-colors cursor-pointer"
                     >
                       <Save size={14} /> Save
                     </button>
@@ -405,7 +405,7 @@ export default function GameWiki() {
                 <p className="text-brand-muted max-w-md mx-auto mb-6 text-sm">This page doesn't exist yet, or it was deleted. You can create it now to start building the Vault.</p>
                 <button 
                   onClick={startAddingNewPage}
-                  className="bg-brand-primary hover:bg-brand-primary/85 text-white px-6 py-2.5 rounded-xl font-mono text-xs font-bold inline-flex items-center gap-2 shadow-[0_0_12px_rgba(37,99,235,0.3)] cursor-pointer"
+                  className="bg-brand-primary hover:bg-brand-primary/85 text-white px-6 py-2.5 rounded-xl font-mono text-xs font-bold inline-flex items-center gap-2 cursor-pointer"
                 >
                   <Plus size={16} /> Create "{pageId}"
                 </button>

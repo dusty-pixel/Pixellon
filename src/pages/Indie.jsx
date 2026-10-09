@@ -7,8 +7,7 @@ export default function Indie() {
     <div className="mx-auto max-w-7xl px-6 py-10 space-y-12">
       {/* ── Header ────────────────────────────────────────────── */}
       <section id="indie-header" className="animate-fade-up">
-        <div className="relative overflow-hidden rounded-2xl border border-accent-emerald/20 bg-surface-800/30">
-          <div className="absolute inset-0 bg-gradient-to-br from-accent-emerald/5 via-transparent to-accent-violet/5" />
+        <div className="relative overflow-hidden rounded-2xl border border-surface-700/40 bg-surface-800/30">
           <div className="relative px-8 py-14 sm:px-12">
             <span className="mb-4 inline-flex items-center rounded-full bg-accent-emerald/10 px-3 py-1 text-xs font-semibold text-accent-emerald">
               ◆ Independent Studios

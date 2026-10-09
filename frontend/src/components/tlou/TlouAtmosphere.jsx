@@ -17,18 +17,8 @@ function TlouAtmosphere({ bgImage }) {
         }}
       />
 
-      {/* ── Forest Canopy Sunbeams / Organic Lighting ────────────── */}
-      <div
-        className="absolute inset-0 opacity-40 mix-blend-screen"
-        style={{
-          background:
-            'radial-gradient(ellipse 65% 55% at 75% 20%, rgba(200, 245, 205, 0.22) 0%, rgba(134, 239, 172, 0.08) 40%, transparent 75%)',
-        }}
-      />
-
       {/* ── Deep Forest Greens & Charcoal Vignette Overlay ────────── */}
       <div className="absolute inset-0 tlou-vignette-overlay" />
-      <div className="absolute inset-0 tlou-ambient-green-glow" />
 
       {/* ── Subtle Film Grain / Atmospheric Depth ──────────────────── */}
       <div

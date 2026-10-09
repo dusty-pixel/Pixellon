@@ -111,7 +111,7 @@ export default function TlouNav({
               onClick={() => onSelectGame(item.id)}
               className={`flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-xs font-cinematic uppercase tracking-wider transition-all cursor-pointer shrink-0 ${
                 isActive
-                  ? 'bg-emerald-950 text-white border border-emerald-400/80 shadow-[0_0_14px_rgba(16,185,129,0.35)] font-bold'
+                  ? 'bg-emerald-950 text-white border border-emerald-400/80 font-bold'
                   : 'text-stone-400 hover:text-white hover:bg-stone-900/60'
               }`}
             >
@@ -186,7 +186,7 @@ export default function TlouNav({
           onClick={() => onSelectGame('live-daily')}
           className={`flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-xs font-cinematic uppercase tracking-wider transition-all cursor-pointer shrink-0 ${
             isLiveActive
-              ? 'bg-red-950 text-red-200 border border-red-500/80 shadow-[0_0_15px_rgba(239,68,68,0.4)] font-bold'
+              ? 'bg-red-950 text-red-200 border border-red-500/80 font-bold'
               : 'text-stone-400 hover:text-white hover:bg-stone-900/60'
           }`}
           title="Switch to Real-Time Live Daily Gaming API"

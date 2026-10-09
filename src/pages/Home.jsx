@@ -8,7 +8,6 @@ export default function Home() {
       {/* ── Hero Section ──────────────────────────────────────── */}
       <section id="hero" className="animate-fade-up">
         <div className="relative overflow-hidden rounded-2xl border border-surface-700/40 bg-surface-800/30">
-          <div className="absolute inset-0 bg-gradient-to-br from-accent-violet/5 via-transparent to-accent-cyan/5" />
           <div className="relative px-8 py-16 sm:px-12 sm:py-20 lg:px-16">
             <div className="max-w-2xl">
               <span className="mb-4 inline-flex items-center rounded-full bg-accent-violet/10 px-3 py-1 text-xs font-semibold text-accent-violet">
@@ -16,7 +15,7 @@ export default function Home() {
               </span>
               <h1 className="font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl lg:text-6xl">
                 Your Portal to the
-                <span className="gradient-text-violet"> Gaming Universe</span>
+                <span className="text-accent-violet"> Gaming Universe</span>
               </h1>
               <p className="mt-5 text-lg leading-relaxed text-text-secondary max-w-xl">
                 Discover trending titles, explore indie gems, read in-depth reviews, and never miss a release. Whether you're a veteran or just starting out — Nexus has you covered.
@@ -121,8 +120,7 @@ export default function Home() {
 
       {/* ── Gateway CTA Banner ────────────────────────────────── */}
       <section id="gateway-cta">
-        <div className="relative overflow-hidden rounded-2xl border border-accent-cyan/20 bg-gradient-to-r from-surface-800/60 via-surface-800/40 to-surface-800/60">
-          <div className="absolute inset-0 bg-gradient-to-r from-accent-cyan/5 via-accent-violet/5 to-accent-cyan/5" />
+        <div className="relative overflow-hidden rounded-2xl border border-surface-700/40 bg-surface-800/30">
           <div className="relative flex flex-col items-center justify-center px-8 py-14 text-center">
             <span className="mb-2 text-3xl">🎮</span>
             <h3 className="font-display text-2xl font-bold text-text-primary">

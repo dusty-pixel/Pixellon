@@ -16,10 +16,10 @@ export default function PixelTicker() {
           <div className="led-dots pointer-events-none absolute inset-0 z-10" />
           <div className="flex h-full items-center overflow-hidden pl-4">
             <div className="led-ticker-track font-pixel text-sm tracking-[0.2em]">
-              <span className={`led-ticker-text pr-8 ${alert ? 'text-red-400' : ''}`} style={alert ? { color: '#ff6b5e', textShadow: '0 0 8px rgba(255,80,60,0.8)' } : undefined}>
+              <span className={`led-ticker-text pr-8 ${alert ? 'text-red-400' : ''}`} style={alert ? { color: '#ff6b5e' } : undefined}>
                 {loop}
               </span>
-              <span aria-hidden className={`led-ticker-text pr-8 ${alert ? '' : ''}`} style={alert ? { color: '#ff6b5e', textShadow: '0 0 8px rgba(255,80,60,0.8)' } : undefined}>
+              <span aria-hidden className={`led-ticker-text pr-8 ${alert ? '' : ''}`} style={alert ? { color: '#ff6b5e' } : undefined}>
                 {loop}
               </span>
             </div>

@@ -218,7 +218,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                     onClick={() => handleGameChange(g.name)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-mono font-semibold border transition-all ${
                       selectedGame === g.name
-                        ? 'border-brand-primary bg-brand-primary/20 text-brand-text shadow-[0_0_12px_rgba(37,99,235,0.3)]'
+                        ? 'border-brand-primary bg-brand-primary/20 text-brand-text'
                         : 'border-surface-700 bg-surface-900 text-brand-muted hover:border-brand-primary/50 hover:text-brand-text'
                     }`}
                   >
@@ -279,7 +279,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                   onClick={() => setStatus('running')}
                   className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-mono font-bold border transition-all ${
                     status === 'running'
-                      ? 'border-red-500 bg-red-500/20 text-red-400 shadow-[0_0_15px_rgba(239,68,68,0.25)]'
+                      ? 'border-red-500 bg-red-500/20 text-red-400'
                       : 'border-surface-700 bg-surface-900 text-brand-muted hover:border-brand-primary/50'
                   }`}
                 >
@@ -293,7 +293,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                   onClick={() => setStatus('not_started')}
                   className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-mono font-bold border transition-all ${
                     status === 'not_started'
-                      ? 'border-blue-500 bg-blue-500/20 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.25)]'
+                      ? 'border-blue-500 bg-blue-500/20 text-blue-400'
                       : 'border-surface-700 bg-surface-900 text-brand-muted hover:border-brand-primary/50'
                   }`}
                 >
@@ -305,7 +305,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
                   onClick={() => setStatus('finished')}
                   className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-mono font-bold border transition-all ${
                     status === 'finished'
-                      ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.25)]'
+                      ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400'
                       : 'border-surface-700 bg-surface-900 text-brand-muted hover:border-brand-primary/50'
                   }`}
                 >
@@ -629,7 +629,7 @@ export default function AddMatchModal({ isOpen, onClose, onAddMatch }) {
               </button>
               <button
                 type="submit"
-                className="flex items-center gap-2 px-5 py-2 rounded-lg bg-brand-primary hover:bg-blue-600 text-xs font-mono font-bold text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all"
+                className="flex items-center gap-2 px-5 py-2 rounded-lg bg-brand-primary hover:bg-blue-600 text-xs font-mono font-bold text-white transition-all"
               >
                 <Plus className="h-4 w-4" />
                 Add Match to Circuit

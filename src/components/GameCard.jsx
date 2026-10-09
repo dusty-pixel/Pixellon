@@ -41,7 +41,7 @@ export default function GameCard({
     return (
       <article
         onClick={onClick}
-        className="group relative overflow-hidden rounded-2xl border border-surface-700/50 bg-surface-800/40 transition-all duration-300 hover:border-accent-violet/30 hover:glow-violet cursor-pointer"
+        className="group relative overflow-hidden rounded-2xl border border-surface-700/50 bg-surface-800/40 transition-all duration-300 hover:border-accent-violet/30 cursor-pointer"
       >
         <div className="relative aspect-[16/9] overflow-hidden">
           <img
@@ -62,7 +62,7 @@ export default function GameCard({
           )}
 
           {/* Rating */}
-          <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-surface-950/70 backdrop-blur-sm">
+          <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-surface-950">
             <span className="text-sm font-bold text-accent-amber">{rating}</span>
           </div>
 
@@ -92,7 +92,7 @@ export default function GameCard({
         <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg">
           <img src={image} alt={title} className="h-full w-full object-cover" loading="lazy" />
           {rating && (
-            <div className="absolute bottom-1 right-1 flex h-6 w-8 items-center justify-center rounded bg-surface-950/80 backdrop-blur-sm">
+            <div className="absolute bottom-1 right-1 flex h-6 w-8 items-center justify-center rounded bg-surface-950">
               <span className="text-[10px] font-bold text-accent-amber">{rating}</span>
             </div>
           )}
@@ -136,7 +136,7 @@ export default function GameCard({
         )}
 
         {rating && (
-          <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg bg-surface-950/70 backdrop-blur-sm">
+          <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg bg-surface-950">
             <span className="text-xs font-bold text-accent-amber">{rating}</span>
           </div>
         )}

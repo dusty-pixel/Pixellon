@@ -76,7 +76,7 @@ export default function CodexHub() {
         <Link
           key={game.id}
           to={`/vault/${game.id}`}
-          className="group block rounded-xl bg-brand-surface border border-surface-700 hover:border-brand-primary transition-all overflow-hidden shadow-sm hover:shadow-[0_0_20px_rgba(37,99,235,0.25)] hover:-translate-y-1"
+          className="group block rounded-xl bg-brand-surface border border-surface-700 hover:border-brand-primary transition-all overflow-hidden shadow-sm hover:-translate-y-1"
         >
           <div className="relative h-52 w-full overflow-hidden border-b border-surface-700">
             <img src={game.image} alt={game.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />

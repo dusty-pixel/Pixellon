@@ -476,7 +476,7 @@ export default function Streams() {
                         href={selectedStream.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold text-white transition-all shadow-[0_0_15px_rgba(145,70,255,0.3)] cursor-pointer"
+                        className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold text-white transition-all cursor-pointer"
                         style={{ backgroundColor: platformOf(selectedStream).color }}
                       >
                         <ExternalLink className="h-4 w-4" />
@@ -574,7 +574,7 @@ export default function Streams() {
                   onClick={() => setSelectedCategory('all')}
                   className={`rounded-lg px-3.5 py-1.5 text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                     selectedCategory === 'all'
-                      ? 'bg-brand-primary text-white shadow-[0_0_16px_rgba(37,99,235,0.4)]'
+                      ? 'bg-brand-primary text-white'
                       : 'border border-surface-700 bg-brand-surface text-brand-muted hover:border-brand-primary/50 hover:text-brand-text'
                   }`}
                 >
@@ -588,7 +588,7 @@ export default function Streams() {
                   onClick={() => setSelectedCategory('24-7')}
                   className={`rounded-lg px-3.5 py-1.5 text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                     selectedCategory === '24-7'
-                      ? 'bg-amber-500 text-black shadow-[0_0_16px_rgba(245,158,11,0.4)]'
+                      ? 'bg-amber-500 text-black'
                       : 'border border-amber-500/30 bg-brand-surface text-amber-300 hover:border-amber-500 hover:text-white'
                   }`}
                 >
@@ -603,7 +603,7 @@ export default function Streams() {
                   onClick={() => setSelectedCategory('official')}
                   className={`rounded-lg px-3.5 py-1.5 text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                     selectedCategory === 'official'
-                      ? 'bg-blue-600 text-white shadow-[0_0_16px_rgba(37,99,235,0.4)]'
+                      ? 'bg-blue-600 text-white'
                       : 'border border-blue-500/30 bg-brand-surface text-blue-300 hover:border-blue-500 hover:text-white'
                   }`}
                 >
@@ -624,7 +624,7 @@ export default function Streams() {
                       onClick={() => setSelectedCategory(plat)}
                       className={`rounded-lg px-3.5 py-1.5 text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                         selectedCategory === plat
-                          ? 'text-white shadow-[0_0_16px_rgba(37,99,235,0.4)]'
+                          ? 'text-white'
                           : 'border border-surface-700 bg-brand-surface text-brand-muted hover:text-brand-text'
                       }`}
                       style={selectedCategory === plat ? { backgroundColor: PLATFORM_META[plat].color } : undefined}
@@ -645,7 +645,7 @@ export default function Streams() {
                       onClick={() => setSelectedCategory(cat)}
                       className={`rounded-lg px-3 py-1.5 text-xs font-mono font-medium transition-all whitespace-nowrap cursor-pointer ${
                         selectedCategory === cat
-                          ? 'bg-brand-primary text-white shadow-[0_0_16px_rgba(37,99,235,0.4)]'
+                          ? 'bg-brand-primary text-white'
                           : 'border border-surface-700 bg-brand-surface text-brand-muted hover:border-brand-primary/50 hover:text-brand-text'
                       }`}
                     >
@@ -682,8 +682,8 @@ export default function Streams() {
                     transition={{ delay: Math.min(i * 0.02, 0.3) }}
                     className={`group relative flex flex-col overflow-hidden rounded-lg border transition-all ${
                       isCurrent
-                        ? 'border-brand-primary bg-brand-surface shadow-[0_0_24px_rgba(37,99,235,0.3)] ring-1 ring-brand-primary'
-                        : 'border-surface-700 bg-brand-surface hover:border-brand-primary/80 hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:-translate-y-1'
+                        ? 'border-brand-primary bg-brand-surface ring-1 ring-brand-primary'
+                        : 'border-surface-700 bg-brand-surface hover:border-brand-primary/80 hover:-translate-y-1'
                     }`}
                   >
                     {/* Thumbnail Stage */}

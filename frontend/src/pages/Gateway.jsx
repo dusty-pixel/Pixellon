@@ -193,7 +193,7 @@ export default function Gateway() {
             <Link
               to="/reviews"
               id="gateway-to-reviews"
-              className="rounded-xl bg-brand-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-brand-primary/85 shadow-[0_0_16px_rgba(37,99,235,0.3)] active:scale-95 cursor-pointer font-sans"
+              className="rounded-xl bg-brand-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-brand-primary/85 active:scale-95 cursor-pointer font-sans"
             >
               Browse All Reviews
             </Link>

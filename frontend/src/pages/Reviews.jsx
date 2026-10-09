@@ -58,7 +58,7 @@ export default function Reviews() {
           <article
             key={review.id}
             id={`review-${review.id}`}
-            className="group grid gap-6 overflow-hidden rounded-xl border border-surface-700 bg-brand-surface p-5 transition-all hover:border-brand-primary hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] md:grid-cols-[280px_1fr]"
+            className="group grid gap-6 overflow-hidden rounded-xl border border-surface-700 bg-brand-surface p-5 transition-all hover:border-brand-primary md:grid-cols-[280px_1fr]"
           >
             {/* Image */}
             <div className="relative aspect-[16/10] overflow-hidden rounded-lg md:aspect-auto md:h-full">

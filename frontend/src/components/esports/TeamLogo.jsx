@@ -64,7 +64,7 @@ export default function TeamLogo({
         src={src}
         alt={name}
         onError={() => setHasError(true)}
-        className="relative z-10 h-full w-full object-contain filter drop-shadow-[0_6px_16px_rgba(0,0,0,0.75)] transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_8px_24px_rgba(0,0,0,0.9)]"
+        className="relative z-10 h-full w-full object-contain transition-all duration-300 group-hover:scale-110"
         loading="lazy"
       />
     </div>

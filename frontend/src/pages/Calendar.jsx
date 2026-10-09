@@ -92,7 +92,7 @@ export default function Calendar() {
             onClick={() => setActivePlatform(platform)}
             className={`rounded-lg px-3.5 py-1.5 text-xs font-mono font-medium transition-all cursor-pointer ${
               activePlatform === platform
-                ? 'bg-brand-primary text-white shadow-[0_0_12px_rgba(37,99,235,0.4)]'
+                ? 'bg-brand-primary text-white'
                 : 'bg-brand-surface text-brand-muted hover:bg-surface-700 hover:text-brand-text border border-surface-700'
             }`}
           >
@@ -110,7 +110,7 @@ export default function Calendar() {
             <div className="sm:flex gap-8">
               {/* Month Header */}
               <div className="sm:w-32 shrink-0 pb-4 sm:pb-0 relative">
-                <div className="hidden sm:block absolute -right-[17px] top-2 h-2.5 w-2.5 rounded-none bg-brand-primary shadow-[0_0_8px_rgba(37,99,235,0.8)]"></div>
+                <div className="hidden sm:block absolute -right-[17px] top-2 h-2.5 w-2.5 rounded-none bg-brand-primary"></div>
                 
                 <h2 className="font-display text-lg font-bold text-brand-accent sticky top-24 font-mono">
                   {month}
@@ -122,7 +122,7 @@ export default function Calendar() {
                 {releases.map((game) => (
                   <div
                     key={game.id}
-                    className="group relative overflow-hidden rounded-xl border border-surface-700 bg-brand-surface p-4 sm:p-5 transition-all hover:border-brand-primary hover:shadow-[0_0_16px_rgba(37,99,235,0.2)] flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    className="group relative overflow-hidden rounded-xl border border-surface-700 bg-brand-surface p-4 sm:p-5 transition-all hover:border-brand-primary flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                   >
                     <div>
                       <h3 className="font-display text-base sm:text-lg font-bold text-brand-text group-hover:text-brand-accent transition-colors">

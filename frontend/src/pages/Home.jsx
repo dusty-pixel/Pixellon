@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import PageTransition from '../components/PageTransition'
 import TlouSpotlightHero from '../components/tlou/TlouSpotlightHero'
+import PortalHero from '../components/home/PortalHero'
 import SectionHeader from '../components/SectionHeader'
 import GameCard from '../components/GameCard'
 import ChoosePath from '../components/home/ChoosePath'
@@ -91,74 +92,10 @@ export default function Home() {
 
   return (
     <PageTransition className="relative w-full overflow-hidden">
-      {/* ── 1. Pixellon Top Games of the Week Hero ──────────────────── */}
-      <div
-        className={`transition-opacity duration-300 ${
-          isSwitchingSpotlight ? 'opacity-70 scale-[0.99]' : 'opacity-100 scale-100'
-        }`}
-      >
-        <TlouSpotlightHero
-          game={spotlightGame}
-          spotlightList={spotlightList}
-          activeId={activeSpotlightId}
-          onSelectGame={handleSelectSpotlight}
-          onOpenSearch={handleOpenSearch}
-        />
-      </div>
+      {/* ── 1. Portal landing — Pixellon intro, not a single game ─── */}
+      <PortalHero onSearch={handleOpenSearch} />
 
-      {/* ── 2. Dynamic Spotlight Quick-Switcher Strip ──────────────── */}
-      <section className="relative z-20 max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 -mt-2 mb-10">
-        <div className="rounded-xl border border-stone-800/80 bg-stone-950/85 backdrop-blur-xl p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-2.5 w-2.5 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-            </span>
-            <span className="font-cinematic text-xs tracking-[0.2em] uppercase font-bold text-white">
-              Top Games of the Week:
-            </span>
-            <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/70 px-2.5 py-0.5 rounded border border-emerald-700/40">
-              Steam & FreeToGame Live APIs
-            </span>
-          </div>
-
-          {/* Quick Select Buttons */}
-          <div className="flex flex-wrap items-center gap-2">
-            {spotlightList.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleSelectSpotlight(item.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-cinematic uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 ${
-                  activeSpotlightId === item.id
-                    ? item.id === 'live-daily'
-                      ? 'bg-red-950 text-red-200 border border-red-500/80 shadow-[0_0_15px_rgba(239,68,68,0.4)] font-bold'
-                      : 'bg-emerald-900/70 text-white border border-emerald-400/80 shadow-[0_0_12px_rgba(16,185,129,0.3)] font-bold'
-                    : 'bg-stone-900/60 text-stone-300 hover:text-white hover:bg-stone-800 border border-stone-800'
-                }`}
-              >
-                <span className="font-mono text-[10px] text-emerald-400 font-bold">
-                  {item.ranking ? `#${item.ranking}` : 'LIVE'}
-                </span>
-                <span>{item.title}</span>
-                {item.metacritic && (
-                  <span className="text-[10px] text-stone-400 font-mono">({item.metacritic})</span>
-                )}
-              </button>
-            ))}
-
-            <button
-              onClick={() => handleSelectSpotlight('live-daily', true)}
-              className="px-3 py-1.5 rounded-lg text-xs font-cinematic uppercase tracking-wider bg-red-950/40 hover:bg-red-900/50 text-red-300 hover:text-white border border-red-800/60 flex items-center gap-1.5 cursor-pointer shadow-sm"
-              title="Force Refresh Live Daily Gaming API"
-            >
-              <RefreshCw className="h-3 w-3 text-red-400" />
-              <span>Refresh Daily API</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. Pixellon Core Portal & Community Layout ─────────────── */}
+      {/* ── 2. Pixellon Core Portal & Community Layout ─────────────── */}
       <div className="relative z-10 max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-6">
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
           {/* Main Portal Column (70%) */}
@@ -186,6 +123,74 @@ export default function Home() {
             {/* Discovery Grid */}
             <VoxelDivider />
             <DiscoverNet />
+
+            {/* Spotlight Vault — Top Games of the Week (section, not landing) */}
+            <section id="spotlight-vault">
+              <SectionHeader
+                index="04"
+                title="Spotlight Vault"
+                subtitle="Top games of the week — deep dive into one pick at a time. Steam & FreeToGame live APIs."
+                accent="emerald"
+              />
+              <div
+                className={`transition-opacity duration-300 ${
+                  isSwitchingSpotlight ? 'opacity-70 scale-[0.99]' : 'opacity-100 scale-100'
+                }`}
+              >
+                <TlouSpotlightHero
+                  game={spotlightGame}
+                  spotlightList={spotlightList}
+                  activeId={activeSpotlightId}
+                  onSelectGame={handleSelectSpotlight}
+                  onOpenSearch={handleOpenSearch}
+                />
+              </div>
+              <div className="mt-3 rounded-xl border border-surface-700 bg-brand-surface p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-2.5 w-2.5 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+                  </span>
+                  <span className="font-display text-xs tracking-[0.2em] uppercase font-bold text-brand-text">
+                    Top Games of the Week:
+                  </span>
+                  <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/70 px-2.5 py-0.5 rounded border border-emerald-700/40">
+                    Steam & FreeToGame Live APIs
+                  </span>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  {spotlightList.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => handleSelectSpotlight(item.id)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-display uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 ${
+                        activeSpotlightId === item.id
+                          ? item.id === 'live-daily'
+                            ? 'bg-red-950 text-red-200 border border-red-500/80 font-bold'
+                            : 'bg-emerald-900/70 text-white border border-emerald-400/80 font-bold'
+                          : 'bg-surface-900/60 text-brand-muted hover:text-brand-text hover:bg-surface-800 border border-surface-700'
+                      }`}
+                    >
+                      <span className="font-mono text-[10px] text-emerald-400 font-bold">
+                        {item.ranking ? `#${item.ranking}` : 'LIVE'}
+                      </span>
+                      <span>{item.title}</span>
+                      {item.metacritic && (
+                        <span className="text-[10px] text-brand-muted font-mono">({item.metacritic})</span>
+                      )}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => handleSelectSpotlight('live-daily', true)}
+                    className="px-3 py-1.5 rounded-lg text-xs font-display uppercase tracking-wider bg-red-950/40 hover:bg-red-900/50 text-red-300 hover:text-white border border-red-800/60 flex items-center gap-1.5 cursor-pointer shadow-sm"
+                    title="Force Refresh Live Daily Gaming API"
+                  >
+                    <RefreshCw className="h-3 w-3 text-red-400" />
+                    <span>Refresh Daily API</span>
+                  </button>
+                </div>
+              </div>
+            </section>
 
             {/* Community Lobby */}
             <CommunityLobby />
@@ -289,7 +294,7 @@ export default function Home() {
                     <MagneticButton
                       to="/gateway"
                       id="gateway-banner-cta"
-                      className="mt-5 rounded-xl bg-brand-accent px-5 py-2.5 font-sans text-xs sm:text-sm font-bold text-slate-950 shadow-[0_0_16px_rgba(96,165,250,0.4)]"
+                      className="mt-5 rounded-xl bg-brand-accent px-5 py-2.5 font-sans text-xs sm:text-sm font-bold text-slate-950"
                     >
                       Enter The Gateway →
                     </MagneticButton>

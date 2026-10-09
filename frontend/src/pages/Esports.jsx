@@ -359,7 +359,7 @@ export default function Esports() {
                   Live Global Esports Circuit
                 </span>
               </div>
-              <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight text-brand-text drop-shadow-md">
+              <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight text-brand-text">
                 Pro Esports Arena
               </h1>
               <p className="mt-2 text-sm text-brand-muted max-w-2xl leading-relaxed">
@@ -374,7 +374,7 @@ export default function Esports() {
                 onClick={() => setLiveSync(!liveSync)}
                 className={`flex items-center gap-2.5 rounded-2xl px-4 py-2.5 text-xs font-mono font-bold border transition-all ${
                   liveSync
-                    ? 'border-emerald-500/60 bg-emerald-500/15 text-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.3)]'
+                    ? 'border-emerald-500/60 bg-emerald-500/15 text-emerald-300'
                     : 'border-surface-700 bg-surface-900 text-brand-muted hover:text-brand-text'
                 }`}
                 title={liveSync ? 'Real-time score engine active' : 'Click to enable real-time score engine'}
@@ -460,7 +460,7 @@ export default function Esports() {
                 onClick={() => setStatusFilter('all')}
                 className={`rounded-xl px-3.5 py-2 text-xs font-mono font-bold border transition-colors ${
                   statusFilter === 'all'
-                    ? 'border-brand-accent bg-brand-accent/15 text-brand-accent shadow-[0_0_12px_rgba(96,165,250,0.2)]'
+                    ? 'border-brand-accent bg-brand-accent/15 text-brand-accent'
                     : 'border-surface-700 bg-surface-900 text-brand-muted hover:text-brand-text'
                 }`}
               >
@@ -471,7 +471,7 @@ export default function Esports() {
                 onClick={() => setStatusFilter('running')}
                 className={`flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-mono font-bold border transition-colors ${
                   statusFilter === 'running'
-                    ? 'border-red-500/70 bg-red-500/20 text-red-300 shadow-[0_0_16px_rgba(239,68,68,0.3)]'
+                    ? 'border-red-500/70 bg-red-500/20 text-red-300'
                     : 'border-surface-700 bg-surface-900 text-brand-muted hover:text-brand-text'
                 }`}
               >
@@ -485,7 +485,7 @@ export default function Esports() {
                 onClick={() => setStatusFilter('not_started')}
                 className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-mono font-bold border transition-colors ${
                   statusFilter === 'not_started'
-                    ? 'border-blue-500/60 bg-blue-500/20 text-blue-300 shadow-[0_0_12px_rgba(59,130,246,0.2)]'
+                    ? 'border-blue-500/60 bg-blue-500/20 text-blue-300'
                     : 'border-surface-700 bg-surface-900 text-brand-muted hover:text-brand-text'
                 }`}
               >
@@ -497,7 +497,7 @@ export default function Esports() {
                 onClick={() => setStatusFilter('finished')}
                 className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-mono font-bold border transition-colors ${
                   statusFilter === 'finished'
-                    ? 'border-emerald-500/60 bg-emerald-500/20 text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.2)]'
+                    ? 'border-emerald-500/60 bg-emerald-500/20 text-emerald-300'
                     : 'border-surface-700 bg-surface-900 text-brand-muted hover:text-brand-text'
                 }`}
               >
@@ -514,7 +514,7 @@ export default function Esports() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search team or tournament..."
-                className="w-full rounded-2xl border border-surface-700 bg-surface-900 pl-10 pr-4 py-2.5 text-xs font-mono text-brand-text placeholder:text-brand-muted focus:border-brand-primary focus:outline-none transition-all focus:shadow-[0_0_15px_rgba(37,99,235,0.25)]"
+                className="w-full rounded-2xl border border-surface-700 bg-surface-900 pl-10 pr-4 py-2.5 text-xs font-mono text-brand-text placeholder:text-brand-muted focus:border-brand-primary focus:outline-none transition-all"
               />
             </div>
           </div>
@@ -563,15 +563,10 @@ export default function Esports() {
                   transition={{ delay: i * 0.04, type: 'spring', stiffness: 100 }}
                   className={`group relative flex flex-col overflow-hidden rounded-[2rem] border transition-all duration-300 ${
                     isRunning
-                      ? 'border-red-500/30 bg-surface-900/40 shadow-[0_8px_32px_rgba(239,68,68,0.1)]'
+                      ? 'border-red-500/30 bg-surface-900/40'
                       : 'border-white/5 bg-surface-900/30 hover:bg-surface-900/50 hover:border-white/10 hover:shadow-xl'
                   } backdrop-blur-2xl`}
                 >
-                  {/* Subtle Background Gradient */}
-                  <div className="absolute inset-0 opacity-20 pointer-events-none" style={{
-                    background: `radial-gradient(circle at 50% 0%, ${t1Color}30 0%, transparent 50%), radial-gradient(circle at 50% 100%, ${t2Color}30 0%, transparent 50%)`
-                  }} />
-
                   {/* League Header - Sleek */}
                   <div className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/5">
                     <div className="flex items-center gap-3">
@@ -621,7 +616,6 @@ export default function Esports() {
                             color={t1Color}
                             size="lg"
                           />
-                          <div className="absolute inset-0 rounded-full blur-2xl opacity-20 -z-10" style={{ background: t1Color }} />
                         </div>
                         <div className="text-center">
                           <span className="block text-base font-display font-bold text-white tracking-tight">
@@ -666,7 +660,6 @@ export default function Esports() {
                             color={t2Color}
                             size="lg"
                           />
-                          <div className="absolute inset-0 rounded-full blur-2xl opacity-20 -z-10" style={{ background: t2Color }} />
                         </div>
                         <div className="text-center">
                           <span className="block text-base font-display font-bold text-white tracking-tight">

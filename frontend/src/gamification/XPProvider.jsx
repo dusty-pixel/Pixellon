@@ -121,7 +121,7 @@ function ToastStack({ events }) {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 24, scale: 0.95 }}
             transition={{ duration: DURATION.normal, ease: EASE.out }}
-            className="rounded-lg border border-brand-primary/40 bg-surface-900/95 px-3.5 py-2.5 shadow-[0_0_20px_rgba(2,132,199,0.25)] backdrop-blur-md"
+            className="rounded-lg border border-brand-primary/40 bg-surface-900/95 px-3.5 py-2.5 backdrop-blur-md"
           >
             {e.type === 'area' ? (
               <>

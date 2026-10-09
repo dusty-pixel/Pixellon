@@ -46,7 +46,7 @@ export function FilterChip({ icon: Icon, label, active = false, onClick, classNa
       onClick={onClick}
       className={`inline-flex items-center gap-2 rounded-lg border px-3.5 py-1.5 text-xs font-medium transition-all duration-150 cursor-pointer ${
         active
-          ? 'border-brand-primary bg-brand-primary/15 text-white shadow-[0_0_12px_rgba(2,132,199,0.35)]'
+          ? 'border-brand-primary bg-brand-primary/15 text-white'
           : 'border-surface-700 bg-brand-surface text-brand-muted hover:border-brand-primary/50 hover:text-brand-text'
       } ${className}`}
     >
@@ -88,7 +88,7 @@ export function CustomCheckbox({ checked, onChange, disabled = false, className 
       onClick={() => !disabled && onChange && onChange(!checked)}
       className={`flex h-5 w-5 items-center justify-center rounded-[4px] border transition-colors cursor-pointer disabled:opacity-50 ${
         checked
-          ? 'border-brand-primary bg-brand-primary text-white shadow-[0_0_8px_rgba(2,132,199,0.3)]'
+          ? 'border-brand-primary bg-brand-primary text-white'
           : 'border-surface-600 bg-surface-900 text-transparent hover:border-brand-primary/50'
       } ${className}`}
     >

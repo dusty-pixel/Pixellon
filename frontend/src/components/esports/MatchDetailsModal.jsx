@@ -239,7 +239,7 @@ export default function MatchDetailsModal({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => onSimulateRound(match.id)}
-                    className="flex items-center gap-1.5 rounded-lg bg-brand-primary hover:bg-blue-600 px-3.5 py-2 text-xs font-mono font-bold text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all"
+                    className="flex items-center gap-1.5 rounded-lg bg-brand-primary hover:bg-blue-600 px-3.5 py-2 text-xs font-mono font-bold text-white transition-all"
                   >
                     <Play className="h-3.5 w-3.5 fill-current" />
                     Simulate Next Round

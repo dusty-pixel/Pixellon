@@ -38,10 +38,6 @@ export default function ChoosePath() {
                   active.id === p.id ? 'border-brand-primary/50' : ''
                 }`}
               >
-                {/* ghost echo */}
-                <span aria-hidden className="ghost-word pointer-events-none absolute -top-2 left-0 font-display text-5xl font-extrabold tracking-tight opacity-70 sm:text-6xl">
-                  {p.word}
-                </span>
                 <span className="relative flex items-baseline gap-4">
                   <span className="font-pixel text-sm text-brand-primary">{p.num}</span>
                   <span
@@ -87,7 +83,7 @@ export default function ChoosePath() {
                       <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--theme-accent, #00D2FF)" strokeOpacity="0.4" />
                     ))}
                     {[[100, 60], [30, 30], [165, 35], [45, 95], [160, 92]].map(([cx, cy], i) => (
-                      <circle key={i} cx={cx} cy={cy} r={i === 0 ? 9 : 5} fill="none" stroke="var(--theme-accent, #00D2FF)" strokeWidth="1.5" className="node-pulse" style={{ animationDelay: `${i * 0.3}s` }} />
+                      <circle key={i} cx={cx} cy={cy} r={i === 0 ? 9 : 5} fill="none" stroke="var(--theme-accent, #00D2FF)" strokeWidth="1.5" className="" style={{ animationDelay: `${i * 0.3}s` }} />
                     ))}
                   </svg>
                 )}

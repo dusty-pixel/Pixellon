@@ -272,13 +272,13 @@ html.light footer {
   border-top-color: #E2E8F0;
 }
 
-/* ── Brand Kit Pixel Utilities & Glows ─────────────────────────── */
+/* ── Brand Kit Pixel Utilities (flat, no glow) ─────────────────── */
 @utility glow-pixel {
-  box-shadow: 0 0 16px rgba(2, 132, 199, 0.45);
+  box-shadow: none;
 }
 
 @utility glow-signal {
-  box-shadow: 0 0 16px rgba(0, 210, 255, 0.45);
+  box-shadow: none;
 }
 
 @utility pixel-card {
@@ -314,11 +314,11 @@ html.light footer {
   transition: all 0.15s ease-in-out;
   cursor: pointer;
   border: 1px solid transparent;
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+  box-shadow: none;
 
   &:hover {
     background-color: #0274B3;
-    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
+    box-shadow: none;
   }
 
   &:active {
@@ -472,7 +472,7 @@ html.light footer {
     background-color: rgba(2, 132, 199, 0.15);
     border-color: var(--color-brand-primary);
     color: #FFFFFF;
-    box-shadow: 0 0 12px rgba(2, 132, 199, 0.35);
+    box-shadow: none;
   }
 }
 
@@ -526,24 +526,14 @@ html.light footer {
   --mouse-y: 30vh;
 }
 
-/* Cursor-following ambient light (very low intensity) */
+/* Cursor-following ambient light — removed (flat design, no glow) */
 .cursor-light {
-  background:
-    radial-gradient(
-      circle 340px at var(--mouse-x) var(--mouse-y),
-      rgba(0, 210, 255, 0.055),
-      transparent 70%
-    );
-  mix-blend-mode: screen;
+  background: none;
+  mix-blend-mode: normal;
 }
 html.light .cursor-light {
-  background:
-    radial-gradient(
-      circle 340px at var(--mouse-x) var(--mouse-y),
-      rgba(2, 132, 199, 0.06),
-      transparent 70%
-    );
-  mix-blend-mode: multiply;
+  background: none;
+  mix-blend-mode: normal;
 }
 
 /* Standard cursor behaviour */
@@ -613,7 +603,7 @@ a, button, [role="button"] {
 }
 .led-ticker-text {
   color: #ffb020;
-  text-shadow: 0 0 6px rgba(255, 176, 32, 0.75), 0 0 18px rgba(255, 140, 0, 0.35);
+  text-shadow: none;
   animation: led-flicker 4s infinite;
   white-space: nowrap;
 }
@@ -642,22 +632,16 @@ a, button, [role="button"] {
   84% { opacity: 1; }
 }
 
-/* Neon Pixellon sign — the primary glowing element */
+/* Pixellon sign — flat, no glow */
 .neon-sign {
   border: 2px solid rgba(0, 210, 255, 0.65);
   border-radius: 12px;
-  box-shadow:
-    0 0 12px rgba(0, 210, 255, 0.45),
-    0 0 42px rgba(0, 210, 255, 0.18),
-    inset 0 0 14px rgba(0, 210, 255, 0.12);
-  animation: neon-flicker 6s infinite;
+  box-shadow: none;
+  animation: none;
 }
 .neon-sign-text {
   color: #eafcff;
-  text-shadow:
-    0 0 8px rgba(0, 210, 255, 0.9),
-    0 0 28px rgba(0, 210, 255, 0.55),
-    0 0 64px rgba(0, 210, 255, 0.3);
+  text-shadow: none;
 }
 @keyframes neon-flicker {
   0%, 100% { opacity: 1; }
@@ -695,10 +679,10 @@ a, button, [role="button"] {
   100% { transform: translate(0); }
 }
 
-/* Ghost typography for Choose-Your-Path */
+/* Ghost typography — removed (flat solid text instead of outlined ghost) */
 .ghost-word {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(148, 163, 184, 0.28);
+  color: inherit;
+  -webkit-text-stroke: 0;
   user-select: none;
 }
 
@@ -709,11 +693,10 @@ a, button, [role="button"] {
   animation: arena-blink 0.9s steps(1) infinite;
 }
 
-/* Node pulse for discover network */
+/* Node indicator — static, no pulse glow */
 .node-pulse {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: node-pulse 2.6s ease-in-out infinite;
+  transform: none;
+  animation: none;
 }
 @keyframes node-pulse {
   0%, 100% { opacity: 0.55; }
@@ -762,7 +745,7 @@ a, button, [role="button"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #A82025 0%, #881418 100%);
+  background: #A82025;
   color: #FFFFFF;
   font-family: 'Oswald', 'Bebas Neue', sans-serif;
   letter-spacing: 0.16em;
@@ -774,7 +757,7 @@ a, button, [role="button"] {
 }
 
 .tlou-btn-crimson:hover {
-  background: linear-gradient(135deg, #BD272D 0%, #9E191E 100%);
+  background: #BD272D;
   box-shadow: none;
   transform: translateY(-1px);
 }
@@ -815,8 +798,7 @@ a, button, [role="button"] {
 }
 
 .tlou-ambient-green-glow {
-  background: radial-gradient(circle at 65% 30%, rgba(34, 197, 94, 0.04) 0%, transparent 55%),
-              radial-gradient(circle at 20% 70%, rgba(20, 83, 45, 0.06) 0%, transparent 60%);
+  background: none;
 }
 
 .tlou-award-item {
@@ -858,7 +840,7 @@ a, button, [role="button"] {
   font-weight: 900;
   letter-spacing: -0.04em;
   color: rgba(255, 255, 255, 0.13);
-  text-shadow: 0 0 80px rgba(255, 255, 255, 0.06);
+  text-shadow: none;
   user-select: none;
   pointer-events: none;
 }
@@ -866,7 +848,7 @@ a, button, [role="button"] {
 .editorial-step-line {
   width: 1px;
   height: 52px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.08));
+  background: rgba(255, 255, 255, 0.25);
 }
 
 @keyframes editorialProgress {

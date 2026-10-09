@@ -222,7 +222,7 @@ export default function DiscordWebhookModal({ isOpen, onClose, onWebhookUpdated 
                 type="button"
                 onClick={handleSave}
                 disabled={!webhookInput.trim()}
-                className="inline-flex items-center gap-2 rounded-lg bg-brand-primary px-5 py-2.5 text-xs font-mono font-semibold text-white hover:bg-brand-primary/85 shadow-[0_0_12px_rgba(37,99,235,0.4)] transition-all disabled:opacity-50 cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-lg bg-brand-primary px-5 py-2.5 text-xs font-mono font-semibold text-white hover:bg-brand-primary/85 transition-all disabled:opacity-50 cursor-pointer"
               >
                 <CheckCircle className="h-4 w-4" />
                 Save Webhook

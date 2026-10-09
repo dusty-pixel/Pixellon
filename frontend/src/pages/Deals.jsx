@@ -72,7 +72,7 @@ export default function Deals() {
               href={`https://www.cheapshark.com/redirect?dealID=${deal.dealID}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col overflow-hidden rounded-xl border border-surface-700 bg-brand-surface transition-all hover:border-brand-primary hover:shadow-[0_0_20px_rgba(37,99,235,0.25)] hover:-translate-y-1 cursor-pointer"
+              className="group flex flex-col overflow-hidden rounded-xl border border-surface-700 bg-brand-surface transition-all hover:border-brand-primary hover:-translate-y-1 cursor-pointer"
             >
               <div className="relative aspect-[16/9] overflow-hidden bg-surface-900 p-2">
                 <img

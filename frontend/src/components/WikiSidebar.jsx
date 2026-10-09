@@ -53,7 +53,7 @@ export default function WikiSidebar({ gameId, pages, wikiData }) {
 
       {/* Live Steam Stats */}
       {appId && (
-        <div className="bg-brand-surface border border-brand-primary/50 rounded-xl p-4 relative overflow-hidden shadow-[0_0_16px_rgba(37,99,235,0.2)]">
+        <div className="bg-brand-surface border border-brand-primary/50 rounded-xl p-4 relative overflow-hidden">
           <div className="absolute top-0 right-0 p-2 opacity-10 text-brand-primary">
             <Activity size={64} />
           </div>

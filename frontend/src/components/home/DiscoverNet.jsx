@@ -52,7 +52,7 @@ export default function DiscoverNet() {
                   fill={sel.id === n.id ? 'var(--theme-accent, #00D2FF)' : 'transparent'}
                   stroke="var(--theme-accent, #00D2FF)"
                   strokeWidth="1.5"
-                  className="node-pulse"
+                  className=""
                 />
                 <text x={n.x} y={n.y + (n.hub ? 26 : 20)} textAnchor="middle" fill="var(--theme-muted, #94A3B8)" fontSize="8" fontFamily="monospace">
                   {n.id}
